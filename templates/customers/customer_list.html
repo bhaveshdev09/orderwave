@@ -1,0 +1,14 @@
+<!-- templates/customers/customer_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Customer List{% endblock %}
+
+{% block content %}
+  <h2>Customer List: {{customers|length}}</h2>
+  <ul>
+    {% for customer in customers %}
+      <li><a href="{% url 'customers:customer-detail' customer.pk %}">{{ customer.name }}</a></li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'customers:customer-create' %}">Create a new customer</a>
+{% endblock %}

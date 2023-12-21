@@ -1,0 +1,15 @@
+<!-- templates/customers/customer_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}Customer Detail{% endblock %}
+
+{% block content %}
+  <h2>Customer Detail</h2>
+  <p>Name: {{ customer.name }}</p>
+  <p>Mobile: {{ customer.mobile }}</p>
+  <p>Email: {{ customer.email|default:"N/A" }}</p>
+  <br/>
+  <a href="{% url 'customers:customer-list' %}">Back to Customer List</a>
+  <a href="{% url 'customers:customer-update' customer.pk %}">Update Customer</a>
+  <a href="{% url 'customers:customer-delete' customer.pk %}">Delete Customer</a>
+{% endblock %}
