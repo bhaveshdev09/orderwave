@@ -1,0 +1,8 @@
+<!-- templates/branch_detail.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Branch Detail</h2>
+  <p>Name: {{ branch.name }}</p>
+  <p>Deleted: {{ branch.is_deleted }}</p>
+{% endblock %}

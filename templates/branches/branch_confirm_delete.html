@@ -1,0 +1,12 @@
+<!-- templates/branch_confirm_delete.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Delete Branch</h2>
+  <p>Are you sure you want to delete branch "{{ branch.name }}"?</p>
+  <form method="post" action="{% url 'branches:branch-delete' branch.pk %}">
+    {% csrf_token %}
+    <button type="submit">Confirm</button>
+  </form>
+  <a href="{% url 'branches:branch-list' %}">Cancel</a>
+{% endblock %}
