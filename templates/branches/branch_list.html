@@ -1,0 +1,11 @@
+<!-- templates/branch_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Branch List</h2>
+  <ul>
+    {% for branch in branches %}
+      <li><a href="{% url 'branches:branch-detail' branch.pk %}">{{ branch.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

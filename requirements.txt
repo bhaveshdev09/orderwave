@@ -1,5 +1,6 @@
 asgiref==3.7.2
 Django==4.2.8
+django-environ==0.11.2
 django-shortcuts==1.6
 sqlparse==0.4.4
 tzdata==2023.3
