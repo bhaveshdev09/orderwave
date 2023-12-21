@@ -1,0 +1,14 @@
+<!-- templates/customers/customer_form.html -->
+{% extends 'base.html' %}
+
+{% block title %}{% if customer %}Update{% else %}Create{% endif %} Customer{% endblock %}
+
+{% block content %}
+  <h2>{% if customer %}Update{% else %}Create{% endif %} Customer</h2>
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+  <a href="{% url 'customers:customer-list' %}">Back to Customer List</a>
+{% endblock %}
