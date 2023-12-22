@@ -18,3 +18,6 @@ class Item(models.Model):
     def selling_price(self):
         # Your logic for calculating selling price
         return round(self.base_price * 1.18, 1)
+
+    def __str__(self):
+        return self.name
