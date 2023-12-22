@@ -15,3 +15,6 @@ class Category(BaseModel):
 
     def get_absolute_url(self):
         return reverse("items:category-detail", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return self.title

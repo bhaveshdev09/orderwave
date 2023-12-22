@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Item Detail{% endblock %}
+
+{% block content %}
+  <h2>Item Detail</h2>
+  <p>Name: {{ item.name }}</p>
+  <p>Description: {{ item.desc }}</p>
+  <p>Section: {{ item.section.title }}</p>
+  <p>Category: {{ item.category.title }}</p>
+  <p>Operating Hour: {{ item.operation_hour.title }}</p>
+  <p>Base Price: {{ item.base_price }}</p>
+  <p>Tax: {{ item.tax }} % </p>
+  <p>Selling Price: {{ item.selling_price }}</p>
+  <a href="{% url 'items:item-list' %}">Back to Item List</a>
+{% endblock %}

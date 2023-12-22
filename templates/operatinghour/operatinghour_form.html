@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if operatinghour %}Update{% else %}Create{% endif %} Operating Hour{% endblock %}
+
+{% block content %}
+  <h2>{% if operatinghour %}Update{% else %}Create{% endif %} Operating Hour</h2>
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+  <a href="{% url 'items:operating-hour-list' %}">Back to Operating Hour List</a>
+{% endblock %}
