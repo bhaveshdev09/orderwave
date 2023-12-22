@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Operating Hour Detail{% endblock %}
+
+{% block content %}
+  <h2>Operating Hour Detail</h2>
+  <p>Title: {{ operatinghour.title }}</p>
+  <p>From Time: {{ operatinghour.from_time }}</p>
+  <p>To Time: {{ operatinghour.to_time }}</p>
+  <p>Tags: {{ operatinghour.tags }}</p>
+  <a href="{% url 'items:operating-hour-list' %}">Back to Operating Hour List</a>
+{% endblock %}

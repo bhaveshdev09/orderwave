@@ -14,6 +14,13 @@ from items.views.category import (
     CategoryUpdateView,
 )
 
+from items.views.operatinghour import (
+    OperatingHourListView,
+    OperatingHourDetailView,
+    OperatingHourUpdateView,
+    # OperatingHourDeleteView,
+    # OperatingHourCreateView,
+)
 
 app_name = "items"
 urlpatterns = [
@@ -27,7 +34,6 @@ urlpatterns = [
     path(
         "sections/<int:pk>/delete/", SectionDeleteView.as_view(), name="section-delete"
     ),
-
     # URL Patterns For Category
     path("categories/", CategoryListView.as_view(), name="category-list"),
     path("categories/<int:pk>/", CategoryDetailView.as_view(), name="category-detail"),
@@ -42,4 +48,28 @@ urlpatterns = [
         CategoryDeleteView.as_view(),
         name="category-delete",
     ),
+    path(
+        "operating-hours/", OperatingHourListView.as_view(), name="operating-hour-list"
+    ),
+    path(
+        "operating-hours/<int:pk>/",
+        OperatingHourDetailView.as_view(),
+        name="operating-hour-detail",
+    ),
+    path(
+        "operating-hours/<int:pk>/update/",
+        OperatingHourUpdateView.as_view(),
+        name="operating-hour-update",
+    ),
+    # TODO: future use case
+    # path(
+    #     "operating-hours/create/",
+    #     OperatingHourCreateView.as_view(),
+    #     name="operating-hour-create",
+    # ),
+    # path(
+    #     "operating-hours/<int:pk>/delete/",
+    #     OperatingHourDeleteView.as_view(),
+    #     name="operating-hour-delete",
+    # ),
 ]
