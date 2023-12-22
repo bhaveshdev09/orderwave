@@ -25,3 +25,6 @@ class OperatingHour(BaseModel):
 
     def get_absolute_url(self):
         return reverse("items:operating-hour-detail", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return self.title
