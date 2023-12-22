@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if category %}Update{% else %}Create{% endif %} Category{% endblock %}
+
+{% block content %}
+  <h2>{% if category %}Update{% else %}Create{% endif %} Category</h2>
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+  </form>
+  <a href="{% url 'items:category-list' %}">Back to Category List</a>
+{% endblock %}

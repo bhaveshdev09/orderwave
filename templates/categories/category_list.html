@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Category List{% endblock %}
+
+{% block content %}
+  <h2>Category List</h2>
+  <ul>
+    {% for category in categories %}
+      <li><a href="{% url 'items:category-detail' category.pk %}">{{ category.title }}</a></li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'items:category-create' %}">Create a new category</a>
+{% endblock %}
