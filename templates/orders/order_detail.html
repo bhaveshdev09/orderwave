@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Detail{% endblock %}
+
+{% block content %}
+  <h2>Order Detail</h2>
+  <p>Order No: {{ order.order_repr }}</p>
+  <p>Order Date: {{ order.order_date }}</p>
+  <p>Total: {{ order.total_price }}</p>
+  <ul>
+    {% for order_item in order.orderitem_set.all %}
+      <li>{{ order_item.item.name }} - Quantity: {{ order_item.quantity }} - Total Price: {{ order_item.total_price }}</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'orders:order-list' %}">Back to Order List</a>
+{% endblock %}

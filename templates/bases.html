@@ -1,0 +1,33 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <!-- Add your CSS styles or link to external stylesheets here -->
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'branches:branch-list' %}">Branches</a></li>
+        <li><a href="{% url 'customers:customer-list' %}">Customers</a></li>
+        <li><a href="{% url 'items:section-list' %}">Sections</a></li>
+        <li><a href="{% url 'items:category-list' %}">Categories</a></li>
+        <li><a href="{% url 'items:operating-hour-list' %}">Operating Hours</a></li>
+        <li><a href="{% url 'items:item-list' %}">Items</a></li>
+
+        <!-- Add more navigation links as needed -->
+    </ul>
+</nav>
+
+<div id="content">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Add your JavaScript scripts or link to external scripts here -->
+{% block js %}{% endblock js %}
+
+</body>
+</html>

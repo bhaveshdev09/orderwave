@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Order List{% endblock %}
+
+{% block content %}
+  <h2>Order List</h2>
+  <ul>
+    {% for order in orders %}
+      <li><a href="{% url 'orders:order-detail' order.pk %}">Order No: {{ order.order_repr }}</a></li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'orders:order-create' %}">Create a new order</a>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if order %}Update{% else %}Create{% endif %} Order{% endblock %}
+
+{% block content %}
+  <h2>{% if order %}Update{% else %}Create{% endif %} Order</h2>
+  <form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    {{ form.orderitem_formset.management_form }}
+    {{ form.orderitem_formset.non_form_errors }}
+    
+    <div id="order-item-formset">
+      {% for orderitem_form in form.orderitem_formset %}
+        <div class="order-item-form">
+          {{ orderitem_form.as_table }}
+          {% if not orderitem_form.empty_permitted %}
+            <a class="delete-item" href="#">Remove this item</a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <a class="add-item" href="#">Add another item</a>
+    
+    <button type="submit">Save</button>
+  </form>
+
+  <a href="{% url 'orders:order-list' %}">Back to Order List</a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var formset = document.getElementById('order-item-formset');
+
+      document.querySelector('.add-item').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        var newForm = formset.children[0].cloneNode(true);
+        newForm.querySelectorAll('input').forEach(function(input) {
+          input.value = '';
+        });
+
+        formset.appendChild(newForm);
+      });
+
+      formset.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-item')) {
+          event.preventDefault();
+          event.target.closest('.order-item-form').remove();
+        }
+      });
+    });
+  </script>
+{% endblock %}
