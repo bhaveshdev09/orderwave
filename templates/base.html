@@ -1,33 +1,130 @@
-<!-- templates/base.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Site{% endblock %}</title>
-    <!-- Add your CSS styles or link to external stylesheets here -->
-</head>
-<body>
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		<meta name="description" content="Candra Caterars POS">
+		<meta name="keywords" content="">
+		<meta name="author" content="master">
+		<meta name="robots" content="noindex, nofollow">
+        <title>{% block title %}{% endblock %}</title>
+        
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="{% static "assets/img/favicon.png" %}">
+        
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static "assets/css/bootstrap.min.css" %}">
+        
+        <!-- animation CSS -->
+        <link rel="stylesheet" href="{% static "assets/css/animate.css" %}">
 
-<nav>
-    <ul>
-        <li><a href="{% url 'branches:branch-list' %}">Branches</a></li>
-        <li><a href="{% url 'customers:customer-list' %}">Customers</a></li>
-        <li><a href="{% url 'items:section-list' %}">Sections</a></li>
-        <li><a href="{% url 'items:category-list' %}">Categories</a></li>
-        <li><a href="{% url 'items:operating-hour-list' %}">Operating Hours</a></li>
-        <li><a href="{% url 'items:item-list' %}">Items</a></li>
+        <!-- Datatable CSS -->
+        <link rel="stylesheet" href="{% static "assets/css/dataTables.bootstrap4.min.css" %}">
+        
+        <!-- Fontawesome CSS -->
+        <link rel="stylesheet" href="{% static "assets/plugins/fontawesome/css/fontawesome.min.css" %}">
+        <link rel="stylesheet" href="{% static "assets/plugins/fontawesome/css/all.min.css" %}">
+        
+        <!-- Main CSS -->
+        <link rel="stylesheet" href="{% static "assets/css/style.css" %}">
+        
+    </head>
+    <body>
+        <div id="global-loader" >
+            <div class="whirly-loader"> </div>
+        </div>
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
 
-        <!-- Add more navigation links as needed -->
-    </ul>
-</nav>
+            <!-- Header -->
+			<div class="header">
+			
+				<!-- Logo -->
+				 <div class="header-left active">
+					<a href="index.html" class="logo logo-normal">
+						<img src="{% static "assets/img/logo.png" %}"  alt="">
+					</a>
+					<a href="index.html" class="logo logo-white">
+						<img src="{% static "assets/img/logo-white.png" %}"  alt="">
+					</a>
+					<a href="index.html" class="logo-small">
+						<img src="{% static "assets/img/logo-small.png" %}"  alt="">
+					</a>
+					<a id="toggle_btn" href="javascript:void(0);">
+						<i data-feather="chevrons-left" class="feather-16"></i>
+					</a>
+				</div>
+				<!-- /Logo -->
+				
+				<a id="mobile_btn" class="mobile_btn" href="#sidebar">
+					<span class="bar-icon">
+						<span></span>
+						<span></span>
+						<span></span>
+					</span>
+				</a>
+				
+				<!-- Header Menu -->
+				{% include "header.html" %}
+				<!-- /Header Menu -->
+				
+				<!-- Mobile Menu -->
+				<div class="dropdown mobile-user-menu">
+					<a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+					<div class="dropdown-menu dropdown-menu-right">
+						<a class="dropdown-item" href="profile.html">My Profile</a>
+						<a class="dropdown-item" href="generalsettings.html">Settings</a>
+						<a class="dropdown-item" href="signin.html">Logout</a>
+					</div>
+				</div>
+				<!-- /Mobile Menu -->
+			</div>
+			<!-- Header -->
+			
+			<!-- Sidebar -->
+			{% include "sidebar.html" %}
+			<!-- /Sidebar -->
 
-<div id="content">
-    {% block content %}{% endblock %}
-</div>
+            <div class="page-wrapper pagehead">
+                <div class="content">
+                    <div class="page-header">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3 class="page-title">Blank Page</h3>
+								<ul class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+									<li class="breadcrumb-item active">Blank Page</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+                    <div class="row">
+						<div class="col-sm-12">
+							{% block content %}{% endblock content %}
+						</div>			
+					</div>
+                </div>
+            </div>
+        </div>
+        <!-- /Main Wrapper -->
+        
+        <!-- jQuery -->
+        <script src="{% static "assets/js/jquery-3.6.0.min.js" %}"></script>
 
-<!-- Add your JavaScript scripts or link to external scripts here -->
-{% block js %}{% endblock js %}
+        <!-- Feather Icon JS -->
+        <script src="{% static "assets/js/feather.min.js" %}"></script>
 
-</body>
+        <!-- Slimscroll JS -->
+        <script src="{% static "assets/js/jquery.slimscroll.min.js" %}"></script>
+
+        <!-- Bootstrap Core JS -->
+        <script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
+
+        <!-- Custom JS -->
+        <script src="{% static "assets/js/script.js" %}"></script>
+
+        <!-- Add your JavaScript scripts or link to external scripts here -->
+		{% block js %}{% endblock js %}
+    </body>
 </html>
