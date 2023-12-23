@@ -3,16 +3,6 @@
 
 {% block title %}{% if customer %}Edit{% else %}Create{% endif %} Customer{% endblock %}
 
-{% comment %} {% block content %}
-  <h2>{% if customer %}Update{% else %}Create{% endif %} Customer</h2>
-  <form method="post" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
-  <a href="{% url 'customers:customer-list' %}">Back to Customer List</a>
-{% endblock %} {% endcomment %}
-
 {% block content %}
 <div class="content">
   <div class="page-header">
