@@ -31,9 +31,9 @@
         
     </head>
     <body>
-        <div id="global-loader" >
+        {% comment %} <div id="global-loader" >
             <div class="whirly-loader"> </div>
-        </div>
+        </div> {% endcomment %}
         <!-- Main Wrapper -->
         <div class="main-wrapper">
 
@@ -86,7 +86,14 @@
 			{% include "sidebar.html" %}
 			<!-- /Sidebar -->
 
-            <div class="page-wrapper pagehead">
+			<!-- Page Content -->
+			<div class="page-wrapper">
+				{% block content %}
+				{% endblock content %}
+			</div>
+
+			<!-- /Page Content -->
+            {% comment %} <div class="page-wrapper pagehead">
                 <div class="content">
                     <div class="page-header">
 						<div class="row">
@@ -101,11 +108,11 @@
 					</div>
                     <div class="row">
 						<div class="col-sm-12">
-							{% block content %}{% endblock content %}
+							
 						</div>			
 					</div>
                 </div>
-            </div>
+            </div> {% endcomment %}
         </div>
         <!-- /Main Wrapper -->
         
