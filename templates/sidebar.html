@@ -47,7 +47,7 @@
                     <ul>
                         <li><a href="{% url 'customers:customer-list' %}"><i data-feather="user"></i><span>Customers</span></a></li>
                         <li><a href="supplierlist.html"><i data-feather="users"></i><span>Suppliers</span></a></li>
-                        <li><a href="userlist.html"><i data-feather="user-check"></i><span>Users</span></a></li>
+                        <li><a href="{% url "users:user-list" %}"><i data-feather="user-check"></i><span>Users</span></a></li>
                         {% comment %} <li><a href="storelist.html"><i data-feather="home"></i><span>Stores</span></a></li> {% endcomment %}
                         <li>
                             <a href="{% url 'branches:branch-list' %}"><i data-feather="box"></i><span>Branches</span></a>

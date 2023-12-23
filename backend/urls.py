@@ -9,4 +9,5 @@ urlpatterns = [
     path("customer/", include("customers.urls", namespace="customer")),
     path("item/", include("items.urls", namespace="item")),
     path("order/", include("orders.urls", namespace="order")),
+    path("", include("users.urls", namespace="user")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
