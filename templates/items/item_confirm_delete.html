@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}Delete Item{% endblock %}
-
+{% comment %} {% comment %} 
 {% block content %}
   <h2>Delete Item</h2>
   <p>Are you sure you want to delete item "{{ item.name }}"?</p>
@@ -10,4 +10,31 @@
     <button type="submit">Confirm</button>
   </form>
   <a href="{% url 'items:item-list' %}">Cancel</a>
-{% endblock %}
+{% endblock %} {% endcomment %} 
+
+
+{% block content %}
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Item Management</h4>
+      <h6>Delete Item</h6>
+    </div>
+  </div>
+  <!-- /add -->
+  <div class="card">
+    <div class="card-body">
+      <h5>Are you sure you want to delete an item "{{ item.name }}"?</h5>
+    <br/>
+      <form method="post" action="{% url 'items:item-delete' item.pk %}">
+      {% csrf_token %}
+        <div class="col-lg-12">
+          <button class="btn btn-submit me-2" type="submit">Confirm</button>
+          <a href="javascript:void(0);"  class="btn btn-cancel">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /add -->
+</div>
+{% endblock content %}
