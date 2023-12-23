@@ -1,11 +1,84 @@
-<!-- templates/branch_list.html -->
 {% extends 'base.html' %}
 
+<!-- templates/branches/branch_list.html -->
+
+{% load humanize %} 
+{% load static %}
+
+{% block title %}Branch List{% endblock %}
+
 {% block content %}
-  <h2>Branch List</h2>
-  <ul>
-    {% for branch in branches %}
-      <li><a href="{% url 'branches:branch-detail' branch.pk %}">{{ branch.name }}</a></li>
-    {% endfor %}
-  </ul>
-{% endblock %}
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Branch List</h4>
+      <h6>Manage your Branches</h6>
+    </div>
+    <div class="page-btn">
+      <a href="{% url 'branches:branch-create' %}" class="btn btn-added">
+        <img src="{% static 'assets/img/icons/plus.svg' %}" alt="img">Add Branch
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table datanew" id="branchDataTable">
+          <thead>
+            <tr>
+              <th>
+                <label class="checkboxs">
+                  <input type="checkbox" id="select-all">
+                  <span class="checkmarks"></span>
+                </label>
+              </th>
+              <th>Sr.No</th>
+              <th>Branch Name</th>
+              <th>Created At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for branch in branches %}
+              <tr>
+                <td>
+                  <label class="checkboxs">
+                    <input type="checkbox">
+                    <span class="checkmarks"></span>
+                  </label>
+                </td>
+                <td>{{forloop.counter}}</td>
+                <td class="productimgname">
+                  <a href="{% url 'branches:branch-update' branch.pk %}">{{ branch.name|capfirst }}</a>
+                </td>
+                <td>
+                  {{branch.created_at|naturaltime}}
+                <td>
+                  <a class="me-3" href="{% url 'branches:branch-update' branch.pk %}">
+                    <img src="{% static 'assets/img/icons/edit.svg' %}" alt="img">
+                  </a>
+                  <a class="me-3" href="{% url 'branches:branch-delete' branch.pk %}">
+                    <img src="{% static 'assets/img/icons/delete.svg' %}" alt="img">
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<!-- Datatable JS -->
+<script src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/js/dataTables.bootstrap4.min.js' %}"></script>
+
+<!-- Sweetalert 2 -->
+<script src="{% static 'assets/plugins/sweetalert/sweetalert2.all.min.js' %}"></script>
+<script src="{% static 'assets/plugins/sweetalert/sweetalerts.min.js' %}"></script>
+
+{% endblock js %}

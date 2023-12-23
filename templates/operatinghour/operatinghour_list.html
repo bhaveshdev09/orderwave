@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Operating Hour List{% endblock %}
+{% comment %} {% block title %}Operating Hour List{% endblock %}
 
 {% block content %}
   <h2>Operating Hour List</h2>
@@ -9,4 +9,69 @@
       <li><a href="{% url 'items:operating-hour-detail' operatinghour.pk %}">{{ operatinghour.title }}</a></li>
     {% endfor %}
   </ul>
-{% endblock %}
+{% endblock %} {% endcomment %}
+
+{% load humanize %} 
+{% load static %}
+
+{% block title %}Operating Hours List{% endblock %}
+
+{% block content %}
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Operating Hours List</h4>
+      <h6>Manage Operating Hours</h6>
+    </div>
+    <div class="page-btn">
+      <!-- Link to create a new Operating Hour, only if allowed -->
+      {% if can_add_operating_hour %}
+        <a href="{% url 'items:operating-hour-create' %}" class="btn btn-added">
+          <img src="{% static 'assets/img/icons/plus.svg' %}" alt="img">Add Operating Hour
+        </a>
+      {% endif %}
+    </div>
+  </div>
+  <!-- /operating hours list -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table datanew" id="operatingHourDataTable">
+          <thead>
+            <tr>
+              <th>Sr.No</th>
+              <th>Title</th>
+              <th>Availabile Duration</th>
+              <th>Tags</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for operating_hour in operatinghours %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{ operating_hour.title }}</td>
+                <td>{{ operating_hour.from_time }} - {{ operating_hour.to_time }}</td>
+                <td>{{ operating_hour.get_tags_display }}</td>
+                <td>
+                  <!-- Links to update and delete Operating Hour -->
+                  <a class="me-3" href="{% url 'items:operating-hour-update' operating_hour.pk %}">
+                    <img src="{% static 'assets/img/icons/edit.svg' %}" alt="img">
+                  </a>
+                  
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- /operating hours list -->
+</div>
+{% endblock content %}
+
+{% block js %}
+<!-- Your DataTables or other JavaScript libraries go here if needed -->
+{% endblock js %}
+

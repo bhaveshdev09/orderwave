@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Item List{% endblock %}
+{% comment %} {% block title %}Item List{% endblock %}
 
 {% block content %}
   <h2>Item List</h2>
@@ -10,4 +10,108 @@
     {% endfor %}
   </ul>
   <a href="{% url 'items:item-create' %}">Create a new item</a>
-{% endblock %}
+{% endblock %} {% endcomment %}
+{% load humanize %} 
+{% load static %}
+
+{% block title %}Item List{% endblock %}
+
+{% block content %}
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Item List</h4>
+      <h6>Manage your Items</h6>
+    </div>
+    <div class="page-btn">
+      <a href="{% url "items:item-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Item</a>
+    </div>
+  </div>
+  <!-- /item list -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="{% static "assets/img/icons/filter.svg" %}" alt="img">
+              <span><img src="{% static "assets/img/icons/closes.svg" %}" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <a class="btn btn-searchset"><img src="{% static "assets/img/icons/search-white" %}.svg" alt="img"></a>
+          </div>
+        </div>
+        <div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{% static "assets/img/icons/pdf.svg" %}" alt="img"></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table datanew" id="itemDataTable">
+          <thead>
+            <tr>
+              <th>
+                <label class="checkboxs">
+                  <input type="checkbox" id="select-all">
+                  <span class="checkmarks"></span>
+                </label>
+              </th>
+              <th>Item Name</th>
+              <th>Section</th>
+              <th>Category</th>
+              <th>Operation Hour</th>
+              <th>Base Price</th>
+              {% comment %} <th>Selling Price</th> {% endcomment %}
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+              <tr>
+                <td>
+                  <label class="checkboxs">
+                    <input type="checkbox">
+                    <span class="checkmarks"></span>
+                  </label>
+                </td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.section|capfirst }}</td>
+                <td>{{ item.category|capfirst }}</td>
+                <td>{{ item.operation_hour }}</td>
+                <td>{{ item.base_price }}</td>
+                {% comment %} <td>{{ item.selling_price }}</td> {% endcomment %}
+                <td>
+                  <a class="me-3" href="{% url 'items:item-update' item.pk %}">
+                    <img src="{% static "assets/img/icons/edit.svg" %}" alt="img">
+                  </a>
+                  <a class="me-3" href="{% url 'items:item-delete' item.pk %}">
+                    <img src="{% static "assets/img/icons/delete.svg" %}" alt="img">
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- /item list -->
+</div>
+{% endblock content %}
+
+{% block js %}
+<!-- Datatable JS -->
+<script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
+{% endblock js %}
+

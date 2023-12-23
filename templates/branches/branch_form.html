@@ -1,11 +1,44 @@
 <!-- templates/branch_form.html -->
 {% extends 'base.html' %}
 
+<!-- templates/branches/branch_form.html -->
+{% block title %}{% if branch %}Edit{% else %}Create{% endif %} Branch{% endblock %}
+
 {% block content %}
-  <h2>{% if form.instance.pk %}Update{% else %}Create{% endif %} Branch</h2>
-  <form method="post" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
-{% endblock %}
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Branch Management</h4>
+      <h6>{% if branch %}Edit{% else %}Create{% endif %} Branch</h6>
+    </div>
+  </div>
+  <!-- /add -->
+  <div class="card">
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-lg-3 col-sm-6 col-12">
+            <div class="form-group">
+              {{ form.name.label_tag }}
+              {{ form.name }}
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 col-12">
+            <div class="form-group">
+              {{ form.slug.label_tag }}
+              {{ form.slug }}
+            </div>
+          </div>
+          <!-- Add other fields as needed -->
+          <div class="col-lg-12">
+            <button class="btn btn-submit me-2" type="submit">Submit</button>
+            <a href="{% url "branches:branch-list" %}" class="btn btn-cancel">Cancel</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /add -->
+</div>
+{% endblock content %}
