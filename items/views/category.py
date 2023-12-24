@@ -1,4 +1,4 @@
-# views.py
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -11,7 +11,7 @@ from items.models.category import Category
 from items.forms import CategoryForm
 
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     template_name = "categories/category_list.html"
     context_object_name = "categories"
@@ -23,21 +23,21 @@ class CategoryDetailView(DetailView):
     context_object_name = "category"
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
     form_class = CategoryForm
     template_name = "categories/category_form.html"
     success_url = reverse_lazy("items:category-list")
 
 
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
     form_class = CategoryForm
     template_name = "categories/category_form.html"
     success_url = reverse_lazy("items:category-list")
 
 
-class CategoryDeleteView(DeleteView):
+class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     model = Category
     template_name = "categories/category_confirm_delete.html"
     success_url = reverse_lazy("items:category-list")

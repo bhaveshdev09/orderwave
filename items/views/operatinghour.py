@@ -1,4 +1,5 @@
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     ListView,
     DetailView,
@@ -10,19 +11,19 @@ from items.models import OperatingHour
 from items.forms import OperatingHourForm
 
 
-class OperatingHourListView(ListView):
+class OperatingHourListView(LoginRequiredMixin, ListView):
     model = OperatingHour
     template_name = "operatinghour/operatinghour_list.html"
     context_object_name = "operatinghours"
 
 
-class OperatingHourDetailView(DetailView):
+class OperatingHourDetailView(LoginRequiredMixin, DetailView):
     model = OperatingHour
     template_name = "operatinghour/operatinghour_detail.html"
     context_object_name = "operatinghour"
 
 
-class OperatingHourUpdateView(UpdateView):
+class OperatingHourUpdateView(LoginRequiredMixin, UpdateView):
     model = OperatingHour
     form_class = OperatingHourForm
     template_name = "operatinghour/operatinghour_form.html"

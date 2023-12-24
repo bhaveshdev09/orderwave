@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>User List</h4>
+      <h6>Manage your Users</h6>
+    </div>
+    <div class="page-btn">
+      <a href="{% url 'users:user-create' %}" class="btn btn-added">
+        <img src="{% static 'assets/img/icons/plus.svg' %}" alt="img">Add User
+      </a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="{% static 'assets/img/icons/filter.svg' %}" alt="img">
+              <span><img src="{% static 'assets/img/icons/closes.svg' %}" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <a class="btn btn-searchset">
+              <img src="{% static 'assets/img/icons/search-white.svg' %}" alt="img">
+            </a>
+          </div>
+        </div>
+        <div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf">
+                <img src="{% static 'assets/img/icons/pdf.svg' %}" alt="img">
+              </a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel">
+                <img src="{% static 'assets/img/icons/excel.svg' %}" alt="img">
+              </a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print">
+                <img src="{% static 'assets/img/icons/printer.svg' %}" alt="img">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table datanew" id="userDataTable">
+          <thead>
+            <tr>
+              <th>
+                <label class="checkboxs">
+                  <input type="checkbox" id="select-all">
+                  <span class="checkmarks"></span>
+                </label>
+              </th>
+              <th>Sr.No</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile No</th>
+              <th>Branch</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+              <tr>
+                <td>
+                  <label class="checkboxs">
+                    <input type="checkbox">
+                    <span class="checkmarks"></span>
+                  </label>
+                </td>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.mobile_no }}</td>
+                <td>{{ user.branch }}</td>
+                {% comment %} <td>{{ user.created_at|naturaltime }}</td> {% endcomment %}
+                <td>
+                  <a class="me-3" href="{% url 'users:user-update' user.pk %}">
+                    <img src="{% static 'assets/img/icons/edit.svg' %}" alt="img">
+                  </a>
+                  <a class="me-3" href="{% url 'users:user-delete' user.pk %}">
+                    <img src="{% static 'assets/img/icons/delete.svg' %}" alt="img">
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<!-- Datatable JS -->
+<script src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/js/dataTables.bootstrap4.min.js' %}"></script>
+
+{% comment %} 
+<!-- Bootstrap Core JS -->
+<script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Select2 JS -->
+<script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
+
+<!-- Datetimepicker JS -->
+<script src="{% static 'assets/js/moment.min.js'%}"></script>
+<script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+
+<!-- Sweetalert 2 -->
+<script src="{% static 'assets/plugins/sweetalert/sweetalert2.all.min.js' %}"></script>
+<script src="{% static 'assets/plugins/sweetalert/sweetalerts.min.js' %}"></script> {% endcomment %}
+
+<!-- Initiate Datatable -->
+<script>
+  $(document).ready(function () {
+    $('#userDataTable').DataTable();
+  });
+</script>
+{% endblock js %}

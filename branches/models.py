@@ -24,3 +24,6 @@ class Branch(BaseModel):
         self.name = self.name.lower()
         self.slug = slugify(self.name[:2])
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name

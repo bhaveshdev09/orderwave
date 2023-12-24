@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "items",
     "orders",
     "staticapp",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -86,6 +87,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "users.CustomUser"
 
 LANGUAGE_CODE = "en-us"
 
