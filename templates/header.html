@@ -129,8 +129,8 @@
                     <img src="{% static "assets/img/profiles/avator1.jpg" %}" alt="" class="img-fluid">
                 </span>
                 <span class="user-detail">
-                    <span class="user-name">John Smilga</span>
-                    <span class="user-role">Super Admin</span>
+                    <span class="user-name">{{request.user.name}}</span>
+                    <span class="user-role">{% if request.user.is_staff %}Admin{% else %}Staff{% endif %}</span>
                 </span>
             </span>
         </a>
@@ -140,15 +140,15 @@
                     <span class="user-img"><img src="{% static "assets/img/profiles/avator1.jpg" %}" alt="">
                     <span class="status online"></span></span>
                     <div class="profilesets">
-                        <h6>John Smilga</h6>
-                        <h5>Super Admin</h5>
+                        <h6>{{request.user.name}}</h6>
+                        <h5>{% if request.user.is_staff %}Admin{% else %}Staff{% endif %}</h5>
                     </div>
                 </div>
                 <hr class="m-0">
-                <a class="dropdown-item" href="profile.html"> <i class="me-2"  data-feather="user"></i> My Profile</a>
+                <a class="dropdown-item" href="{% url "users:user-update" request.user.pk %}"> <i class="me-2"  data-feather="user"></i> My Profile</a>
                 <a class="dropdown-item" href="generalsettings.html"><i class="me-2" data-feather="settings"></i>Settings</a>
                 <hr class="m-0">
-                <a class="dropdown-item logout pb-0" href="signin.html"><img src="{% static "assets/img/icons/log-out.svg" %}" class="me-2" alt="img">Logout</a>
+                <a class="dropdown-item logout pb-0" href="{% url "users:logout" %}"><img src="{% static "assets/img/icons/log-out.svg" %}" class="me-2" alt="img">Logout</a>
             </div>
         </div>
     </li>

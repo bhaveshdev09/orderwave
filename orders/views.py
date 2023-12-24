@@ -51,6 +51,7 @@
 
 
 # views.py
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import (
     CreateView,
@@ -64,19 +65,19 @@ from .models import Order, OrderItem
 from .forms import OrderForm
 
 
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, ListView):
     model = Order
     template_name = "orders/order_list.html"
     context_object_name = "orders"
 
 
-class OrderDetailView(DetailView):
+class OrderDetailView(LoginRequiredMixin, DetailView):
     model = Order
     template_name = "orders/order_detail.html"
     context_object_name = "order"
 
 
-class OrderCreateView(CreateView):
+class OrderCreateView(LoginRequiredMixin, CreateView):
     model = Order
     form_class = OrderForm
     template_name = "orders/order_form.html"
@@ -87,7 +88,7 @@ class OrderCreateView(CreateView):
         return response
 
 
-class OrderUpdateView(UpdateView):
+class OrderUpdateView(LoginRequiredMixin, UpdateView):
     model = Order
     form_class = OrderForm
     template_name = "orders/order_form.html"
@@ -98,7 +99,7 @@ class OrderUpdateView(UpdateView):
         return response
 
 
-class OrderDeleteView(DeleteView):
+class OrderDeleteView(LoginRequiredMixin, DeleteView):
     model = Order
     template_name = "orders/order_confirm_delete.html"
     success_url = reverse_lazy("orders:order-list")

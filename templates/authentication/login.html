@@ -1,0 +1,61 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-wrapper">
+    <div class="account-content">
+        <div class="login-wrapper">
+            <div class="login-content">
+                <div class="login-userset">
+                    <div class="login-logo logo-normal">
+                        <img src="{% static 'assets/img/logo.png' %}" alt="img">
+                    </div>
+                    <a href="{% url 'users:user-list' %}" class="login-logo logo-white">
+                        <img src="{% static 'assets/img/logo-white.png' %}"  alt="">
+                    </a>
+                    <div class="login-userheading">
+                        <h3>Sign In</h3>
+                        <h4>Please login to your account</h4>
+                    </div>
+                    <form method="post" action="{% url 'users:login' %}">
+                        {% csrf_token %}
+                        <div class="form-login">
+                            <label>Email</label>
+                            <div class="form-addons">
+                                <input type="text" name="email" placeholder="Enter your email address">
+                                <img src="{% static 'assets/img/icons/mail.svg' %}" alt="img">
+                            </div>
+                        </div>
+                        <div class="form-login">
+                            <label>Password</label>
+                            <div class="pass-group">
+                                <input type="password" name="password" class="pass-input" placeholder="Enter your password">
+                                <span class="fas toggle-password fa-eye-slash"></span>
+                            </div>
+                        </div>
+                        {% comment %} <div class="form-login">
+                            <div class="alreadyuser">
+                                <h4><a href="{% url 'users:password_change' %}" class="hover-a">Forgot Password?</a></h4>
+                            </div>
+                        </div> {% endcomment %}
+                        <div class="form-login">
+                            <button type="submit" class="btn btn-login">Sign In</button>
+                        </div>
+                    </form>
+                    {% comment %} <div class="signinform text-center">
+                        <h4>Don't have an account? <a href="{% url 'users:signup' %}" class="hover-a">Sign Up</a></h4>
+                    </div> {% endcomment %}
+                    
+                </div>
+            </div>
+            <div class="login-img">
+                <img src="{% static 'assets/img/login.jpg' %}" alt="img">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<!-- Include your JavaScript files if needed -->
+{% endblock js %}
