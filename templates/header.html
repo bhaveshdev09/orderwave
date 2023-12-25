@@ -27,12 +27,12 @@
             <i data-feather="maximize"></i>
         </a>
     </li>
-    <li class="nav-item nav-item-box">
+    {% comment %} <li class="nav-item nav-item-box">
         <a href="email.html">
             <i data-feather="mail"></i>
             <span class="badge rounded-pill">1</span>
         </a>
-    </li>
+    </li> {% endcomment %}
     <!-- Notifications -->
     <li class="nav-item dropdown nav-item-box">
         <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
@@ -119,9 +119,11 @@
     </li>
     <!-- /Notifications -->
     
-    <li class="nav-item nav-item-box">
+    {% comment %} <li class="nav-item nav-item-box">
         <a href="generalsettings.html"><i data-feather="settings"></i></a>
-    </li>
+    </li> {% endcomment %}
+
+    {% if request.user.is_authenticated %}
     <li class="nav-item dropdown has-arrow main-drop">
         <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
             <span class="user-info">
@@ -129,7 +131,7 @@
                     <img src="{% static "assets/img/profiles/avator1.jpg" %}" alt="" class="img-fluid">
                 </span>
                 <span class="user-detail">
-                    <span class="user-name">{{request.user.name}}</span>
+                    <span class="user-name">{% if request.user %}{{request.user.name|default:"Test User"}}{% endif %}</span>
                     <span class="user-role">{% if request.user.is_staff %}Admin{% else %}Staff{% endif %}</span>
                 </span>
             </span>
@@ -140,17 +142,20 @@
                     <span class="user-img"><img src="{% static "assets/img/profiles/avator1.jpg" %}" alt="">
                     <span class="status online"></span></span>
                     <div class="profilesets">
-                        <h6>{{request.user.name}}</h6>
+                        <h6>{% if request.user.name %}{{request.user.name}}{% else %}<a href="{% url "users:user-update" request.user.pk %}">Edit Name</a>{% endif %}</h6>
                         <h5>{% if request.user.is_staff %}Admin{% else %}Staff{% endif %}</h5>
                     </div>
                 </div>
                 <hr class="m-0">
-                <a class="dropdown-item" href="{% url "users:user-update" request.user.pk %}"> <i class="me-2"  data-feather="user"></i> My Profile</a>
-                <a class="dropdown-item" href="generalsettings.html"><i class="me-2" data-feather="settings"></i>Settings</a>
-                <hr class="m-0">
-                <a class="dropdown-item logout pb-0" href="{% url "users:logout" %}"><img src="{% static "assets/img/icons/log-out.svg" %}" class="me-2" alt="img">Logout</a>
+                
+                    <a class="dropdown-item" href="{% url "users:user-update" request.user.pk %}"> <i class="me-2"  data-feather="user"></i> My Profile</a>
+                    <a class="dropdown-item" href="generalsettings.html"><i class="me-2" data-feather="settings"></i>Settings</a>
+                    <hr class="m-0">
+                    <a class="dropdown-item logout pb-0" href="{% url "users:logout" %}"><img src="{% static "assets/img/icons/log-out.svg" %}" class="me-2" alt="img">Logout</a>
+
             </div>
         </div>
     </li>
+    {% endif %}
 </ul>
 <!-- /header -->

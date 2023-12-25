@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "items",
     "orders",
     "staticapp",
+    "vendors",
     "users",
 ]
 
@@ -102,3 +103,7 @@ STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_URL = "users:login"
+
+LOGOUT_URL = "users:logout"
