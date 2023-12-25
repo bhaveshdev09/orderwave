@@ -46,7 +46,7 @@
                     <h6 class="submenu-hdr">People</h6>		
                     <ul>
                         <li><a href="{% url 'customers:customer-list' %}"><i data-feather="user"></i><span>Customers</span></a></li>
-                        <li><a href="supplierlist.html"><i data-feather="users"></i><span>Suppliers</span></a></li>
+                        <li><a href="{% url "vendors:vendor-list" %}"><i data-feather="users"></i><span>Vendors</span></a></li>
                         <li><a href="{% url "users:user-list" %}"><i data-feather="user-check"></i><span>Users</span></a></li>
                         {% comment %} <li><a href="storelist.html"><i data-feather="home"></i><span>Stores</span></a></li> {% endcomment %}
                         <li>
