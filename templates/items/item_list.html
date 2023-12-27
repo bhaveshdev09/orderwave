@@ -1,16 +1,5 @@
 {% extends 'base.html' %}
 
-{% comment %} {% block title %}Item List{% endblock %}
-
-{% block content %}
-  <h2>Item List</h2>
-  <ul>
-    {% for item in items %}
-      <li><a href="{% url 'items:item-detail' item.pk %}">{{ item.name }}</a></li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'items:item-create' %}">Create a new item</a>
-{% endblock %} {% endcomment %}
 {% load humanize %} 
 {% load static %}
 
@@ -69,9 +58,11 @@
               <th>Item Name</th>
               <th>Section</th>
               <th>Category</th>
-              <th>Operation Hour</th>
+              <th>Selling Price</th>
+              {% comment %} <th>Operation Hour</th> {% endcomment %}
               <th>Base Price</th>
               {% comment %} <th>Selling Price</th> {% endcomment %}
+              <th>Active</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -87,8 +78,9 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.section|capfirst }}</td>
                 <td>{{ item.category|capfirst }}</td>
-                <td>{{ item.operation_hour }}</td>
+                <td>{{ item.selling_price }}</td>
                 <td>{{ item.base_price }}</td>
+                <td>{% if item.is_active %}<span class="badges bg-lightgreen">Active</span>{% else %}<span class="badges bg-lightred">Inactive</span>{% endif %}</td>
                 {% comment %} <td>{{ item.selling_price }}</td> {% endcomment %}
                 <td>
                   <a class="me-3" href="{% url 'items:item-update' item.pk %}">
