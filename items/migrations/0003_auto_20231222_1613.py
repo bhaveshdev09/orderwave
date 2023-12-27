@@ -3,25 +3,32 @@ from django.db import migrations, models
 from django.utils.translation import gettext_lazy as _
 from datetime import time
 
+'''
+DINNER - 19:00:06 - 22:00:06
+BREAKFAST - 08:30:15 - 11:00:15
+LUNCH - 11:30:13 - 15:30:13
+SNACKS - 16:00:18 - 18:00:18
+All Day - 09:00:53 - 22:00:53
+'''
 
 def insert_operating_hours(apps, schema_editor):
     OperatingHour = apps.get_model("items", "OperatingHour")
 
     # Values for time ranges
-    ALL_DAY_FROM = time(0, 0, 0)
-    ALL_DAY_TO = time(23, 59, 59)
+    ALL_DAY_FROM = time(9, 00, 0)
+    ALL_DAY_TO = time(22, 0, 30)
 
-    BREAKFAST_FROM = time(6, 0, 0)
-    BREAKFAST_TO = time(10, 0, 0)
+    BREAKFAST_FROM = time(8, 30, 15)
+    BREAKFAST_TO = time(11, 0, 15)
 
-    LUNCH_FROM = time(12, 0, 0)
-    LUNCH_TO = time(14, 0, 0)
+    LUNCH_FROM = time(11, 30, 15)
+    LUNCH_TO = time(15, 30, 15)
 
-    DINNER_FROM = time(18, 0, 0)
-    DINNER_TO = time(21, 0, 0)
+    DINNER_FROM = time(19, 0, 30)
+    DINNER_TO = time(22, 0, 30)
 
-    SNACKS_FROM = time(15, 0, 0)
-    SNACKS_TO = time(18, 0, 0)
+    SNACKS_FROM = time(16, 0, 30)
+    SNACKS_TO = time(18, 0, 30)
 
     # Insert data
     OperatingHour.objects.bulk_create(

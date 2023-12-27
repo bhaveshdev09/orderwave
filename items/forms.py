@@ -33,21 +33,38 @@ class OperatingHourForm(forms.ModelForm):
 
 
 class ItemForm(forms.ModelForm):
+    operation_hour = forms.ModelMultipleChoiceField(
+        queryset=OperatingHour.objects.all(),
+        widget=forms.SelectMultiple(
+            attrs={
+                "class": "form-control",
+            }
+        ),
+    )
+    tax = forms.FloatField(
+        initial=5.0, widget=forms.NumberInput(attrs={"class": "form-control"})
+    )
+    base_price = forms.FloatField(
+        min_value=1,
+        initial=1,
+        widget=forms.NumberInput(attrs={"class": "form-control"}),
+    )
+
     class Meta:
         model = Item
         fields = [
             "name",
-            "desc",
             "section",
             "category",
             "operation_hour",
             "base_price",
+            "tax",
+            "desc",
+            "is_active",
         ]
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
             "desc": forms.Textarea(attrs={"class": "form-control"}),
             "section": forms.Select(attrs={"class": "form-control"}),
             "category": forms.Select(attrs={"class": "form-control"}),
-            "operation_hour": forms.Select(attrs={"class": "form-control"}),
-            "base_price": forms.NumberInput(attrs={"class": "form-control"}),
         }

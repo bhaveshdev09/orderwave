@@ -1,16 +1,6 @@
 {% extends 'base.html' %}
-{% comment %} 
-{% block title %}{% if item %}Update{% else %}Create{% endif %} Item{% endblock %}
+{% load static %}
 
-{% block content %}
-  <h2>{% if item %}Update{% else %}Create{% endif %} Item</h2>
-  <form method="post" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
-  <a href="{% url 'items:item-list' %}">Back to Item List</a>
-{% endblock %} {% endcomment %}
 
 {% block title %}{% if item %}Edit{% else %}Create{% endif %} Item{% endblock %}
 
@@ -27,7 +17,10 @@
     <div class="card-body">
       <form method="post">
         {% csrf_token %}
-        <div class="row">
+        <!-- Your form fields go here -->
+        {{ form.as_p }}
+
+        {% comment %} <div class="row">
           <div class="col-lg-3 col-sm-6 col-12">
             <div class="form-group">
               {{ form.name.label_tag }}
@@ -47,12 +40,7 @@
               {{ form.category }}
             </div>
           </div>
-          <div class="col-lg-3 col-sm-6 col-12">
-            <div class="form-group">
-              {{ form.operation_hour.label_tag }}
-              {{ form.operation_hour }}
-            </div>
-          </div>
+          
           <div class="col-lg-3 col-sm-6 col-12">
             <div class="form-group">
               {{ form.base_price.label_tag }}
@@ -60,13 +48,20 @@
             </div>
           </div>
         </div>
-          <div class="col-lg-12">
+        <div class="row">
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            {{ form.operation_hour.label_tag }}
+            {{ form.operation_hour }}
+          </div>
+        </div>
+          <div class="col-lg-9">
             <div class="form-group">
               {{ form.desc.label_tag }}
               {{ form.desc }}
             </div>
           </div>
-
+        </div> {% endcomment %}
         <div class="col-lg-12">
           <button class="btn btn-submit me-2" type="submit">Submit</button>
           <a href="{% url "items:item-list" %}" class="btn btn-cancel">Cancel</a>
@@ -78,3 +73,17 @@
 </div>
 {% endblock content %}
 
+
+
+{% block js %}
+
+{% comment %} <!-- Select2 JS -->
+<script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
+<script src="{% static "assets/plugins/select2/js/custom-select.js" %}"></script>
+
+<script>
+  $(document).ready(function() {
+      $('.tagging').select2();
+  });
+</script> {% endcomment %}
+{% endblock js %}
