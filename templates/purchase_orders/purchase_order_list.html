@@ -1,0 +1,108 @@
+<!-- templates/purchase_orders/purchase_orders_list.html -->
+{% extends 'base.html' %}
+{% load humanize %} 
+{% load static %}
+
+{% block title %}Purchase Orders List{% endblock %}
+
+{% block content %}
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Purchase Orders List</h4>
+      <h6>Manage your Purchase Orders</h6>
+    </div>
+    <div class="page-btn">
+      <a href="{% url "purchase_orders:purchase-order-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Purchase Orders</a>
+    </div>
+  </div>
+  <!-- /product list -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="{% static "assets/img/icons/filter.svg" %}" alt="img">
+              <span><img src="{% static "assets/img/icons/closes.svg" %}" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <a class="btn btn-searchset"><img src="{% static "assets/img/icons/search-white" %}.svg" alt="img"></a>
+          </div>
+        </div>
+        <div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{% static "assets/img/icons/pdf.svg" %}" alt="img"></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    
+      <div class="table-responsive">
+        <table class="table datanew" id="purchase_ordersDataTable">
+          <thead>
+            <tr>
+              <th>
+                <label class="checkboxs">
+                  <input type="checkbox" id="select-all">
+                  <span class="checkmarks"></span>
+                </label>
+              </th>
+              <th>Purchase Order</th>
+              <th>Vendor Name</th>
+              <th>Total Cost<th/>
+              <th>Status</th>
+              <th>Created At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for purchase_order in purchase_orders %}
+              <tr>
+                <td>
+                  <label class="checkboxs">
+                    <input type="checkbox">
+                    <span class="checkmarks"></span>
+                  </label>
+                </td>
+                <td><a href="{% url 'purchase_orders:purchase-order-update' purchase_order.pk %}">{{purchase_order.purchase_order_id}}</a></td>
+                <td>{{purchase_order.vendor.name}}</a></td>
+                <td>{{purchase_order.total}}</td>
+                <td></td>
+                <td>{% if purchase_order.status == "complete" %}<span class="badges bg-lightgreen">Completed</span> {% else %}<span class="badges bg-lightred">Pending</span>{% endif %}</td>
+                <td>{{purchase_order.created_at|naturaltime}}</td>
+                <td>
+                  <a class="me-3" href="{% url 'purchase_orders:purchase-order-update' purchase_order.pk %}">
+                    <img src="{% static "assets/img/icons/edit.svg" %}" alt="img">
+                  </a>
+                  <a class="me-3" href="{% url 'purchase_orders:purchase-order-delete' purchase_order.pk %}">
+                    <img src="{% static "assets/img/icons/delete.svg" %}" alt="img">
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- /product list -->
+</div>
+{% endblock content %}
+
+{% block js %}
+{% comment "" %}
+<script src="{% static "assets/plugins/sweetalert/sweetalerts.min.js" %}"></script> {% endcomment %}
+<!-- Datatable JS -->
+<script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
+
+{% endblock js %}
