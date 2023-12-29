@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "staticapp",
     "vendors",
     "users",
+    "materials",
 ]
 
 MIDDLEWARE = [
