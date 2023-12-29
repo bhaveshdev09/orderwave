@@ -1,0 +1,134 @@
+<!-- templates/materials/material_list.html -->
+{% extends 'base.html' %}
+{% load humanize %} 
+{% load static %}
+
+{% block title %}Material List{% endblock %}
+
+{% block content %}
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Material List</h4>
+      <h6>Manage your Materials</h6>
+    </div>
+    <div class="page-btn">
+      <a href="{% url "materials:material-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Material</a>
+    </div>
+  </div>
+  <!-- /product list -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="{% static "assets/img/icons/filter.svg" %}" alt="img">
+              <span><img src="{% static "assets/img/icons/closes.svg" %}" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <a class="btn btn-searchset"><img src="{% static "assets/img/icons/search-white" %}.svg" alt="img"></a>
+          </div>
+        </div>
+        <div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{% static "assets/img/icons/pdf.svg" %}" alt="img"></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    
+      <div class="table-responsive">
+        <table class="table datanew" id="materialDataTable">
+          <thead>
+            <tr>
+              <th>
+                <label class="checkboxs">
+                  <input type="checkbox" id="select-all">
+                  <span class="checkmarks"></span>
+                </label>
+              </th>
+              <th>Material Name</th>
+              <th>Material Units<th/>
+              <th>Material Cost</th>
+              <th>Created At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for material in materials %}
+              <tr>
+                <td>
+                  <label class="checkboxs">
+                    <input type="checkbox">
+                    <span class="checkmarks"></span>
+                  </label>
+                </td>
+                <td class="productimgname">
+                  {% comment %} <a href="javascript:void(0);" class="product-imgs">
+                    {{material.name.0}}
+                  </a> {% endcomment %}
+                  <a href="{% url 'materials:material-update' material.pk %}">{{material.name}}</a>
+                </td>
+            
+                <td>{{material.units}}</td>
+                <td></td>
+                <td>{{material.price}}</td>
+                <td>{{material.created_at|naturaltime}}</td>
+                <td>
+                  <a class="me-3" href="{% url 'materials:material-update' material.pk %}">
+                    <img src="{% static "assets/img/icons/edit.svg" %}" alt="img">
+                  </a>
+                  <a class="me-3" href="{% url 'materials:material-delete' material.pk %}">
+                    <img src="{% static "assets/img/icons/delete.svg" %}" alt="img">
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- /product list -->
+</div>
+{% endblock content %}
+
+{% block js %}
+
+<!-- Datatable JS -->
+{% comment %} <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script> {% endcomment %}
+{% comment %} <script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
+
+<!-- Bootstrap Core JS -->
+<script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
+
+<!-- Select2 JS -->
+<script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
+
+<!-- Datetimepicker JS -->
+<script src="{% static "assets/js/moment.min.js"%}"></script>
+<script src="{% static "assets/js/bootstrap-datetimepicker.min.js" %}"></script>
+
+ {% endcomment %}
+
+<!-- Datatable JS -->
+{% comment %} <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script> 
+<script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script> {% endcomment %}
+
+<!-- Sweetalert 2 -->
+{% comment %} <script src="{% static "assets/plugins/sweetalert/sweetalert2.all.min.js" %}"></script>
+<script src="{% static "assets/plugins/sweetalert/sweetalerts.min.js" %}"></script> {% endcomment %}
+<!-- Datatable JS -->
+<script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
+
+{% endblock js %}

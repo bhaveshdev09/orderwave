@@ -9,21 +9,15 @@
                         <li>
                             <a href="{% url "analytics:dashboard" %}"><i data-feather="bar-chart-2"></i><span>Dashboard</span></a>
                         </li>
-                        
-                        {% comment %} <li>
-                            <a href="{% url 'customers:customer-list' %}"><i data-feather="save"></i><span>Customers</span></a>
-                        </li> {% endcomment %}
-                        
-                        {% comment %} <li>
-                            <a href="{% url 'items:category-list' %}"><i data-feather="codepen"></i><span>Category</span></a>
-                        </li>
-                        <li>
-                            <a href="{% url 'items:operating-hour-list' %}"><i data-feather="speaker"></i>Operating Hours</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'items:item-list' %}"><i data-feather="plus-square"><span>Items</span></a>
-                        </li> {% endcomment %}
                     </ul>								
+                </li>
+                <li class="submenu-open">
+                    <h6 class="submenu-hdr">Sales</h6>
+                    <ul>
+                        <li>
+                            <a href="{% url "orders:bill-list" %}"><i data-feather="shopping-cart"></i><span>Orders</span></a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="submenu-open">
                     <h6 class="submenu-hdr">Product</h6>
@@ -40,6 +34,9 @@
                         <li>
                             <a href="{% url 'items:item-list' %}"><i data-feather="plus-square"></i><span>Items</span></a>
                         </li> 
+                        <li>
+                            <a href="{% url 'materials:material-list' %}"><i data-feather="file-minus"></i><span>Material</span></a>
+                        </li> 
                     </ul>
                 </li>
                 <li class="submenu-open">
@@ -54,7 +51,7 @@
                         </li>
                     </ul>
                 </li>
-                {% comment %} <li class="submenu-open">
+                                {% comment %} <li class="submenu-open">
                     <h6 class="submenu-hdr">Products</h6>
                     <ul>
                         <li><a href="productlist.html"><i data-feather="box"></i><span>Products</span></a></li>
