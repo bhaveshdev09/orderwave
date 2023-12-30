@@ -61,7 +61,7 @@
                   <span class="checkmarks"></span>
                 </label>
               </th>
-              <th>Sr.No</th>
+              <th>#</th>
               <th>Name</th>
               <th>Email</th>
               <th>Mobile No</th>
@@ -82,7 +82,7 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.mobile_no }}</td>
-                <td>{{ user.branch }}</td>
+                <td>{{ user.branch|default_if_none:"-" }}</td>
                 {% comment %} <td>{{ user.created_at|naturaltime }}</td> {% endcomment %}
                 <td>
                   <a class="me-3" href="{% url 'users:user-update' user.pk %}">
