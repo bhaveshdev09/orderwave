@@ -9,7 +9,9 @@ class BranchForm(forms.ModelForm):
         model = Branch
         fields = ("name",)
         widgets = {
-            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "name": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter Branch Name"}
+            ),
         }
 
     def clean_name(self):

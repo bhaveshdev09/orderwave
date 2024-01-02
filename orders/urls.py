@@ -6,6 +6,10 @@ from orders.views import (
     OrderCreateView,
     OrderUpdateView,
     OrderDeleteView,
+    BillListView,
+    BillCreateView,
+    BillUpdateView,
+    BillDeleteView,
 )
 
 app_name = "orders"
@@ -16,4 +20,9 @@ urlpatterns = [
     path("orders/create/", OrderCreateView.as_view(), name="order-create"),
     path("orders/<int:pk>/update/", OrderUpdateView.as_view(), name="order-update"),
     path("orders/<int:pk>/delete/", OrderDeleteView.as_view(), name="order-delete"),
+    path("bills/", BillListView.as_view(), name="bill-list"),
+    path("bills/create/", BillCreateView.as_view(), name="bill-create"),
+    path("bills/<int:pk>/update/", BillUpdateView.as_view(), name="bill-update"),
+    path("bills/<int:pk>/delete/", BillDeleteView.as_view(), name="bill-delete"),
+    # Add any other URLs as needed.
 ]
