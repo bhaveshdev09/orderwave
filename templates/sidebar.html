@@ -42,7 +42,6 @@
                             <a href="{% url "purchase_orders:purchase-order-list" %}"><i data-feather="shopping-bag"></i><span>Purchase Orders</span></a>
                         </li>
                     </ul>
-
                 </li>
                 <li class="submenu-open">
                     <h6 class="submenu-hdr">Product</h6>
@@ -61,9 +60,6 @@
                         </li> 
                         <li class="{% if request.path == materials %}active{% endif %}">
                             <a href="{% url "materials:material-list" %}"><i data-feather="file-minus"></i><span>Material</span></a>
-                        </li> 
-                        <li>
-                            <a href="{% url 'materials:material-list' %}"><i data-feather="file-minus"></i><span>Material</span></a>
                         </li> 
                     </ul>
                 </li>

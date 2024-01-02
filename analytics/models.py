@@ -31,6 +31,7 @@ class ProxyVendor(Vendor):
     def total_vendors(cls):
         return cls._default_manager.count()
 
+
 class ProxyOrder(Bill):
     class Meta:
         proxy = True
@@ -38,4 +39,3 @@ class ProxyOrder(Bill):
     @classmethod
     def total_orders(cls):
         return cls._default_manager.count()
-

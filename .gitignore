@@ -27,7 +27,6 @@ share/python-wheels/
 MANIFEST
 
 # ignore app staticfiles 
-staticapp/static/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
