@@ -11,6 +11,9 @@ urlpatterns = [
     path("order/", include("orders.urls", namespace="order")),
     path("suppliers/", include("vendors.urls", namespace="vendor")),
     path("materials/", include("materials.urls", namespace="material")),
+    path(
+        "purchase-orders/", include("purchase_orders.urls", namespace="purchase_order")
+    ),
     path("", include("users.urls", namespace="user")),
     path("", include("analytics.urls", namespace="analytics")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

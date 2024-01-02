@@ -19,3 +19,6 @@ class Customer(BaseModel):
 
     def get_absolute_url(self):
         return reverse("branches:branch-detail", kwargs={"pk": self.pk})
+
+    def __str__(self) -> str:
+        return self.name

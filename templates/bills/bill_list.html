@@ -1,33 +1,22 @@
+<!-- templates/orders/orders_list.html -->
 {% extends 'base.html' %}
-
-{% comment %} {% block title %}Category List{% endblock %}
-
-{% block content %}
-  <h2>Category List</h2>
-  <ul>
-    {% for category in categories %}
-      <li><a href="{% url 'items:category-detail' category.pk %}">{{ category.title }}</a></li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'items:category-create' %}">Create a new category</a>
-{% endblock %} {% endcomment %}
-
 {% load humanize %} 
 {% load static %}
 
-{% block title %}Category List{% endblock %}
+{% block title %} Orders List{% endblock %}
 
 {% block content %}
 <div class="content">
   <div class="page-header">
     <div class="page-title">
-      <h4>Category List</h4>
-      <h6>Manage your Categories</h6>
+      <h4> Orders List</h4>
+      <h6>Manage your Orders</h6>
     </div>
     <div class="page-btn">
-      <a href="{% url "items:category-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Category</a>
+      <a href="{% url "orders:bill-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Orders</a>
     </div>
   </div>
+  <!-- /product list -->
   <div class="card">
     <div class="card-body">
       <div class="table-top">
@@ -56,8 +45,9 @@
           </ul>
         </div>
       </div>
+    
       <div class="table-responsive">
-        <table class="table datanew" id="categoryDataTable">
+        <table class="table datanew" id="ordersDataTable">
           <thead>
             <tr>
               <th>
@@ -66,14 +56,16 @@
                   <span class="checkmarks"></span>
                 </label>
               </th>
-              <th>#</th>
-              <th>Category Title</th>
+              <th>Order</th>
+              <th>Vendor Name</th>
+              <th>Total Cost</th>
+              <th>Status</th>
               <th>Created At</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {% for category in categories %}
+            {% for order in bills %}
               <tr>
                 <td>
                   <label class="checkboxs">
@@ -81,18 +73,16 @@
                     <span class="checkmarks"></span>
                   </label>
                 </td>
-                <td>{{forloop.counter}}</td>
-                <td class="productimgname">
-                  <a href="{% url 'items:category-update' category.pk %}">{{ category.title|capfirst }}</a>
-                </td>
+                <td><a href="{% url 'orders:bill-update' order.pk %}">{{order.order_repr}}</a></td>
+                <td>{{order.customer.name}}</a></td>
+                <td>{{order.order.total_price}}</td>
+                <td>{% if order.status == "complete" %}<span class="badges bg-lightgreen">Completed</span> {% else %}<span class="badges bg-lightred">Pending</span>{% endif %}</td>
+                <td>{{order.created_at|naturaltime}}</td>
                 <td>
-                  {{category.created_at|naturaltime}}
-                </td>
-                <td>
-                  <a class="me-3" href="{% url 'items:category-update' category.pk %}">
+                  <a class="me-3" href="{% url 'orders:bill-update' order.pk %}">
                     <img src="{% static "assets/img/icons/edit.svg" %}" alt="img">
                   </a>
-                  <a class="me-3" href="{% url 'items:category-delete' category.pk %}">
+                  <a class="me-3" href="{% url 'orders:order-delete' order.pk %}">
                     <img src="{% static "assets/img/icons/delete.svg" %}" alt="img">
                   </a>
                 </td>
@@ -103,32 +93,15 @@
       </div>
     </div>
   </div>
+  <!-- /product list -->
 </div>
 {% endblock content %}
 
 {% block js %}
+{% comment "" %}
+<script src="{% static "assets/plugins/sweetalert/sweetalerts.min.js" %}"></script> {% endcomment %}
 <!-- Datatable JS -->
 <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
 <script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
 
-<!-- Bootstrap Core JS -->
-<script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
-
-<!-- Select2 JS -->
-<script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
-
-<!-- Datetimepicker JS -->
-<script src="{% static "assets/js/moment.min.js"%}"></script>
-<script src="{% static "assets/js/bootstrap-datetimepicker.min.js" %}"></script>
-
-<!-- Sweetalert 2 -->
-<script src="{% static "assets/plugins/sweetalert/sweetalert2.all.min.js" %}"></script>
-<script src="{% static "assets/plugins/sweetalert/sweetalerts.min.js" %}"></script>
-
-<!-- Initiate Datatable -->
-<script>
-  $(document).ready(function () {
-    $('#categoryDataTable').DataTable();
-  });
-</script>
 {% endblock js %}
