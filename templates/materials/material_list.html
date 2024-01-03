@@ -56,8 +56,9 @@
                   <span class="checkmarks"></span>
                 </label>
               </th>
+              <th>#</th>
               <th>Material Name</th>
-              <th>Material Units<th/>
+              <th>Material Units</th>
               <th>Material Cost</th>
               <th>Created At</th>
               <th>Action</th>
@@ -72,15 +73,15 @@
                     <span class="checkmarks"></span>
                   </label>
                 </td>
-                <td class="productimgname">
+                <td>{{forloop.counter}}</td>
+                <td>
                   {% comment %} <a href="javascript:void(0);" class="product-imgs">
                     {{material.name.0}}
                   </a> {% endcomment %}
-                  <a href="{% url 'materials:material-update' material.pk %}">{{material.name}}</a>
+                  {{material.name}}
                 </td>
             
                 <td>{{material.units}}</td>
-                <td></td>
                 <td>{{material.price}}</td>
                 <td>{{material.created_at|naturaltime}}</td>
                 <td>

@@ -55,6 +55,7 @@
                   <span class="checkmarks"></span>
                 </label>
               </th>
+              <th>#</th>
               <th>Item Name</th>
               <th>Section</th>
               <th>Category</th>
@@ -75,6 +76,7 @@
                     <span class="checkmarks"></span>
                   </label>
                 </td>
+                <td>{{ forloop.counter}}</td>
                 <td>{{ item.name }}</td>
                 <td>{{ item.section|capfirst }}</td>
                 <td>{{ item.category|capfirst }}</td>
