@@ -79,7 +79,7 @@
                   </label>
                 </td>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ user.name }}</td>
+                <td>{{ user.name|default:"-" }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.mobile_no }}</td>
                 <td>{{ user.branch|default_if_none:"-" }}</td>
