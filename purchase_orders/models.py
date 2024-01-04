@@ -25,7 +25,7 @@ class PurchaseOrder(BaseModel):
 
     @property
     def purchase_order_id(self):
-        return f"PO-{self.order_date.strftime('%d%m%Y')}-{self.po_no}"
+        return f"PO-{self.order_date.strftime('%d%m%Y')}-{self.pk}"
 
     def save(self, *args, **kwargs):
         new_po_id = self._meta.model.objects.count() + 1

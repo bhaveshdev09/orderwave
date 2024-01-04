@@ -61,60 +61,6 @@ class OrderForm(forms.ModelForm):
         return instance
 
 
-# class BillForm(forms.ModelForm):
-#     train_name = forms.CharField(required=False)
-#     train_no = forms.CharField(required=False)
-
-#     class Meta:
-#         model = Bill
-#         exclude = "__all__"
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.customer_form = CustomerForm(*args, **kwargs)
-#         self.orderitem_formset = OrderItemFormSet(*args, **kwargs)
-
-#     def is_valid(self):
-#         print(self.customer_form.data)
-#         return (
-#             super().is_valid()
-#             and self.customer_form.is_valid()
-#             and self.orderitem_formset.is_valid()
-#         )
-
-#     def save(self, commit=True):
-#         customer = self.customer_form.cleaned_data
-#         order_items = self.orderitem_formset.cleaned_data
-
-#         print(f"{order_items=}")
-#         # Create Customer instance
-#         customer_instance = Customer.objects.create(
-#             name=customer["name"], email=customer["email"], mobile=customer["mobile"]
-#         )
-
-#         # Create Order instance
-#         order_instance = Order.objects.create(customer=customer_instance)
-
-#         # Create OrderItem instances
-#         for item in order_items:
-#             OrderItem.objects.create(
-#                 item=item["item"], quantity=item["quantity"], order=order_instance
-#             )
-
-#         # Create Bill instance
-#         bill_instance = super().save(commit=False)
-#         bill_instance.order = order_instance
-#         bill_instance.save()
-
-#         return bill_instance
-
-
-# OrderItemFormSet = inlineformset_factory(
-#     Bill, OrderItem, form=OrderItemForm, extra=1, can_delete=False
-# )
-
-# OrderItemFormSet = inlineformset_factory(Bill, OrderItem, form=OrderItemForm, extra=1, can_delete=False)
-
 
 class BillForm(forms.ModelForm):
     train_name = forms.CharField(required=False)
@@ -144,17 +90,8 @@ class BillForm(forms.ModelForm):
                 self.order_instance = self.instance.order
         except Exception as e:
             pass
-        # self.customer_form = CustomerForm(instance=self.instance.customer)
-        # self.orderform = OrderForm()
-        # self.orderitem_formset = OrderItemFormSet()
-        # if self.instance:
-        #     print(self.instance)
-        #     self.customer_form = CustomerForm(instance=self.instance.customer)
-        #     self.orderform = OrderForm(instance=self.instance.order)
-        #     self.orderitem_formset = OrderItemFormSet(instance=self.instance.order)
-
+        
     def is_valid(self):
-        # print(self.orderitem_formset.is_valid())
         # return super().is_valid() and self.customer_form.is_valid()
         return True
 
@@ -172,12 +109,12 @@ class BillForm(forms.ModelForm):
         if not self.order_instance:
             self.order_instance = Order.objects.create()
 
-        order_formset = OrderItemFormSet(
+        self.order_formset = OrderItemFormSet(
             self.data, instance=self.order_instance, prefix="orderitems"
         )
 
-        if order_formset.is_valid():
-            order_formset.save()
+        if self.order_formset.is_valid():
+            self.order_formset.save()
 
         # Create Bill instance
         bill_instance, created = Bill.objects.get_or_create(

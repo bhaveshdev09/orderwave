@@ -31,19 +31,21 @@
             <a class="btn btn-searchset"><img src="{% static "assets/img/icons/search-white" %}.svg" alt="img"></a>
           </div>
         </div>
-        <div class="wordset">
-          <ul>
-            <li>
-              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{% static "assets/img/icons/pdf.svg" %}" alt="img"></a>
-            </li>
-            <li>
-              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
-            </li>
-            <li>
-              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
-            </li>
-          </ul>
-        </div>
+        {% comment %}
+          <div class="wordset">
+            <ul>
+              <li>
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{% static "assets/img/icons/pdf.svg" %}" alt="img"></a>
+              </li>
+              <li>
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
+              </li>
+              <li>
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
+              </li>
+            </ul>
+          </div> 
+        {% endcomment %}
       </div>
       <div class="table-responsive">
         <table class="table datanew" id="itemDataTable">
@@ -82,6 +84,12 @@
                 <td>{{ item.category|capfirst }}</td>
                 <td>{{ item.selling_price }}</td>
                 <td>{{ item.base_price }}</td>
+                {% comment %} <td>
+                  <div class="status-toggle d-flex justify-content-between align-items-center">
+                    <input type="checkbox" id="user1" class="check" {% if item.is_active %} checked	{% endif %}>
+                    <label for="user1" class="checktoggle">checkbox</label>
+                  </div>
+                </td> {% endcomment %}
                 <td>{% if item.is_active %}<span class="badges bg-lightgreen">Active</span>{% else %}<span class="badges bg-lightred">Inactive</span>{% endif %}</td>
                 {% comment %} <td>{{ item.selling_price }}</td> {% endcomment %}
                 <td>
