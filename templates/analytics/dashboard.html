@@ -7,7 +7,7 @@
 {% block content %}
 <div class="content">
     <div class="row">
-        <div class="col-lg-3 col-sm-6 col-12">
+        {% comment %} <div class="col-lg-3 col-sm-6 col-12">
             <div class="dash-widget">
                 <div class="dash-widgetimg">
                     <span><img src="{% static "assets/img/icons/dash1.svg" %}" alt="img"></span>
@@ -50,15 +50,15 @@
                     <h6>Total Sale Amount</h6>
                 </div>
             </div>
-        </div>
+        </div> {% endcomment %}
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
             <div class="dash-count">
                 <div class="dash-counts">
                     <h4>{{total_customers}}</h4>
-                    <h5>Customers</h5>
+                    <h5>Sales</h5>
                 </div>
                 <div class="dash-imgs">
-                    <i data-feather="user"></i> 
+                    <i data-feather="trending-up"></i> 
                 </div>
             </div>
         </div>
@@ -66,10 +66,10 @@
             <div class="dash-count das1">
                 <div class="dash-counts">
                     <h4>{{total_vendors}}</h4>
-                    <h5>Suppliers</h5>
+                    <h5>Expenses</h5>
                 </div>
                 <div class="dash-imgs">
-                    <i data-feather="user-check"></i> 
+                    <i data-feather="trending-down"></i> 
                 </div>
             </div>
         </div>
@@ -102,7 +102,7 @@
         <div class="col-lg-7 col-sm-12 col-12 d-flex">
             <div class="card flex-fill">
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Purchase & Sales</h5>
+                    <h5 class="card-title mb-0">Purchase &amp; Sales</h5>
                     <div class="graph-sets">
                         <ul>
                             <li>
