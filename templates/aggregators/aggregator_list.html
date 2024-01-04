@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+<!-- templates/aggregators/aggregator_list.html -->
+
+{% load humanize %} 
+{% load static %}
+
+{% block title %}Aggregator List{% endblock %}
+
+{% block content %}
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Aggregator List</h4>
+      <h6>Manage your Aggregators</h6>
+    </div>
+    <div class="page-btn">
+      <a href="{% url 'aggregators:aggregator-create' %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Aggregator</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="{% static "assets/img/icons/filter.svg" %}" alt="img">
+              <span><img src="{% static "assets/img/icons/closes.svg" %}" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <a class="btn btn-searchset"><img src="{% static "assets/img/icons/search-white" %}.svg" alt="img"></a>
+          </div>
+        </div>
+        {% comment %}<div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{% static "assets/img/icons/pdf.svg" %}" alt="img"></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
+            </li>
+          </ul>
+        </div> {% endcomment %}
+      </div>
+      <div class="table-responsive">
+        <table class="table datanew" id="aggregatorDataTable">
+          <thead>
+            <tr>
+              <th>
+                <label class="checkboxs">
+                  <input type="checkbox" id="select-all">
+                  <span class="checkmarks"></span>
+                </label>
+              </th>
+              <th>#</th>
+              <th>Aggregator Name</th>
+              <th>Created At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for aggregator in aggregators %}
+            <tr>
+              <td>
+                <label class="checkboxs">
+                  <input type="checkbox">
+                  <span class="checkmarks"></span>
+                </label>
+              </td>
+              <td>{{forloop.counter}}</td>
+              <td>
+                <a href="{% url 'aggregators:aggregator-update' aggregator.pk %}">{{ aggregator.name|capfirst }}</a>
+              </td>
+              <td>
+                {{aggregator.created_at|naturaltime}}
+              <td>
+                <a class="me-3" href="{% url 'aggregators:aggregator-update' aggregator.pk %}">
+                  <img src="{% static 'assets/img/icons/edit.svg' %}" alt="img">
+                </a>
+                <a class="me-3" href="{% url 'aggregators:aggregator-delete' aggregator.pk %}">
+                  <img src="{% static 'assets/img/icons/delete.svg' %}" alt="img">
+                </a>
+              </td>
+            </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<!-- Datatable JS -->
+<script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
+
+<!-- Bootstrap Core JS -->
+<script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
+
+<!-- Select2 JS -->
+<script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
+
+<!-- Datetimepicker JS -->
+<script src="{% static "assets/js/moment.min.js"%}"></script>
+<script src="{% static "assets/js/bootstrap-datetimepicker.min.js" %}"></script>
+
+<!-- Sweetalert 2 -->
+<script src="{% static "assets/plugins/sweetalert/sweetalert2.all.min.js" %}"></script>
+<script src="{% static "assets/plugins/sweetalert/sweetalerts.min.js" %}"></script>
+
+<!-- Initiate Datatable -->
+<script>
+  $(document).ready(function () {
+    $('#aggregatorDataTable').DataTable();
+  });
+</script>
+{% endblock js %}

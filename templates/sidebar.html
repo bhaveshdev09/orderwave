@@ -13,6 +13,8 @@
 {% url "vendors:vendor-list" as vendors %}
 {% url "users:user-list" as users %}
 {% url "branches:branch-list" as branches %}
+{% url "aggregators:aggregator-list" as aggregators %}
+
 
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
@@ -75,7 +77,9 @@
                         <li class="{% if request.path == users %}active{% endif %}">
                             <a href="{% url "users:user-list" %}"><i data-feather="user-check"></i><span>Users</span></a>
                         </li>
-                        {% comment %} <li><a href="storelist.html"><i data-feather="home"></i><span>Stores</span></a></li> {% endcomment %}
+                        <li class="{% if request.path == aggregators %}active{% endif %}">
+                            <a href="{% url "aggregators:aggregator-list" %}"><i data-feather="refresh-cw"></i><span>Aggregator</span></a>
+                        </li>
                         <li class="{% if request.path == branches %}active{% endif %}">
                             <a href="{% url "branches:branch-list" %}"><i data-feather="box"></i><span>Branches</span></a>
                         </li>
