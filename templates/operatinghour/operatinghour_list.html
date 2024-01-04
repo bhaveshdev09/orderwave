@@ -1,20 +1,9 @@
 {% extends 'base.html' %}
-
-{% comment %} {% block title %}Operating Hour List{% endblock %}
-
-{% block content %}
-  <h2>Operating Hour List</h2>
-  <ul>
-    {% for operatinghour in operatinghours %}
-      <li><a href="{% url 'items:operating-hour-detail' operatinghour.pk %}">{{ operatinghour.title }}</a></li>
-    {% endfor %}
-  </ul>
-{% endblock %} {% endcomment %}
-
+<!-- templates/branches/branch_list.html -->
 {% load humanize %} 
 {% load static %}
 
-{% block title %}Operating Hours List{% endblock %}
+{% block title %}Operating Hour List{% endblock %}
 
 {% block content %}
 <div class="content">
@@ -23,18 +12,27 @@
       <h4>Operating Hours List</h4>
       <h6>Manage Operating Hours</h6>
     </div>
-    <div class="page-btn">
-      <!-- Link to create a new Operating Hour, only if allowed -->
-      {% if can_add_operating_hour %}
-        <a href="{% url 'items:operating-hour-create' %}" class="btn btn-added">
-          <img src="{% static 'assets/img/icons/plus.svg' %}" alt="img">Add Operating Hour
-        </a>
-      {% endif %}
-    </div>
+    {% comment %} <div class="page-btn">
+      <a href="{% url 'branches:branch-create' %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Branch</a>
+    </div> {% endcomment %}
   </div>
-  <!-- /operating hours list -->
+
   <div class="card">
     <div class="card-body">
+      <div class="table-top">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="{% static "assets/img/icons/filter.svg" %}" alt="img">
+              <span><img src="{% static "assets/img/icons/closes.svg" %}" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <a class="btn btn-searchset"><img src="{% static "assets/img/icons/search-white" %}.svg" alt="img"></a>
+          </div>
+        </div>
+        
+      </div>
       <div class="table-responsive">
         <table class="table datanew" id="operatingHourDataTable">
           <thead>
@@ -67,11 +65,18 @@
       </div>
     </div>
   </div>
-  <!-- /operating hours list -->
 </div>
 {% endblock content %}
 
 {% block js %}
-<!-- Your DataTables or other JavaScript libraries go here if needed -->
-{% endblock js %}
+<!-- Datatable JS -->
+<script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
 
+<!-- Initiate Datatable -->
+<script>
+  $(document).ready(function () {
+    $('#operatingHourDataTable').DataTable();
+  });
+</script>
+{% endblock js %}
