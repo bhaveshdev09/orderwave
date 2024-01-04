@@ -31,7 +31,7 @@
             <a class="btn btn-searchset"><img src="{% static "assets/img/icons/search-white" %}.svg" alt="img"></a>
           </div>
         </div>
-        <div class="wordset">
+        {% comment %}<div class="wordset">
           <ul>
             <li>
               <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{% static "assets/img/icons/pdf.svg" %}" alt="img"></a>
@@ -43,7 +43,7 @@
               <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
             </li>
           </ul>
-        </div>
+        </div> {% endcomment %}
       </div>
     
       <div class="table-responsive">
@@ -59,8 +59,8 @@
               <th>Order</th>
               <th>Vendor Name</th>
               <th>Total Cost</th>
-              <th>Status</th>
               <th>Created At</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -73,16 +73,16 @@
                     <span class="checkmarks"></span>
                   </label>
                 </td>
-                <td><a href="{% url 'orders:bill-update' order.pk %}">{{order.order_repr}}</a></td>
+                <td><a href="{% url 'orders:bill-update' order.pk %}"><span class="fw-bold">{{order.order_repr}}</span></a></td>
                 <td>{{order.customer.name}}</a></td>
-                <td>{{order.order.total_price}}</td>
-                <td>{% if order.status == "complete" %}<span class="badges bg-lightgreen">Completed</span> {% else %}<span class="badges bg-lightred">Pending</span>{% endif %}</td>
+                <td>{{order.total}}</td>
                 <td>{{order.created_at|naturaltime}}</td>
+                <td>{% if order.status == "complete" %}<span class="badges bg-lightgreen">Completed</span> {% else %}<span class="badges bg-lightred">Pending</span>{% endif %}</td>
                 <td>
                   <a class="me-3" href="{% url 'orders:bill-update' order.pk %}">
                     <img src="{% static "assets/img/icons/edit.svg" %}" alt="img">
                   </a>
-                  <a class="me-3" href="{% url 'orders:order-delete' order.pk %}">
+                  <a class="me-3" href="{% url 'orders:bill-delete' order.pk %}">
                     <img src="{% static "assets/img/icons/delete.svg" %}" alt="img">
                   </a>
                 </td>

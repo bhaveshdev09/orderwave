@@ -15,14 +15,38 @@
       <h6>Manage your Branches</h6>
     </div>
     <div class="page-btn">
-      <a href="{% url 'branches:branch-create' %}" class="btn btn-added">
-        <img src="{% static 'assets/img/icons/plus.svg' %}" alt="img">Add Branch
-      </a>
+      <a href="{% url 'branches:branch-create' %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Branch</a>
     </div>
   </div>
 
   <div class="card">
     <div class="card-body">
+      <div class="table-top">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="{% static "assets/img/icons/filter.svg" %}" alt="img">
+              <span><img src="{% static "assets/img/icons/closes.svg" %}" alt="img"></span>
+            </a>
+          </div>
+          <div class="search-input">
+            <a class="btn btn-searchset"><img src="{% static "assets/img/icons/search-white" %}.svg" alt="img"></a>
+          </div>
+        </div>
+        {% comment %}<div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{% static "assets/img/icons/pdf.svg" %}" alt="img"></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
+            </li>
+          </ul>
+        </div> {% endcomment %}
+      </div>
       <div class="table-responsive">
         <table class="table datanew" id="branchDataTable">
           <thead>
@@ -41,28 +65,29 @@
           </thead>
           <tbody>
             {% for branch in branches %}
-              <tr>
-                <td>
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
-                <td>{{forloop.counter}}</td>
-                <td>
-                  <a href="{% url 'branches:branch-update' branch.pk %}">{{ branch.name|capfirst }}</a>
-                </td>
-                <td>
-                  {{branch.created_at|naturaltime}}
-                <td>
-                  <a class="me-3" href="{% url 'branches:branch-update' branch.pk %}">
-                    <img src="{% static 'assets/img/icons/edit.svg' %}" alt="img">
-                  </a>
-                  <a class="me-3" href="{% url 'branches:branch-delete' branch.pk %}">
-                    <img src="{% static 'assets/img/icons/delete.svg' %}" alt="img">
-                  </a>
-                </td>
-              </tr>
+            <tr>
+              <td>
+                <label class="checkboxs">
+                  <input type="checkbox">
+                  <span class="checkmarks"></span>
+                </label>
+              </td>
+              <td>{{forloop.counter}}</td>
+              <td>
+                <a href="{% url 'branches:branch-update' branch.pk %}">{{ branch.name|capfirst }}</a>
+              </td>
+              <td>
+                {{branch.created_at|naturaltime}}
+              <td>
+                <a class="me-3" href="{% url 'branches:branch-update' branch.pk %}">
+                  <img src="{% static 'assets/img/icons/edit.svg' %}" alt="img">
+                </a>
+                <a class="me-3" href="{% url 'branches:branch-delete' branch.pk %}">
+                  <img src="{% static 'assets/img/icons/delete.svg' %}" alt="img">
+                </a>
+              </td>
+            </tr>
+
             {% endfor %}
           </tbody>
         </table>
@@ -74,11 +99,27 @@
 
 {% block js %}
 <!-- Datatable JS -->
-<script src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'assets/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
+
+<!-- Bootstrap Core JS -->
+<script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
+
+<!-- Select2 JS -->
+<script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
+
+<!-- Datetimepicker JS -->
+<script src="{% static "assets/js/moment.min.js"%}"></script>
+<script src="{% static "assets/js/bootstrap-datetimepicker.min.js" %}"></script>
 
 <!-- Sweetalert 2 -->
-<script src="{% static 'assets/plugins/sweetalert/sweetalert2.all.min.js' %}"></script>
-<script src="{% static 'assets/plugins/sweetalert/sweetalerts.min.js' %}"></script>
+<script src="{% static "assets/plugins/sweetalert/sweetalert2.all.min.js" %}"></script>
+<script src="{% static "assets/plugins/sweetalert/sweetalerts.min.js" %}"></script>
 
+<!-- Initiate Datatable -->
+<script>
+  $(document).ready(function () {
+    $('#branchDataTable').DataTable();
+  });
+</script>
 {% endblock js %}

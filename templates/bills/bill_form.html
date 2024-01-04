@@ -112,8 +112,8 @@
             <button type="button" class="btn btn-primary btn-sm mt-1">Primary</button>
           </div>
         </div>
-
-      </div> {% endcomment %}
+      </div> 
+      {% endcomment %}
 
       {{ form.orderform.orderitem_formset.management_form }}
       {{ form.orderform.orderitem_formset.non_form_errors }}
@@ -231,59 +231,6 @@
 {% block js %}
 <script>
 
-
-{% comment %} 
-  // jQuery equivalent for the cloneRow function
-  $(document).ready(function () {
-    $("#btn-add-item").click(function () {
-      // Get reference to the table and the row to be cloned
-      var table = $("#itemTable tbody");
-      var rowToClone = table.find('tr:first');
-
-      // Clone the row
-      var newRow = rowToClone.clone();
-
-      // Optionally, clear input values in the cloned row
-      newRow.find('input').val('');
-
-      // Append the cloned row to the table
-      table.append(newRow);
-
-      // Delete Row
-      function deleteRow() {
-        var row = $(this).closest('tr');
-        if ($("#itemTable tbody tr").length > 1) {
-          row.remove();
-        }
-      }
-
-      // Update Row
-      function updateRow() {
-        var row = $(this).closest('tr');
-        var selectedItem = $(this).find('option:selected');
-        console.log(selectedItem);
-        var price = selectedItem.data('price');
-        var tax = selectedItem.data('tax');
-        var quantity = row.find('.quantity').val();
-
-        row.find('.price').val(price);
-        row.find('.tax').val(tax);
-
-        // Calculate subtotal
-        var subtotal = (price * quantity) + (price * quantity * tax / 100);
-        row.find('.subtotal').val(subtotal.toFixed(2));
-      }
-
-      // Event delegation for dynamically added elements with class "delete-row"
-      $(document).on("click", ".delete-row", deleteRow);
-
-      // Event delegation for dynamically added elements with class "item-select"
-      $(document).on("change", ".item-select", updateRow);
-
-    });
-  }); {% endcomment %}
-
-
   $(document).ready(function() {
     // Function to calculate subtotal and total
     function updateTotals() {
@@ -318,8 +265,8 @@
                 taxInput.text(tax);
 
                 // Calculate subtotal
-                var subtotal = parseFloat(price) * parseInt(quantityInput.val()) + parseFloat(tax);
-                subtotalInput.text(subtotal.toFixed(2));
+                var subtotal = parseFloat(price) * (1 + parseFloat(tax) * 0.01) * parseInt(quantityInput.val());
+                subtotalInput.text(subtotal.toFixed(1));
 
                 // Accumulate subtotal to calculate total
                 total += subtotal;

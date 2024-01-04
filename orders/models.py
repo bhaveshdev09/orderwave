@@ -1,6 +1,4 @@
-from collections.abc import Iterable
 from django.db import models
-from django.utils import timezone
 from backend.models import BaseModel
 from items.models import Item
 from customers.models import Customer
@@ -13,9 +11,8 @@ class Order(BaseModel):
     total_price = models.FloatField(default=0, editable=False)
     is_deleted = models.BooleanField(default=False)
 
-    @property
-    def total(self):
-        return sum(order_item.total_price for order_item in self.order_set.all())
+    def get_total(self):
+        return self.items.all().aggregate(total=models.Sum("total_price")).get("total")
 
     @property
     def final_total(self):
@@ -49,7 +46,7 @@ class OrderItem(BaseModel):
 
     def save(self, *args, **kwargs):
         # Calculate total price before saving
-        self.total_price = self.item.base_price * self.quantity
+        self.total_price = self.item.selling_price * self.quantity
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -83,3 +80,7 @@ class Bill(BaseModel):
     @property
     def order_repr(self) -> str:
         return f"CC-{self.bill_date.strftime('%d%m%Y')}-{self.order.order_no}"
+
+    @property
+    def total(self):
+        return self.order.get_total()
