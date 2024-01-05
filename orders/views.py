@@ -112,6 +112,7 @@ class BillUpdateView(UpdateView):
     model = Bill
     template_name = "bills/bill_form.html"
     form_class = BillForm
+    context_object_name = "order"
 
     def get_queryset(self):
         queryset = super().get_queryset()
