@@ -10,7 +10,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4>Vendor List</h4>
-      <h6>Manage your Vendors</h6>
+      <h6>Manage Vendors</h6>
     </div>
     <div class="page-btn">
       <a href="{% url 'vendors:vendor-create' %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Vendor</a>
@@ -82,15 +82,9 @@
         <table class="table datanew" id="customerDataTable">
           <thead>
             <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
-              <th>#</th>
               <th>Name</th>
-              <th>Mobile No</th>
+              <th>Mobile No.</th>
+              <th>Email</th>
               <th>Created At</th>
               <th>Action</th>
             </tr>
@@ -98,12 +92,6 @@
           <tbody>
             {% for vendor in vendors %}
               <tr>
-                <td>
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
                 <td class="productimgname">
                   <a href="javascript:void(0);" class="product-imgs">
                     {{vendor.name.0}}

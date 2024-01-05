@@ -18,47 +18,23 @@
       <form method="post">
         {% csrf_token %}
         <div class="row">
-          {% comment %} <div class="col-lg-3 col-sm-6 col-12">
-            <div class="form-group">
-              {{ form.name.label_tag }}
-              {{ form.name }}
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 col-12">
-            <div class="form-group">
-              {{ form.mobile.label_tag }}
-              {{ form.mobile }}
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 col-12">
-            <div class="form-group">
-              {{ form.vendor_email.label_tag }}
-              {{ form.vendor_email }}
-            </div>
-          </div> {% endcomment %}
-          <div class="col-lg-3 col-sm-6 col-12">
+          <div class="col-lg-4 col-sm-6 col-12">
             <div class="form-group">
                 {{ form.name.label_tag }}
                 {{ form.name }}
             </div>
         </div>
 
-        <div class="col-lg-3 col-sm-6 col-12">
+        <div class="col-lg-4 col-sm-6 col-12">
             <div class="form-group">
                 {{ form.email.label_tag }}
                 {{ form.email }}
             </div>
         </div>
-        <div class="col-lg-3 col-sm-6 col-12">
+        <div class="col-lg-4 col-sm-6 col-12">
             <div class="form-group">
                 {{ form.mobile.label_tag }}
                 {{ form.mobile }}
-            </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-12">
-            <div class="form-group">
-                {{ form.branch.label_tag }}
-                {{ form.branch }}
             </div>
         </div>
         <div class="col-lg-12">
