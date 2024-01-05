@@ -10,7 +10,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4>Material List</h4>
-      <h6>Manage your Materials</h6>
+      <h6>Manage Materials</h6>
     </div>
     <div class="page-btn">
       <a href="{% url "materials:material-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Material</a>
@@ -50,13 +50,6 @@
         <table class="table datanew" id="materialDataTable">
           <thead>
             <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
-              <th>#</th>
               <th>Material Name</th>
               <th>Material Units</th>
               <th>Material Cost</th>
@@ -67,20 +60,7 @@
           <tbody>
             {% for material in materials %}
               <tr>
-                <td>
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
-                <td>{{forloop.counter}}</td>
-                <td>
-                  {% comment %} <a href="javascript:void(0);" class="product-imgs">
-                    {{material.name.0}}
-                  </a> {% endcomment %}
-                  {{material.name}}
-                </td>
-            
+                <td>{{material.name}}</td>
                 <td>{{material.units}}</td>
                 <td>{{material.price}}</td>
                 <td>{{material.created_at|naturaltime}}</td>

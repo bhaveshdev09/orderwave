@@ -22,7 +22,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4>Category List</h4>
-      <h6>Manage your Categories</h6>
+      <h6>Manage Categories</h6>
     </div>
     <div class="page-btn">
       <a href="{% url "items:category-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Category</a>
@@ -60,13 +60,6 @@
         <table class="table datanew" id="categoryDataTable">
           <thead>
             <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
-              <th>#</th>
               <th>Category Title</th>
               <th>Created At</th>
               <th>Action</th>
@@ -75,13 +68,6 @@
           <tbody>
             {% for category in categories %}
               <tr>
-                <td>
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
-                <td>{{forloop.counter}}</td>
                 <td>
                   <a href="{% url 'items:category-update' category.pk %}">{{ category.title|capfirst }}</a>
                 </td>

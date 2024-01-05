@@ -10,7 +10,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4> Orders List</h4>
-      <h6>Manage your Orders</h6>
+      <h6>Manage Orders</h6>
     </div>
     <div class="page-btn">
       <a href="{% url "orders:bill-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Orders</a>
@@ -50,12 +50,6 @@
         <table class="table datanew" id="ordersDataTable">
           <thead>
             <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
               <th>Order</th>
               <th>Vendor Name</th>
               <th>Total Cost</th>
@@ -67,12 +61,6 @@
           <tbody>
             {% for order in bills %}
               <tr>
-                <td>
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
                 <td><a href="{% url 'orders:bill-update' order.pk %}"><span class="fw-bold">{{order.order_repr}}</span></a></td>
                 <td>{{order.customer.name}}</a></td>
                 <td>{{order.total}}</td>

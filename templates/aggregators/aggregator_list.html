@@ -12,7 +12,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4>Aggregator List</h4>
-      <h6>Manage your Aggregators</h6>
+      <h6>Manage Aggregators</h6>
     </div>
     <div class="page-btn">
       <a href="{% url 'aggregators:aggregator-create' %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Aggregator</a>
@@ -51,13 +51,6 @@
         <table class="table datanew" id="aggregatorDataTable">
           <thead>
             <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
-              <th>#</th>
               <th>Aggregator Name</th>
               <th>Created At</th>
               <th>Action</th>
@@ -66,13 +59,6 @@
           <tbody>
             {% for aggregator in aggregators %}
             <tr>
-              <td>
-                <label class="checkboxs">
-                  <input type="checkbox">
-                  <span class="checkmarks"></span>
-                </label>
-              </td>
-              <td>{{forloop.counter}}</td>
               <td>
                 <a href="{% url 'aggregators:aggregator-update' aggregator.pk %}">{{ aggregator.name|capfirst }}</a>
               </td>
@@ -87,7 +73,6 @@
                 </a>
               </td>
             </tr>
-
             {% endfor %}
           </tbody>
         </table>

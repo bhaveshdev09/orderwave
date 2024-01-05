@@ -17,19 +17,19 @@
       <form method="post">
         {% csrf_token %}
       <div class="row">
-        <div class="col-lg-3 col-sm-6 col-12">
+        <div class="col-lg-4 col-sm-6 col-12">
           <div class="form-group">
             {{ form.name.label_tag }}
             {{ form.name }}
           </div>
         </div>
-        <div class="col-lg-3 col-sm-6 col-12">
+        <div class="col-lg-4 col-sm-6 col-12">
           <div class="form-group">
             {{ form.units.label_tag }}
             {{ form.units }}
           </div>
         </div>
-        <div class="col-lg-3 col-sm-6 col-12">
+        <div class="col-lg-4 col-sm-6 col-12">
           <div class="form-group">
             {{ form.price.label_tag }}
             {{ form.price }}

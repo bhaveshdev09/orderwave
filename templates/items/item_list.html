@@ -10,7 +10,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4>Item List</h4>
-      <h6>Manage your Items</h6>
+      <h6>Manage Items</h6>
     </div>
     <div class="page-btn">
       <a href="{% url "items:item-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Item</a>
@@ -51,13 +51,6 @@
         <table class="table datanew" id="itemDataTable">
           <thead>
             <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
-              <th>#</th>
               <th>Item Name</th>
               <th>Section</th>
               <th>Category</th>
@@ -72,13 +65,6 @@
           <tbody>
             {% for item in items %}
               <tr>
-                <td>
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
-                <td>{{ forloop.counter}}</td>
                 <td>{{ item.name }}</td>
                 <td>{{ item.section|capfirst }}</td>
                 <td>{{ item.category|capfirst }}</td>
