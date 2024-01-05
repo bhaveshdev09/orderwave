@@ -14,6 +14,7 @@ urlpatterns = [
     path(
         "purchase-orders/", include("purchase_orders.urls", namespace="purchase_order")
     ),
+    path("aggregators/", include("aggregators.urls", namespace="aggregator")),
     path("", include("users.urls", namespace="user")),
     path("", include("analytics.urls", namespace="analytics")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

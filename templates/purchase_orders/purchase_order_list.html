@@ -10,7 +10,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4>Purchase Orders List</h4>
-      <h6>Manage your Purchase Orders</h6>
+      <h6>Manage Purchase Orders</h6>
     </div>
     <div class="page-btn">
       <a href="{% url "purchase_orders:purchase-order-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Purchase Orders</a>
@@ -50,12 +50,6 @@
         <table class="table datanew" id="purchase_ordersDataTable">
           <thead>
             <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
               <th>Purchase Order</th>
               <th>Vendor Name</th>
               <th>Total Cost<th/>
@@ -67,12 +61,6 @@
           <tbody>
             {% for purchase_order in purchase_orders %}
               <tr>
-                <td>
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
                 <td><a href="{% url 'purchase_orders:purchase-order-update' purchase_order.pk %}"><span class="fw-bold">{{purchase_order.purchase_order_id}}</span></a></td>
                 <td>{{purchase_order.vendor.name}}</a></td>
                 <td>{{purchase_order.total}}</td>

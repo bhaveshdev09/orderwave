@@ -12,7 +12,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4>Branch List</h4>
-      <h6>Manage your Branches</h6>
+      <h6>Manage Branches</h6>
     </div>
     <div class="page-btn">
       <a href="{% url 'branches:branch-create' %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Branch</a>
@@ -51,14 +51,7 @@
         <table class="table datanew" id="branchDataTable">
           <thead>
             <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
-              <th>#</th>
-              <th>Branch Name</th>
+              <th>Branch</th>
               <th>Created At</th>
               <th>Action</th>
             </tr>
@@ -66,13 +59,6 @@
           <tbody>
             {% for branch in branches %}
             <tr>
-              <td>
-                <label class="checkboxs">
-                  <input type="checkbox">
-                  <span class="checkmarks"></span>
-                </label>
-              </td>
-              <td>{{forloop.counter}}</td>
               <td>
                 <a href="{% url 'branches:branch-update' branch.pk %}">{{ branch.name|capfirst }}</a>
               </td>
@@ -104,17 +90,6 @@
 
 <!-- Bootstrap Core JS -->
 <script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
-
-<!-- Select2 JS -->
-<script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
-
-<!-- Datetimepicker JS -->
-<script src="{% static "assets/js/moment.min.js"%}"></script>
-<script src="{% static "assets/js/bootstrap-datetimepicker.min.js" %}"></script>
-
-<!-- Sweetalert 2 -->
-<script src="{% static "assets/plugins/sweetalert/sweetalert2.all.min.js" %}"></script>
-<script src="{% static "assets/plugins/sweetalert/sweetalerts.min.js" %}"></script>
 
 <!-- Initiate Datatable -->
 <script>

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "materials",
     "purchase_orders",
     "analytics",
+    "aggregators",
 ]
 
 MIDDLEWARE = [

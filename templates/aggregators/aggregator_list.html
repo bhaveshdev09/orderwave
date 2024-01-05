@@ -1,33 +1,24 @@
 {% extends 'base.html' %}
 
-{% comment %} {% block title %}Category List{% endblock %}
-
-{% block content %}
-  <h2>Category List</h2>
-  <ul>
-    {% for category in categories %}
-      <li><a href="{% url 'items:category-detail' category.pk %}">{{ category.title }}</a></li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'items:category-create' %}">Create a new category</a>
-{% endblock %} {% endcomment %}
+<!-- templates/aggregators/aggregator_list.html -->
 
 {% load humanize %} 
 {% load static %}
 
-{% block title %}Category List{% endblock %}
+{% block title %}Aggregator List{% endblock %}
 
 {% block content %}
 <div class="content">
   <div class="page-header">
     <div class="page-title">
-      <h4>Category List</h4>
-      <h6>Manage Categories</h6>
+      <h4>Aggregator List</h4>
+      <h6>Manage Aggregators</h6>
     </div>
     <div class="page-btn">
-      <a href="{% url "items:category-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Category</a>
+      <a href="{% url 'aggregators:aggregator-create' %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Aggregator</a>
     </div>
   </div>
+
   <div class="card">
     <div class="card-body">
       <div class="table-top">
@@ -57,32 +48,31 @@
         </div> {% endcomment %}
       </div>
       <div class="table-responsive">
-        <table class="table datanew" id="categoryDataTable">
+        <table class="table datanew" id="aggregatorDataTable">
           <thead>
             <tr>
-              <th>Category Title</th>
+              <th>Aggregator Name</th>
               <th>Created At</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {% for category in categories %}
-              <tr>
-                <td>
-                  <a href="{% url 'items:category-update' category.pk %}">{{ category.title|capfirst }}</a>
-                </td>
-                <td>
-                  {{category.created_at|naturaltime}}
-                </td>
-                <td>
-                  <a class="me-3" href="{% url 'items:category-update' category.pk %}">
-                    <img src="{% static "assets/img/icons/edit.svg" %}" alt="img">
-                  </a>
-                  <a class="me-3" href="{% url 'items:category-delete' category.pk %}">
-                    <img src="{% static "assets/img/icons/delete.svg" %}" alt="img">
-                  </a>
-                </td>
-              </tr>
+            {% for aggregator in aggregators %}
+            <tr>
+              <td>
+                <a href="{% url 'aggregators:aggregator-update' aggregator.pk %}">{{ aggregator.name|capfirst }}</a>
+              </td>
+              <td>
+                {{aggregator.created_at|naturaltime}}
+              <td>
+                <a class="me-3" href="{% url 'aggregators:aggregator-update' aggregator.pk %}">
+                  <img src="{% static 'assets/img/icons/edit.svg' %}" alt="img">
+                </a>
+                <a class="me-3" href="{% url 'aggregators:aggregator-delete' aggregator.pk %}">
+                  <img src="{% static 'assets/img/icons/delete.svg' %}" alt="img">
+                </a>
+              </td>
+            </tr>
             {% endfor %}
           </tbody>
         </table>
@@ -114,7 +104,7 @@
 <!-- Initiate Datatable -->
 <script>
   $(document).ready(function () {
-    $('#categoryDataTable').DataTable();
+    $('#aggregatorDataTable').DataTable();
   });
 </script>
 {% endblock js %}
