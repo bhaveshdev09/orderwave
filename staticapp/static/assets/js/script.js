@@ -867,7 +867,7 @@ $(document).ready(function(){
 		 	'</div>' +
 	  	'</div>';
 
-$("body").append(customize_link);
+//$("body").append(customize_link);
 
 $('.add-setting').on("click", function (e) {
 	e.preventDefault();

@@ -99,7 +99,7 @@
                   <a href="{% url 'vendors:vendor-update' vendor.pk %}">{{vendor.name}}</a>
                 </td>
                 <td>+91 {{vendor.mobile}}</td>
-                <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6d2cec9cbc7d5e6c3dec7cbd6cac388c5c9cb">{{vendor.email}}</a></td>
+                <td>{{vendor.email}}</td>
                 <td>{{vendor.created_at|naturaltime}}</td>
                 <td>
                 <a class="me-3" href="{% url 'vendors:vendor-update' vendor.pk %}">

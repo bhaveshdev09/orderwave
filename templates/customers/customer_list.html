@@ -81,13 +81,6 @@
       <div class="table-responsive">
         <table class="table datanew" id="customerDataTable">
           <thead>
-            <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
               <th>Customer Name</th>
               <th>Phone</th>
               <th>Email</th>
@@ -98,12 +91,6 @@
           <tbody>
             {% for customer in customers %}
               <tr>
-                <td>
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
                 <td class="productimgname">
                   <a href="javascript:void(0);" class="product-imgs">
                     {{customer.name.0}}
@@ -111,7 +98,7 @@
                   <a href="{% url 'customers:customer-update' customer.pk %}">{{customer.name}}</a>
                 </td>
                 <td>+91 {{customer.mobile}}</td>
-                <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6d2cec9cbc7d5e6c3dec7cbd6cac388c5c9cb">{{customer.email}}</a></td>
+                <td>{{customer.email}}</td>
                 <td>{{customer.created_at|naturaltime}}</td>
                 <td>
                 <a class="me-3" href="{% url 'customers:customer-update' customer.pk %}">
@@ -136,4 +123,19 @@
 <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
 <script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
 
+<script>
+  // Server Side Errors If any
+  $(document).ready(function(){
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "error" %}
+          toastr.error("{{message}}", "Error!", { timeOut: 5e3, rtl: false });
+        {% else %}
+          toastr.success("{{message}}", "Success", { timeOut: 5e3, rtl: false });
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  });
+</script>
 {% endblock js %}
+
