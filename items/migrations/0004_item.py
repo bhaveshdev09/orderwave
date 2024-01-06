@@ -28,11 +28,12 @@ class Migration(migrations.Migration):
                 ("desc", models.TextField()),
                 ("base_price", models.FloatField()),
                 ("tax", models.FloatField(default=5)),
-                ("is_active", models.BooleanField(default=True)),
+                ("is_active", models.BooleanField(default=True, verbose_name="active")),
                 (
                     "category",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
                         to="items.category",
                     ),
                 ),
@@ -40,7 +41,8 @@ class Migration(migrations.Migration):
                 (
                     "section",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
                         to="items.section",
                     ),
                 ),
