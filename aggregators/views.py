@@ -9,6 +9,7 @@ from django.views.generic import (
 )
 from aggregators.models import Aggregator
 from aggregators.forms import AggregatorForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class AggregatorListView(LoginRequiredMixin, ListView):
@@ -24,25 +25,28 @@ class AggregatorDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "aggregator"
 
 
-class AggregatorCreateView(LoginRequiredMixin, CreateView):
+class AggregatorCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Aggregator
     form_class = AggregatorForm
     template_name = "aggregators/aggregator_form.html"
     success_url = reverse_lazy("aggregators:aggregator-list")
+    success_message = "Aggregator created successfully."
 
     def form_valid(self, form):
         print(self.request.user)
         return super().form_valid(form)
 
 
-class AggregatorUpdateView(LoginRequiredMixin, UpdateView):
+class AggregatorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Aggregator
     form_class = AggregatorForm
     template_name = "aggregators/aggregator_form.html"
     success_url = reverse_lazy("aggregators:aggregator-list")
+    success_message = "Aggregator updated successfully."
 
 
-class AggregatorDeleteView(LoginRequiredMixin, DeleteView):
+class AggregatorDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Aggregator
     template_name = "aggregators/aggregator_confirm_delete.html"
     success_url = reverse_lazy("aggregators:aggregator-list")
+    success_message = "Aggregator deleted successfully."

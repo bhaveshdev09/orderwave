@@ -14,12 +14,13 @@
   <!-- /delete -->
   <div class="card">
     <div class="card-body">
-      <h5>Are you sure you want to delete aggregator "{{ aggregator.name }}"?</h5>
+      <h5>Are you sure you want to delete aggregator <span class="fw-bold">"{{ aggregator.name }}"</span>?</h5>
       <br/>
       <form method="post" action="{% url 'aggregators:aggregator-delete' aggregator.pk %}">
         {% csrf_token %}
         <div class="col-lg-12">
-          <button class="btn btn-submit me-2" type="submit">Confirm</button>
+          {% comment %} <button class="btn btn-submit me-2" type="submit">Confirm</button> {% endcomment %}
+          <button class="btn btn-delete me-2" type="submit">Delete</button>
           <a href="javascript:void(0);" onclick="history.back();" class="btn btn-cancel">Cancel</a>
         </div>
       </form>
@@ -28,3 +29,28 @@
   <!-- /delete -->
 </div>
 {% endblock content %}
+
+
+{% block js %}
+<script>
+  // Server Side Errors If any
+  $(document).ready(function(){
+    {% if form.errors %}
+      {% for error in form.errors.values %}
+        toastr.error("{{error.0}}", "Error!", { timeOut: 5e3, rtl: false });
+      {% endfor %}
+    {% endif %}
+
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "error" %}
+          toastr.error("{{message}}", "Error!", { timeOut: 5e3, rtl: false });
+        {% else %}
+          toastr.success("{{message}}", "Success", { timeOut: 5e3, rtl: false });
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  });
+  </script>
+
+{% endblock js %}
