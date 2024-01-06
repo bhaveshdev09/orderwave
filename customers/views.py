@@ -9,6 +9,7 @@ from django.views.generic import (
 from django.urls import reverse_lazy
 from customers.models import Customer
 from customers.forms import CustomerForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class CustomerListView(LoginRequiredMixin, ListView):
@@ -24,21 +25,24 @@ class CustomerDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "customer"
 
 
-class CustomerCreateView(LoginRequiredMixin, CreateView):
+class CustomerCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Customer
     form_class = CustomerForm
     template_name = "customers/customer_form.html"
     success_url = reverse_lazy("customers:customer-list")
+    success_message = "Customer created successfully."
 
 
-class CustomerUpdateView(LoginRequiredMixin, UpdateView):
+class CustomerUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Customer
     form_class = CustomerForm
     template_name = "customers/customer_form.html"
     success_url = reverse_lazy("customers:customer-list")
+    success_message = "Customer updated successfully."
 
 
-class CustomerDeleteView(LoginRequiredMixin, DeleteView):
+class CustomerDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Customer
     template_name = "customers/customer_confirm_delete.html"
     success_url = reverse_lazy("customers:customer-list")
+    success_message = "Customer deleted successfully."
