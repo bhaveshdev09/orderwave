@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('orders', '0003_remove_bill_train_details_bill_train_name_and_more'),
+        ('orders', '0003_remove_bill_train_details_bill_aggregator_and_more'),
         ('analytics', '0001_initial'),
     ]
 

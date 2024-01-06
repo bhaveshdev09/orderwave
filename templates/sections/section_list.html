@@ -1,18 +1,5 @@
 {% extends 'base.html' %}
-{% comment %} 
-{% block title %}Section List{% endblock %}
 
-{% block content %}
-  <h2>Section List</h2>
-  <ul>
-    {% for section in sections %}
-      <li><a href="{% url 'items:section-detail' section.pk %}">{{ section.title }}</a></li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'items:section-create' %}">Create a new section</a>
-{% endblock %} {% endcomment %}
-
-<!-- templates/sections/section_list.html -->
 {% load humanize %} 
 {% load static %}
 
@@ -23,7 +10,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4>Section List</h4>
-      <h6>Manage your Sections</h6>
+      <h6>Manage Sections</h6>
     </div>
     <div class="page-btn">
       <a href="{% url "items:section-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Section</a>
@@ -61,13 +48,7 @@
         <table class="table datanew" id="sectionDataTable">
           <thead>
             <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
-              <th>#</th>
+              
               <th>Section Title</th>
               <th>Created At</th>
               <th>Action</th>
@@ -75,14 +56,7 @@
           </thead>
           <tbody>
             {% for section in sections %}
-              <tr>
-                <td>
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
-                <td>{{forloop.counter}}</td>
+              
                 <td>
                   <a href="{% url 'items:section-update' section.pk %}">{{ section.title|capfirst }}</a>
                 </td>
@@ -114,17 +88,6 @@
 
 <!-- Bootstrap Core JS -->
 <script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
-
-<!-- Select2 JS -->
-<script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
-
-<!-- Datetimepicker JS -->
-<script src="{% static "assets/js/moment.min.js"%}"></script>
-<script src="{% static "assets/js/bootstrap-datetimepicker.min.js" %}"></script>
-
-<!-- Sweetalert 2 -->
-<script src="{% static "assets/plugins/sweetalert/sweetalert2.all.min.js" %}"></script>
-<script src="{% static "assets/plugins/sweetalert/sweetalerts.min.js" %}"></script>
 
 <!-- Initiate Datatable -->
 <script>

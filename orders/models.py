@@ -2,6 +2,7 @@ from django.db import models
 from backend.models import BaseModel
 from items.models import Item
 from customers.models import Customer
+from aggregators.models import Aggregator
 
 
 class Order(BaseModel):
@@ -62,17 +63,33 @@ class Bill(BaseModel):
         ("pending", "Pending"),
     ]
 
+    # Payment Type
+    PAYMENT_TYPE_CASH = "cash"
+    PAYMENT_TYPE_CARD = "upi"
+    PAYMENT_TYPE_UPI = "card"
+    PAYMENT_TYPE_CHOICES = [
+        (PAYMENT_TYPE_CASH, "cash"),
+        (PAYMENT_TYPE_CARD, "card"),
+        (PAYMENT_TYPE_UPI, "upi"),
+    ]
+
     order = models.OneToOneField(
         Order, on_delete=models.CASCADE, default=None, null=True
     )
-    # train_number = models.JSONField()  # Assuming you're using Django 3.1+
-    train_number = models.CharField(max_length=255, blank=True, default="-")
-    train_name = models.CharField(max_length=255, blank=True, default="-")
+    # train_number = models.CharField(max_length=255, blank=True, default="-")
+    # train_name = models.CharField(max_length=255, blank=True, default="-")
+    train_details = models.CharField(max_length=255, blank=True, default="-")
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, default=None, null=True
     )
     bill_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
+    aggregator = models.ForeignKey(
+        Aggregator, on_delete=models.DO_NOTHING, related_name="bills", default=None
+    )
+    payment_type = models.CharField(
+        max_length=20, choices=PAYMENT_TYPE_CHOICES, default="upi"
+    )
 
     def __str__(self):
         return f"Bill for Order: Customer: {self.customer.name}, Status: {self.status}"

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{% if order %}Update{% else %}Create{% endif %} Order{% endblock %}
+{% block title %}{% if order %}Update{% else %}Add{% endif %} Order{% endblock %}
 {% block css %}
 
 {% endblock css %}
@@ -12,8 +12,8 @@
   <div class="page-header">
     <div class="page-title">
       {{items|json_script:"items-data"}}
-      <h4>{% if order %}Update{% else %}Create{% endif %} Order</h4>
-      <h6>Add your new order</h6>
+      <h4>{% if order %}Update{% else %}Add{% endif %} Order</h4>
+      <h6>Add new order</h6>
     </div>
   </div>
   <div class="card">
@@ -29,7 +29,7 @@
         </div>
         <div class="col-lg-4 col-sm-6 col-12">
           <div class="form-group">
-            <label for="{{ form.customer_form.mobile.id_for_label }}">Customer Contact Number</label>
+            <label for="{{ form.customer_form.mobile.id_for_label }}">Customer Phone Number</label>
             {{ form.customer_form.mobile }}
           </div>
         </div>
@@ -41,19 +41,26 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-4 col-sm-6 col-12">
+        <div class="col-lg-3 col-sm-6 col-12">
           <div class="form-group">
-            <label for="{{ form.train_name.id_for_label }}">Train Name</label>
-            {{ form.train_name }}
+            <label for="{{ form.train_details.id_for_label }}">Train Name/No.</label>
+            {{ form.train_details }}
           </div>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12">
+
+        <div class="col-lg-3 col-sm-6 col-12">
           <div class="form-group">
-            <label for="{{ form.train_number.id_for_label }}">Train Number</label>
-            {{ form.train_number }}
+            <label for="{{ form.aggregator.id_for_label }}">Aggregator</label>
+            {{ form.aggregator }}
           </div>
         </div>
-        <div class="col-lg-4 col-sm-6 col-12">
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label for="{{ form.payment_type.id_for_label }}">Payment Type</label>
+            {{ form.payment_type }}
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
           <div class="form-group">
             <label for="{{ form.status.id_for_label }}">Order Status</label>
             {{ form.status }}
@@ -84,36 +91,6 @@
           </div>
         </div>
       </div>
-      {% comment %} <div class="row">
-        <div class="col-lg-6 col-sm-6 col-12">
-          <div class="form-group">
-            <label>Product Name</label>
-            <button type="button" class="btn btn-primary btn-sm mt-1">Primary</button>
-            <div class="input-groupicon">
-              <input type="text" placeholder="Please type product code and select...">
-              <div class="addonset">
-                <img src="{% static " assets/img/icons/scanners.svg" %}" alt="img">
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Product Name</label>
-            <button type="button" class="btn btn-primary btn-sm mt-1">Primary</button>
-            <div class="input-groupicon">
-              <input type="text" placeholder="Please type product code and select...">
-              <div class="addonset">
-                <img src="{% static " assets/img/icons/scanners.svg" %}" alt="img">
-              </div>
-            </div>
-          </div>
-          <div class>
-          </div>
-          {% comment %} <div class="col-lg-6 col-sm-6 col-12">
-            <button type="button" class="btn btn-primary btn-sm mt-1">Primary</button>
-          </div>
-        </div>
-      </div> 
-      {% endcomment %}
 
       {{ form.orderform.orderitem_formset.management_form }}
       {{ form.orderform.orderitem_formset.non_form_errors }}
@@ -123,24 +100,20 @@
           <table class="table" id="itemTable">
             <thead>
               <tr>
-                <th>#</th>
-                <th>Item Name</th>
+                <th>Item</th>
                 <th>QTY</th>
-                <th>Price</th>
+                <th>Price (&#8377;)</th>
                 {% comment %} <th>Discount</th> {% endcomment %}
-                <th>Tax</th>
-                <th>Subtotal</th>
-                <th>Action</th>
+                <th>Tax (%)</th>
+                <th>Total (in &#8377;)</th>
+                <th>Remove</th>
               </tr>
             </thead>
             <tbody>
               {% for form in form.orderform.orderitem_formset %}
               <tr class="formset-row">
-                <td>{{form.id}}</td>
-                <td>
-                  {{ form.item }} 
-                  {% comment %} <a href="javascript:void(0);">Apple Earpods</a> {% endcomment %}
-                </td>
+                {{form.id}}
+                <td>{{ form.item }}</td>
                 <td class="quantity">{{ form.quantity }}</td>
                 <td class="price"></td>
                 <td class="tax"></td>
@@ -156,34 +129,6 @@
       </div>
 
       <div class="row">
-        {% comment %} <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            <label>Order Tax</label>
-            <input type="text">
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            <label>Discount</label>
-            <input type="text">
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            <label>Shipping</label>
-            <input type="text">
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            <label>Status</label>
-            <select class="select">
-              <option>Choose Status</option>
-              <option>Completed</option>
-              <option>Inprogress</option>
-            </select>
-          </div>
-        </div> {% endcomment %}
         <div class="row">
           <div class="col-lg-6 ">
             {% comment %} <div class="total-order w-100 max-widthauto m-auto mb-4">
@@ -207,16 +152,17 @@
                   <h5 id="discount">0.00</h5>
                 </li> {% endcomment %}
                 <li class="total">
-                  <h4>Grand Total (in &#8377; )</h4>
+                  <h4>Total (in &#8377; )</h4>
                   <h5 id="grand_total">0.00</h5>
                 </li>
               </ul>
             </div>
           </div>
         </div>
+        <!--d-flex justify-content-end add this to move content end-->
         <div class="col-lg-12">
-          <button type="submit" class="btn btn-submit me-2">Submit</button>
-          <a href="javascript:void(0);" class="btn btn-cancel">Cancel</a>
+          <button type="submit" class="btn btn-submit me-2">{% if order %}Update{% else %}Add{% endif %}</button>
+          {% comment %} <a href="javascript:void(0);" class="btn btn-cancel">Cancel</a> {% endcomment %}
         </div>
       </div>
     </form>
@@ -261,8 +207,8 @@
                 var tax = selectedItem.tax;
 
                 // Update price and tax in the row
-                priceInput.text(price);
-                taxInput.text(tax);
+                priceInput.text(price.toFixed(1));
+                taxInput.text(tax.toFixed(1));
 
                 // Calculate subtotal
                 var subtotal = parseFloat(price) * (1 + parseFloat(tax) * 0.01) * parseInt(quantityInput.val());

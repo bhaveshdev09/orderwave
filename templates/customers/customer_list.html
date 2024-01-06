@@ -10,7 +10,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4>Customer List</h4>
-      <h6>Manage your Customers</h6>
+      <h6>Manage Customers</h6>
     </div>
     <div class="page-btn">
       <a href="{% url "customers:customer-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Customer</a>
@@ -133,31 +133,6 @@
 {% endblock content %}
 
 {% block js %}
-
-<!-- Datatable JS -->
-{% comment %} <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script> {% endcomment %}
-{% comment %} <script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
-
-<!-- Bootstrap Core JS -->
-<script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
-
-<!-- Select2 JS -->
-<script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
-
-<!-- Datetimepicker JS -->
-<script src="{% static "assets/js/moment.min.js"%}"></script>
-<script src="{% static "assets/js/bootstrap-datetimepicker.min.js" %}"></script>
-
- {% endcomment %}
-
-<!-- Datatable JS -->
-{% comment %} <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script> 
-<script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script> {% endcomment %}
-
-<!-- Sweetalert 2 -->
-{% comment %} <script src="{% static "assets/plugins/sweetalert/sweetalert2.all.min.js" %}"></script>
-<script src="{% static "assets/plugins/sweetalert/sweetalerts.min.js" %}"></script> {% endcomment %}
-<!-- Datatable JS -->
 <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
 <script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
 

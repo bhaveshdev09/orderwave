@@ -7,7 +7,7 @@
   <div class="page-header">
     <div class="page-title">
       <h4>User List</h4>
-      <h6>Manage your Users</h6>
+      <h6>Manage Users</h6>
     </div>
     <div class="page-btn">
       <a href="{% url 'users:user-create' %}" class="btn btn-added">
@@ -55,13 +55,6 @@
         <table class="table datanew" id="userDataTable">
           <thead>
             <tr>
-              <th>
-                <label class="checkboxs">
-                  <input type="checkbox" id="select-all">
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
-              <th>#</th>
               <th>Name</th>
               <th>Email</th>
               <th>Mobile No</th>
@@ -72,14 +65,7 @@
           <tbody>
             {% for user in users %}
               <tr>
-                <td>
-                  <label class="checkboxs">
-                    <input type="checkbox">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ user.name|default:"-" }}</td>
+                <td>{{ user.name|default:"-"|capfirst }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.mobile_no }}</td>
                 <td>{{ user.branch|default_if_none:"-" }}</td>
@@ -107,20 +93,6 @@
 <script src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'assets/js/dataTables.bootstrap4.min.js' %}"></script>
 
-{% comment %} 
-<!-- Bootstrap Core JS -->
-<script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
-
-<!-- Select2 JS -->
-<script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
-
-<!-- Datetimepicker JS -->
-<script src="{% static 'assets/js/moment.min.js'%}"></script>
-<script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
-
-<!-- Sweetalert 2 -->
-<script src="{% static 'assets/plugins/sweetalert/sweetalert2.all.min.js' %}"></script>
-<script src="{% static 'assets/plugins/sweetalert/sweetalerts.min.js' %}"></script> {% endcomment %}
 
 <!-- Initiate Datatable -->
 <script>

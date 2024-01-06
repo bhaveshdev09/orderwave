@@ -1,22 +1,22 @@
-<!-- templates/branch_confirm_delete.html -->
+<!-- templates/aggregator_confirm_delete.html -->
 {% extends 'base.html' %}
 
-{% block title %}Delete Vendor{% endblock %}
+{% block title %}Delete Aggregator{% endblock %}
 
 {% block content %}
 <div class="content">
   <div class="page-header">
     <div class="page-title">
-      <h4>Vendor Management</h4>
-      <h6>Delete Vendor</h6>
+      <h4>Aggregator Management</h4>
+      <h6>Delete Aggregator</h6>
     </div>
   </div>
   <!-- /delete -->
   <div class="card">
     <div class="card-body">
-      <h5>Are you sure you want to delete vendor "{{ vendor.name }}"?</h5>
+      <h5>Are you sure you want to delete aggregator "{{ aggregator.name }}"?</h5>
       <br/>
-      <form method="post" action="{% url 'vendors:vendor-delete' vendor.pk %}">
+      <form method="post" action="{% url 'aggregators:aggregator-delete' aggregator.pk %}">
         {% csrf_token %}
         <div class="col-lg-12">
           <button class="btn btn-submit me-2" type="submit">Confirm</button>
