@@ -9,6 +9,8 @@ from django.views.generic import (
 )
 from branches.models import Branch
 from branches.forms import BranchForm
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class BranchListView(LoginRequiredMixin, ListView):
@@ -24,25 +26,28 @@ class BranchDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "branch"
 
 
-class BranchCreateView(LoginRequiredMixin, CreateView):
+class BranchCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Branch
     form_class = BranchForm
     template_name = "branches/branch_form.html"
     success_url = reverse_lazy("branches:branch-list")
+    success_message = "Branch created successfully."
 
     def form_valid(self, form):
         print(self.request.user)
         return super().form_valid(form)
 
 
-class BranchUpdateView(LoginRequiredMixin, UpdateView):
+class BranchUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Branch
     form_class = BranchForm
     template_name = "branches/branch_form.html"
     success_url = reverse_lazy("branches:branch-list")
+    success_message = "Branch updated successfully."
 
 
-class BranchDeleteView(LoginRequiredMixin, DeleteView):
+class BranchDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Branch
     template_name = "branches/branch_confirm_delete.html"
     success_url = reverse_lazy("branches:branch-list")
+    success_message = "Branch deleted successfully."

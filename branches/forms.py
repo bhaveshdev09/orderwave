@@ -1,7 +1,6 @@
 from django import forms
 from branches.models import Branch
 
-
 class BranchForm(forms.ModelForm):
     name = forms.RegexField(
         strip=True,
@@ -13,6 +12,7 @@ class BranchForm(forms.ModelForm):
                 "class": "form-control",
                 "placeholder": "Enter Branch Name",
                 "pattern": "^[A-Za-z]+(?:\s[A-Za-z]+)?(?:\s[A-Za-z]+)?$",
+                "autofocus": True,
             }
         ),
     )

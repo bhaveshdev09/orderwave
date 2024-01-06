@@ -19,6 +19,9 @@
         <!-- animation CSS -->
         <link rel="stylesheet" href="{% static "assets/css/animate.css" %}">
 
+		<!-- Toatr CSS -->		
+        <link rel="stylesheet" href="{% static "assets/plugins/toastr/toatr.css" %}">
+
         <!-- Datatable CSS -->
         <link rel="stylesheet" href="{% static "assets/css/dataTables.bootstrap4.min.css" %}">
         
@@ -113,8 +116,13 @@
         <!-- Bootstrap Core JS -->
         <script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
 
+		<!-- Mask JS -->
+		<script src="{% static "assets/plugins/toastr/toastr.min.js" %}"></script>
+		<script src="{% static "assets/plugins/toastr/toastr.js" %}"></script>
+
         <!-- Custom JS -->
         <script src="{% static "assets/js/script.js" %}"></script>
+
 
         <!-- Add your JavaScript scripts or link to external scripts here -->
 		{% block js %}{% endblock js %}
