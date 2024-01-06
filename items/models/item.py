@@ -12,7 +12,7 @@ class Item(BaseModel):
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     operation_hour = models.ManyToManyField(OperatingHour)
     base_price = models.FloatField()
-    tax = models.FloatField(default=18)
+    tax = models.FloatField(default=5)
     is_active = models.BooleanField(_("active"), default=True)
 
     @property

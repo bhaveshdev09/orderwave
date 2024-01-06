@@ -5,7 +5,7 @@ from django.urls import reverse
 
 
 class Section(BaseModel):
-    title = models.CharField(max_length=255, null=False)
+    title = models.CharField(max_length=255, null=False, unique=True)
     is_deleted = models.BooleanField(_("deleted"), default=False)
 
     class Meta:

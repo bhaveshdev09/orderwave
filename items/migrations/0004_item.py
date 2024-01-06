@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ("desc", models.TextField()),
                 ("base_price", models.FloatField()),
                 ("tax", models.FloatField(default=5)),
-                ("is_active", models.BooleanField(default=True)),
+                ("is_active", models.BooleanField(default=True, verbose_name="active")),
                 (
                     "category",
                     models.ForeignKey(
