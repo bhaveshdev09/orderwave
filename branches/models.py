@@ -7,7 +7,7 @@ from backend.models import BaseModel
 
 
 class Branch(BaseModel):
-    name = models.CharField(_("branch name"), max_length=50)
+    name = models.CharField(_("branch name"), max_length=50, unique=True)
     slug = models.SlugField(_("slug"), max_length=255, unique=True, editable=False)
     is_deleted = models.BooleanField(_("deleted"), default=False)
 
@@ -22,7 +22,7 @@ class Branch(BaseModel):
     def save(self, *args, **kwargs):
         # auto-generate slug based on the first two characters of the name
         self.name = self.name.lower()
-        self.slug = slugify(self.name[:2])
+        self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
     def __str__(self):
