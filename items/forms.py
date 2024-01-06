@@ -8,12 +8,48 @@ from items.models import (
 
 
 class SectionForm(forms.ModelForm):
+    title = forms.RegexField(
+        strip=True,
+        min_length=2,
+        max_length=20,
+        regex="^[A-Za-z]+(?:\s[A-Za-z]+)?(?:\s[A-Za-z]+)?$",
+        error_messages={
+            "invalid": "Enter a valid section title.",
+            "unique": "Section with this title already exists.Please provide a different one.",
+        },
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "pattern": "^[A-Za-z]+(?:\s[A-Za-z]+)?(?:\s[A-Za-z]+)?$",
+                "autofocus": True,
+            }
+        ),
+    )
+
     class Meta:
         model = Section
         fields = ["title"]
 
 
 class CategoryForm(forms.ModelForm):
+    title = forms.RegexField(
+        strip=True,
+        min_length=2,
+        max_length=20,
+        regex="^[A-Za-z]+(?:\s[A-Za-z]+)?(?:\s[A-Za-z]+)?$",
+        error_messages={
+            "invalid": "Enter a valid category title.",
+            "unique": "Category with this title already exists.Please provide a different one.",
+        },
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "pattern": "^[A-Za-z]+(?:\s[A-Za-z]+)?(?:\s[A-Za-z]+)?$",
+                "autofocus": True,
+            }
+        ),
+    )
+
     class Meta:
         model = Category
         fields = ["title"]

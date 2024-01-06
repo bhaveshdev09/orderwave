@@ -9,6 +9,7 @@ from django.views.generic import (
 )
 from items.models.category import Category
 from items.forms import CategoryForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class CategoryListView(LoginRequiredMixin, ListView):
@@ -23,21 +24,24 @@ class CategoryDetailView(DetailView):
     context_object_name = "category"
 
 
-class CategoryCreateView(LoginRequiredMixin, CreateView):
+class CategoryCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Category
     form_class = CategoryForm
     template_name = "categories/category_form.html"
     success_url = reverse_lazy("items:category-list")
+    success_message = "Category created successfully."
 
 
-class CategoryUpdateView(LoginRequiredMixin, UpdateView):
+class CategoryUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Category
     form_class = CategoryForm
     template_name = "categories/category_form.html"
     success_url = reverse_lazy("items:category-list")
+    success_message = "Category updated successfully."
 
 
-class CategoryDeleteView(LoginRequiredMixin, DeleteView):
+class CategoryDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Category
     template_name = "categories/category_confirm_delete.html"
     success_url = reverse_lazy("items:category-list")
+    success_message = "Category deleted successfully."

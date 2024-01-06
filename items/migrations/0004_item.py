@@ -32,7 +32,8 @@ class Migration(migrations.Migration):
                 (
                     "category",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
                         to="items.category",
                     ),
                 ),
@@ -40,7 +41,8 @@ class Migration(migrations.Migration):
                 (
                     "section",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
                         to="items.section",
                     ),
                 ),

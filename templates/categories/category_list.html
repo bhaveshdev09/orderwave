@@ -1,17 +1,4 @@
 {% extends 'base.html' %}
-
-{% comment %} {% block title %}Category List{% endblock %}
-
-{% block content %}
-  <h2>Category List</h2>
-  <ul>
-    {% for category in categories %}
-      <li><a href="{% url 'items:category-detail' category.pk %}">{{ category.title }}</a></li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'items:category-create' %}">Create a new category</a>
-{% endblock %} {% endcomment %}
-
 {% load humanize %} 
 {% load static %}
 
@@ -97,24 +84,26 @@
 <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
 <script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
 
-<!-- Bootstrap Core JS -->
-<script src="{% static "assets/js/bootstrap.bundle.min.js" %}"></script>
-
-<!-- Select2 JS -->
-<script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
-
-<!-- Datetimepicker JS -->
-<script src="{% static "assets/js/moment.min.js"%}"></script>
-<script src="{% static "assets/js/bootstrap-datetimepicker.min.js" %}"></script>
-
-<!-- Sweetalert 2 -->
-<script src="{% static "assets/plugins/sweetalert/sweetalert2.all.min.js" %}"></script>
-<script src="{% static "assets/plugins/sweetalert/sweetalerts.min.js" %}"></script>
-
 <!-- Initiate Datatable -->
 <script>
   $(document).ready(function () {
     $('#categoryDataTable').DataTable();
   });
 </script>
+
+<script>
+  // Server Side Errors If any
+  $(document).ready(function(){
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "error" %}
+          toastr.error("{{message}}", "Error!", { timeOut: 5e3, rtl: false });
+        {% else %}
+          toastr.success("{{message}}", "Success", { timeOut: 5e3, rtl: false });
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  });
+</script>
+
 {% endblock js %}

@@ -1,17 +1,5 @@
 {% extends 'base.html' %}
 
-{% comment %} {% block title %}Delete Category{% endblock %}
-
-{% block content %}
-  <h2>Delete Category</h2>
-  <p>Are you sure you want to delete category "{{ category.title }}"?</p>
-  <form method="post" action="{% url 'items:category-delete' category.pk %}">
-    {% csrf_token %}
-    <button type="submit">Confirm</button>
-  </form>
-  <a href="{% url 'items:category-list' %}">Cancel</a>
-{% endblock %} {% endcomment %}
-
 {% block title %}Delete Category{% endblock %}
 
 {% block content %}
@@ -24,12 +12,12 @@
   </div>
   <div class="card">
     <div class="card-body">
-      <h5>Are you sure you want to delete category "{{ category.title }}"?</h5>
+      <h5>Are you sure you want to delete category <span class="fw-bold">"{{ category.title }}"</span>?</h5>
       <br/>
       <form method="post" action="{% url 'items:category-delete' category.pk %}">
         {% csrf_token %}
         <div class="col-lg-12">
-          <button class="btn btn-submit me-2" type="submit">Confirm</button>
+          <button class="btn btn-delete me-2" type="submit">Delete</button>
           <a href="{% url 'items:category-list' %}" class="btn btn-cancel">Cancel</a>
         </div>
       </form>

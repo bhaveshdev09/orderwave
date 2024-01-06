@@ -8,8 +8,8 @@ from items.models import Section, Category, OperatingHour
 class Item(BaseModel):
     name = models.CharField(max_length=255, null=False)
     desc = models.TextField()
-    section = models.ForeignKey(Section, on_delete=models.DO_NOTHING)
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
+    section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     operation_hour = models.ManyToManyField(OperatingHour)
     base_price = models.FloatField()
     tax = models.FloatField(default=5)
