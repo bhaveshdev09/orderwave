@@ -1,10 +1,10 @@
 # views.py
-from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from vendors.models import Vendor
 from vendors.forms import VendorForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class VendorListView(LoginRequiredMixin, ListView):
@@ -13,21 +13,29 @@ class VendorListView(LoginRequiredMixin, ListView):
     context_object_name = "vendors"
 
 
-class VendorCreateView(LoginRequiredMixin, CreateView):
+class VendorCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Vendor
     form_class = VendorForm
     template_name = "vendors/vendor_form.html"
     success_url = reverse_lazy("vendors:vendor-list")
+    success_message = "Vendor created successfully."
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        print(form.errors.as_json())
+        return response
 
 
-class VendorUpdateView(LoginRequiredMixin, UpdateView):
+class VendorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Vendor
     form_class = VendorForm
     template_name = "vendors/vendor_form.html"
     success_url = reverse_lazy("vendors:vendor-list")
+    success_message = "Vendor updated successfully."
 
 
-class VendorDeleteView(LoginRequiredMixin, DeleteView):
+class VendorDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Vendor
     template_name = "vendors/vendor_confirm_delete.html"
     success_url = reverse_lazy("vendors:vendor-list")
+    success_message = "Vendor deleted successfully."

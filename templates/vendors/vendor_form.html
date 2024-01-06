@@ -15,13 +15,16 @@
   <!-- /add -->
   <div class="card">
     <div class="card-body">
-      <form method="post">
+      <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
         <div class="row">
           <div class="col-lg-4 col-sm-6 col-12">
             <div class="form-group">
                 {{ form.name.label_tag }}
                 {{ form.name }}
+                <div class="ml-3 invalid-feedback">
+                  Please provide a valid name.
+                </div> 
             </div>
         </div>
 
@@ -29,23 +32,35 @@
             <div class="form-group">
                 {{ form.email.label_tag }}
                 {{ form.email }}
+                <div class="valid-feedback">
+                  Looks good!
+                </div>
+                <div class="ml-3 invalid-feedback">
+                  Please provide a valid email.
+                </div> 
             </div>
         </div>
         <div class="col-lg-4 col-sm-6 col-12">
             <div class="form-group">
                 {{ form.mobile.label_tag }}
                 {{ form.mobile }}
+                <div class="ml-3 invalid-feedback">
+                  Please provide a valid mobile number.
+                </div> 
             </div>
         </div>
         <div class="col-lg-12">
           <div class="form-group">
-            <label>Address</label>
+            <label>Address:</label>
             {{ form.addr }}
+            <div class="ml-3 invalid-feedback">
+              Please provide a valid address.
+            </div> 
           </div>
         </div>
           <!-- Add other fields as needed -->
           <div class="col-lg-12">
-            <button class="btn btn-submit me-2" type="submit">Submit</button>
+            <button class="btn btn-submit me-2" type="submit">{% if vendor %}Update{% else %}Add{% endif %}</button>
             <a href="{% url "vendors:vendor-list" %}" class="btn btn-cancel">Cancel</a>
           </div>
         </div>
@@ -55,3 +70,48 @@
   <!-- /add -->
 </div>
 {% endblock content %}
+
+{% block js %}
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+    window.addEventListener(
+      "load",
+      function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(
+          forms,
+          function (form) {
+            form.addEventListener(
+              "submit",
+              function (event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add("was-validated");
+              },
+              false
+            );
+          }
+        );
+      },
+      false
+    );
+  })();
+</script>
+
+<script>
+  // Server Side Errors If any
+  $(document).ready(function(){
+    {% if form.errors %}
+      {% for error in form.errors.values %}
+        toastr.error("{{error.0}}", "Error!", { timeOut: 5e3, rtl: false });
+      {% endfor %}
+    {% endif %}
+  });
+  </script>
+{% endblock js %}

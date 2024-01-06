@@ -14,7 +14,7 @@
   <!-- /delete -->
   <div class="card">
     <div class="card-body">
-      <h5>Are you sure you want to delete vendor "{{ vendor.name }}"?</h5>
+      <h5>Are you sure you want to delete vendor <span class="fw-bold">"{{ vendor.name }}"</span>?</h5>
       <br/>
       <form method="post" action="{% url 'vendors:vendor-delete' vendor.pk %}">
         {% csrf_token %}
@@ -28,3 +28,27 @@
   <!-- /delete -->
 </div>
 {% endblock content %}
+
+{% block js %}
+<script>
+  // Server Side Errors If any
+  $(document).ready(function(){
+    {% if form.errors %}
+      {% for error in form.errors.values %}
+        toastr.error("{{error.0}}", "Error!", { timeOut: 5e3, rtl: false });
+      {% endfor %}
+    {% endif %}
+
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "error" %}
+          toastr.error("{{message}}", "Error!", { timeOut: 5e3, rtl: false });
+        {% else %}
+          toastr.success("{{message}}", "Success", { timeOut: 5e3, rtl: false });
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  });
+  </script>
+
+{% endblock js %}
