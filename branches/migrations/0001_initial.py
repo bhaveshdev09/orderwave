@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=50, verbose_name='branch name')),
+                ('name', models.CharField(max_length=50, unique=True, verbose_name='branch name')),
                 ('slug', models.SlugField(editable=False, max_length=255, unique=True, verbose_name='slug')),
                 ('is_deleted', models.BooleanField(default=False, verbose_name='deleted')),
             ],
