@@ -2,32 +2,30 @@
 {% extends 'base.html' %}
 
 <!-- templates/branches/branch_form.html -->
-{% block title %}{% if branch %}Edit{% else %}Create{% endif %} Branch{% endblock %}
+{% block title %}{% if branch %}Edit{% else %}Add{% endif %} Branch{% endblock %}
 
 {% block content %}
 <div class="content">
   <div class="page-header">
     <div class="page-title">
       <h4>Branch Management</h4>
-      <h6>{% if branch %}Edit{% else %}Create{% endif %} Branch</h6>
+      <h6>{% if branch %}Edit{% else %}Add{% endif %} Branch</h6>
     </div>
   </div>
   <!-- /add -->
   <div class="card">
     <div class="card-body">
-      <form method="post">
+      <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
         <div class="row">
-          <div class="col-lg-3 col-sm-6 col-12">
+          <div class="col-lg-4 col-sm-6 col-12">
             <div class="form-group">
               {{ form.name.label_tag }}
               {{ form.name }}
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 col-12">
-            <div class="form-group">
-              {{ form.slug.label_tag }}
-              {{ form.slug }}
+              <div class="ml-3 invalid-feedback">
+                Please provide a valid name.
+              </div> 
+              {% comment %} <div class="text-danger">{{form.name.errors}}</div> {% endcomment %}
             </div>
           </div>
           <!-- Add other fields as needed -->
@@ -42,3 +40,38 @@
   <!-- /add -->
 </div>
 {% endblock content %}
+
+{% block js %}
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+    window.addEventListener(
+      "load",
+      function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(
+          forms,
+          function (form) {
+            form.addEventListener(
+              "submit",
+              function (event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add("was-validated");
+              },
+              false
+            );
+          }
+        );
+      },
+      false
+    );
+  })();
+</script>
+
+{% endblock js %}
