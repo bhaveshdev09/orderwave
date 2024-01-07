@@ -9,6 +9,7 @@ from django.views.generic import (
 )
 from items.models import OperatingHour
 from items.forms import OperatingHourForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class OperatingHourListView(LoginRequiredMixin, ListView):
@@ -23,11 +24,12 @@ class OperatingHourDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "operatinghour"
 
 
-class OperatingHourUpdateView(LoginRequiredMixin, UpdateView):
+class OperatingHourUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = OperatingHour
     form_class = OperatingHourForm
     template_name = "operatinghour/operatinghour_form.html"
     success_url = reverse_lazy("items:operating-hour-list")
+    success_message = "Operating hour updated successfully."
 
 
 # TODO:future use case
