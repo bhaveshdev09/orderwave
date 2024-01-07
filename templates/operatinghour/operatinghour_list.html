@@ -79,4 +79,19 @@
     $('#operatingHourDataTable').DataTable();
   });
 </script>
+
+<script>
+  // Server Side Errors If any
+  $(document).ready(function(){
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "error" %}
+          toastr.error("{{message}}", "Error!", { timeOut: 5e3, rtl: false });
+        {% else %}
+          toastr.success("{{message}}", "Success", { timeOut: 5e3, rtl: false });
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  });
+</script>
 {% endblock js %}

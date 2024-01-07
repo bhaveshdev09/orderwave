@@ -1,3 +1,4 @@
+from typing import Any
 from django import forms
 from items.models import (
     Section,
@@ -56,15 +57,25 @@ class CategoryForm(forms.ModelForm):
 
 
 class OperatingHourForm(forms.ModelForm):
+    def clean(self):
+        cleaned_data = super().clean()
+        from_time = cleaned_data.get("from_time")
+        to_time = cleaned_data.get("to_time")
+
+        if from_time and to_time and from_time >= to_time:
+            raise forms.ValidationError("Start time must be earlier than end time.")
+
+        return cleaned_data
     class Meta:
         model = OperatingHour
-        fields = ["from_time", "to_time", "tags", "title"]
+        fields = ["from_time", "to_time", "title"]
         widgets = {
+            "title": forms.TextInput(attrs={"class": "form-control"}),
             "from_time": forms.TimeInput(
                 attrs={"type": "time", "class": "form-control"}
             ),
             "to_time": forms.TimeInput(attrs={"type": "time", "class": "form-control"}),
-            "tags": forms.Select(attrs={"class": "form-control"}),
+            # "tags": forms.Select(attrs={"class": "form-control"}), # dont allow to change as each is mapped and 5 objects are created as per requirements
         }
 
 
