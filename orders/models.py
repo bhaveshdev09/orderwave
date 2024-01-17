@@ -65,12 +65,13 @@ class Bill(BaseModel):
 
     # Payment Type
     PAYMENT_TYPE_CASH = "cash"
-    PAYMENT_TYPE_CARD = "upi"
-    PAYMENT_TYPE_UPI = "card"
+    PAYMENT_TYPE_UPI = "upi"
+    # PAYMENT_TYPE_CARD = "card"
+
     PAYMENT_TYPE_CHOICES = [
         (PAYMENT_TYPE_CASH, "cash"),
-        (PAYMENT_TYPE_CARD, "card"),
         (PAYMENT_TYPE_UPI, "upi"),
+        # (PAYMENT_TYPE_CARD, "card"),
     ]
 
     order = models.OneToOneField(
@@ -78,7 +79,7 @@ class Bill(BaseModel):
     )
     # train_number = models.CharField(max_length=255, blank=True, default="-")
     # train_name = models.CharField(max_length=255, blank=True, default="-")
-    train_details = models.CharField(max_length=255, blank=True, default="-")
+    train_details = models.CharField(max_length=255, default="-")
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, default=None, null=True
     )

@@ -51,8 +51,8 @@
           <thead>
             <tr>
               <th>Order</th>
-              <th>Vendor Name</th>
-              <th>Total Cost</th>
+              <th>Customer Name</th>
+              <th>Total Cost (in &#8377;)</th>
               <th>Created At</th>
               <th>Status</th>
               <th>Action</th>
@@ -63,7 +63,7 @@
               <tr>
                 <td><a href="{% url 'orders:bill-update' order.pk %}"><span class="fw-bold">{{order.order_repr}}</span></a></td>
                 <td>{{order.customer.name}}</a></td>
-                <td>{{order.total}}</td>
+                <td>&#8377;&nbsp;{{order.total}}</td>
                 <td>{{order.created_at|naturaltime}}</td>
                 <td>{% if order.status == "complete" %}<span class="badges bg-lightgreen">Completed</span> {% else %}<span class="badges bg-lightred">Pending</span>{% endif %}</td>
                 <td>
@@ -92,4 +92,19 @@
 <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
 <script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
 
+
+<script>
+  // Server Side Errors If any
+  $(document).ready(function(){
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == "error" %}
+          toastr.error("{{message}}", "Error!", { timeOut: 5e3, rtl: false });
+        {% else %}
+          toastr.success("{{message}}", "Success", { timeOut: 5e3, rtl: false });
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  });
+</script>
 {% endblock js %}

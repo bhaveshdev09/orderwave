@@ -16,6 +16,7 @@ from django.urls import reverse_lazy
 from orders.models import Order, OrderItem, Bill
 from orders.forms import OrderForm, BillForm
 from items.models import Item
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class OrderListView(LoginRequiredMixin, ListView):
@@ -64,23 +65,12 @@ class BillListView(ListView):
     context_object_name = "bills"
 
 
-# class BillCreateView(CreateView):
-#     model = Bill
-#     form_class = BillForm
-#     template_name = "bills/bill_form.html"
-#     success_url = reverse_lazy("orders:bill-list")
-
-#     def form_invalid(self, form):
-#         print(form.errors)
-#         response = super().form_invalid(form)
-#         return response
-
-
-class BillCreateView(CreateView):
+class BillCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Bill
     form_class = BillForm
     template_name = "bills/bill_form.html"
     success_url = reverse_lazy("orders:bill-list")
+    success_message = "Order created successfully."
 
     # def form_valid(self, form):
     #     # The code `print(self.request.POST)` is printing the POST data that is submitted with the
@@ -103,16 +93,13 @@ class BillCreateView(CreateView):
         response = super().form_invalid(form)
         return response
 
-    # def form_valid(self, form):
-    #     form.save()
-    #     return super().form_valid(form)
 
-
-class BillUpdateView(UpdateView):
+class BillUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Bill
     template_name = "bills/bill_form.html"
     form_class = BillForm
     context_object_name = "order"
+    success_message = "Order updated successfully."
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -127,25 +114,12 @@ class BillUpdateView(UpdateView):
         )
         return self.context
 
-    # def form_valid(self, form):
-    #     bill_instance = form.save(commit=False)
-
-    #     # Update the attributes of the Order instance if needed
-    #     # For example, bill_instance.order.attribute_name = form.cleaned_data['some_field']
-
-    #     # Save the changes to the Order instance
-    #     bill_instance.order.save()
-
-    #     # Save the changes to the Bill instance
-    #     bill_instance.save()
-
-    #     return super().form_valid(form)
-
     def get_success_url(self):
         return reverse_lazy("orders:bill-list")
 
 
-class BillDeleteView(DeleteView):
+class BillDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Bill
     template_name = "bills/bill_confirm_delete.html"
     success_url = reverse_lazy("orders:bill-list")
+    success_message = "Order deleted successfully."
