@@ -105,9 +105,11 @@ class BillForm(forms.ModelForm):
 
         # Create Customer instance
         customer_instance, created = Customer.objects.get_or_create(
-            name=self.cleaned_data["name"],
-            email=self.cleaned_data["email"],
             mobile=self.cleaned_data["mobile"],
+            defaults={
+                "name": self.cleaned_data["name"],
+                "email": self.cleaned_data["email"],
+            },
         )
 
         aggregator = Aggregator.objects.get(id=self.cleaned_data.get("aggregator"))

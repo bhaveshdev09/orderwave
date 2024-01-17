@@ -81,9 +81,9 @@ urlpatterns = [
     #     name="operating-hour-delete",
     # ),
     # URL Patterns For Item
-    path("items/", ItemListView.as_view(), name="item-list"),
-    path("items/<int:pk>/", ItemDetailView.as_view(), name="item-detail"),
-    path("items/create/", ItemCreateView.as_view(), name="item-create"),
-    path("items/<int:pk>/update/", ItemUpdateView.as_view(), name="item-update"),
-    path("items/<int:pk>/delete/", ItemDeleteView.as_view(), name="item-delete"),
+    path("", ItemListView.as_view(), name="item-list"),
+    path("<int:pk>/", ItemDetailView.as_view(), name="item-detail"),
+    path("create/", ItemCreateView.as_view(), name="item-create"),
+    path("<int:pk>/update/", ItemUpdateView.as_view(), name="item-update"),
+    path("<int:pk>/delete/", ItemDeleteView.as_view(), name="item-delete"),
 ]
