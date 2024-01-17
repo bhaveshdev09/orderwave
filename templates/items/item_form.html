@@ -15,53 +15,83 @@
   <!-- /add -->
   <div class="card">
     <div class="card-body">
-      <form method="post">
+      <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
         <!-- Your form fields go here -->
-        {{ form.as_p }}
 
-        {% comment %} <div class="row">
-          <div class="col-lg-3 col-sm-6 col-12">
+        <div class="row">
+          <div class="col-lg-12 col-sm-6 col-12">
             <div class="form-group">
               {{ form.name.label_tag }}
               {{ form.name }}
+              <div class="ml-3 invalid-feedback">
+                Please provide a valid item name.
+              </div> 
             </div>
           </div>
 
-          <div class="col-lg-3 col-sm-6 col-12">
+          <div class="col-lg-6 col-sm-6 col-12">
             <div class="form-group">
               {{ form.section.label_tag }}
               {{ form.section }}
+              <div class="ml-3 invalid-feedback">
+                Please select valid section.
+              </div> 
             </div>
           </div>
-          <div class="col-lg-3 col-sm-6 col-12">
+          <div class="col-lg-6 col-sm-6 col-12">
             <div class="form-group">
               {{ form.category.label_tag }}
               {{ form.category }}
+              <div class="ml-3 invalid-feedback">
+                Please select valid category.
+              </div> 
             </div>
           </div>
           
-          <div class="col-lg-3 col-sm-6 col-12">
+          <div class="col-lg-6 col-sm-6 col-12">
             <div class="form-group">
               {{ form.base_price.label_tag }}
               {{ form.base_price }}
+              <div class="ml-3 invalid-feedback">
+                Please enter valid price.
+              </div> 
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-12">
+            <div class="form-group">
+              {{ form.tax.label_tag }}
+              {{ form.tax }}
+              <div class="ml-3 invalid-feedback">
+                Please enter valid tax.
+              </div> 
             </div>
           </div>
         </div>
-        <div class="row">
-        <div class="col-lg-3 col-sm-6 col-12">
+        <div class="col-lg-12 col-sm-6 col-12">
           <div class="form-group">
             {{ form.operation_hour.label_tag }}
             {{ form.operation_hour }}
+            <div class="ml-3 invalid-feedback">
+              Please select valid operation hour.
+            </div> 
           </div>
         </div>
-          <div class="col-lg-9">
-            <div class="form-group">
-              {{ form.desc.label_tag }}
-              {{ form.desc }}
-            </div>
+        <div class="col-lg-12">
+          <div class="form-group">
+            {{ form.desc.label_tag }}
+            {{ form.desc }}
+            <div class="ml-3 invalid-feedback">
+              Please enter valid description.
+            </div> 
           </div>
-        </div> {% endcomment %}
+        </div>
+        <div class="col-lg-6 status-toggle">
+          <div class="form-group">
+            {{ form.is_active.label_tag }}
+            {{ form.is_active }}
+          </div>
+        </div>
         <div class="col-lg-12">
           <button class="btn btn-submit me-2" type="submit">Submit</button>
           <a href="{% url "items:item-list" %}" class="btn btn-cancel">Cancel</a>
@@ -76,14 +106,46 @@
 
 
 {% block js %}
-
-{% comment %} <!-- Select2 JS -->
-<script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
-<script src="{% static "assets/plugins/select2/js/custom-select.js" %}"></script>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+    window.addEventListener(
+      "load",
+      function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(
+          forms,
+          function (form) {
+            form.addEventListener(
+              "submit",
+              function (event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add("was-validated");
+              },
+              false
+            );
+          }
+        );
+      },
+      false
+    );
+  })();
+</script>
 
 <script>
-  $(document).ready(function() {
-      $('.tagging').select2();
+  // Server Side Errors If any
+  $(document).ready(function(){
+    {% if form.errors %}
+      {% for error in form.errors.values %}
+        toastr.error("{{error.0}}", "Error!", { timeOut: 5e3, rtl: false });
+      {% endfor %}
+    {% endif %}
   });
-</script> {% endcomment %}
+  </script>
 {% endblock js %}

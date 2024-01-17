@@ -66,6 +66,7 @@ class OperatingHourForm(forms.ModelForm):
             raise forms.ValidationError("Start time must be earlier than end time.")
 
         return cleaned_data
+
     class Meta:
         model = OperatingHour
         fields = ["from_time", "to_time", "title"]
@@ -112,6 +113,6 @@ class ItemForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
             "desc": forms.Textarea(attrs={"class": "form-control"}),
-            "section": forms.Select(attrs={"class": "form-control"}),
-            "category": forms.Select(attrs={"class": "form-control"}),
+            "section": forms.Select(attrs={"class": "form-select"}),
+            "category": forms.Select(attrs={"class": "form-select"}),
         }

@@ -9,6 +9,7 @@ from django.views.generic import (
 )
 from items.models import Item
 from items.forms import ItemForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class ItemListView(LoginRequiredMixin, ListView):
@@ -23,21 +24,24 @@ class ItemDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "item"
 
 
-class ItemCreateView(LoginRequiredMixin, CreateView):
+class ItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Item
     form_class = ItemForm
     template_name = "items/item_form.html"
     success_url = reverse_lazy("items:item-list")
+    success_message = "Item created successfully."
 
 
-class ItemUpdateView(LoginRequiredMixin, UpdateView):
+class ItemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Item
     form_class = ItemForm
     template_name = "items/item_form.html"
     success_url = reverse_lazy("items:item-list")
+    success_message = "Item updated successfully."
 
 
-class ItemDeleteView(LoginRequiredMixin, DeleteView):
+class ItemDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Item
     template_name = "items/item_confirm_delete.html"
     success_url = reverse_lazy("items:item-list")
+    success_message = "Item deleted successfully."

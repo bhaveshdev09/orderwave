@@ -52,7 +52,7 @@
             <tr>
               <th>Purchase Order</th>
               <th>Vendor Name</th>
-              <th>Total Cost<th/>
+              <th>Total Cost</th>
               <th>Status</th>
               <th>Created At</th>
               <th>Action</th>
@@ -64,7 +64,6 @@
                 <td><a href="{% url 'purchase_orders:purchase-order-update' purchase_order.pk %}"><span class="fw-bold">{{purchase_order.purchase_order_id}}</span></a></td>
                 <td>{{purchase_order.vendor.name}}</a></td>
                 <td>{{purchase_order.total}}</td>
-                <td></td>
                 <td>{% if purchase_order.status == "complete" %}<span class="badges bg-lightgreen">Completed</span> {% else %}<span class="badges bg-lightred">Pending</span>{% endif %}</td>
                 <td>{{purchase_order.created_at|naturaltime}}</td>
                 <td>
