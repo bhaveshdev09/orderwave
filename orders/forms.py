@@ -11,7 +11,12 @@ from aggregators.models import Aggregator
 class OrderItemForm(forms.ModelForm):
     quantity = forms.IntegerField(
         widget=forms.NumberInput(
-            attrs={"class": "form-control item-qty", "min": "1", "value": "1"}
+            attrs={
+                "class": "form-control item-qty",
+                "min": "1",
+                "value": "1",
+                "required": True,
+            }
         ),
         min_value=1,
     )
@@ -20,7 +25,9 @@ class OrderItemForm(forms.ModelForm):
         model = OrderItem
         fields = ["item", "quantity"]
         widgets = {
-            "item": forms.Select(attrs={"class": "form-control item-select"}),
+            "item": forms.Select(
+                attrs={"class": "form-select item-select", "required": True}
+            ),
         }
 
 
@@ -65,15 +72,17 @@ class OrderForm(forms.ModelForm):
 
 
 class BillForm(forms.ModelForm):
-    train_details = forms.CharField(required=False)
+    train_details = forms.CharField(
+        required=True, widget=forms.TextInput(attrs={"class": "form-control"})
+    )
 
     class Meta:
         model = Bill
         fields = ["train_details", "status", "payment_type", "aggregator"]
         widgets = {
-            "status": forms.Select(attrs={"class": "form-control"}),
-            "payment_type": forms.Select(attrs={"class": "form-control"}),
-            "aggregator": forms.Select(attrs={"class": "form-control"}),
+            "status": forms.Select(attrs={"class": "form-select"}),
+            "payment_type": forms.Select(attrs={"class": "form-select"}),
+            "aggregator": forms.Select(attrs={"class": "form-select"}),
         }
 
     # Include fields for customer details

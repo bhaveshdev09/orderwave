@@ -18,25 +18,34 @@
   </div>
   <div class="card">
     <div class="card-body">
-      <form method="post">
+      <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
       <div class="row">
         <div class="col-lg-4 col-sm-6 col-12">
           <div class="form-group">
             <label for="{{ form.customer_form.name.id_for_label }}">Customer Name</label>
             {{ form.customer_form.name }}
+            <div class="ml-3 invalid-feedback">
+              Please provide a valid customer name.
+            </div>
           </div>
         </div>
         <div class="col-lg-4 col-sm-6 col-12">
           <div class="form-group">
             <label for="{{ form.customer_form.mobile.id_for_label }}">Customer Phone Number</label>
             {{ form.customer_form.mobile }}
+            <div class="ml-3 invalid-feedback">
+              Please provide a valid mobile number.
+            </div>
           </div>
         </div>
         <div class="col-lg-4 col-sm-6 col-12">
           <div class="form-group">
             <label for="{{ form.customer_form.email.id_for_label }}">Customer Email</label>
             {{ form.customer_form.email }}
+            <div class="ml-3 invalid-feedback">
+              Please provide a valid email id.
+            </div>
           </div>
         </div>
       </div>
@@ -45,6 +54,9 @@
           <div class="form-group">
             <label for="{{ form.train_details.id_for_label }}">Train Name/No.</label>
             {{ form.train_details }}
+            <div class="ml-3 invalid-feedback">
+              Please provide a valid train details.
+            </div>
           </div>
         </div>
 
@@ -52,18 +64,27 @@
           <div class="form-group">
             <label for="{{ form.aggregator.id_for_label }}">Aggregator</label>
             {{ form.aggregator }}
+            <div class="ml-3 invalid-feedback">
+              Please select a valid aggregator.
+            </div>
           </div>
         </div>
         <div class="col-lg-3 col-sm-6 col-12">
           <div class="form-group">
             <label for="{{ form.payment_type.id_for_label }}">Payment Type</label>
             {{ form.payment_type }}
+            <div class="ml-3 invalid-feedback">
+              Please select a valid Payment type.
+            </div>
           </div>
         </div>
         <div class="col-lg-3 col-sm-6 col-12">
           <div class="form-group">
             <label for="{{ form.status.id_for_label }}">Order Status</label>
             {{ form.status }}
+            <div class="ml-3 invalid-feedback">
+              Please select a valid order status.
+            </div>
           </div>
         </div>
         {% comment %} <div class="col-lg-3 col-sm-6 col-12">
@@ -103,7 +124,6 @@
                 <th>Item</th>
                 <th>QTY</th>
                 <th>Price (&#8377;)</th>
-                {% comment %} <th>Discount</th> {% endcomment %}
                 <th>Tax (%)</th>
                 <th>Total (in &#8377;)</th>
                 <th>Remove</th>
@@ -113,8 +133,8 @@
               {% for form in form.orderform.orderitem_formset %}
               <tr class="formset-row">
                 {{form.id}}
-                <td>{{ form.item }}</td>
-                <td class="quantity">{{ form.quantity }}</td>
+                <td class="col-lg-4 col-md-4">{{ form.item }}</td>
+                <td class="col-lg-3 col-md-3 quantity">{{ form.quantity }}</td>
                 <td class="price"></td>
                 <td class="tax"></td>
                 <td class="subtotal"></td>
@@ -152,7 +172,7 @@
                   <h5 id="discount">0.00</h5>
                 </li> {% endcomment %}
                 <li class="total">
-                  <h4>Total (in &#8377; )</h4>
+                  <h4>Total (&#8377;)</h4>
                   <h5 id="grand_total">0.00</h5>
                 </li>
               </ul>
@@ -195,14 +215,14 @@
             var priceInput = row.find(".price");
             var taxInput = row.find(".tax");
             var subtotalInput = row.find(".subtotal");
-            console.log("Values ", itemSelect.val(), quantityInput.val());
+            // console.log("Values ", itemSelect.val(), quantityInput.val());
 
             if (itemSelect.val() && quantityInput.val()) {
                 // Fetch price and tax based on the selected item (Assuming you have a JSON variable named 'items')
                 var items = JSON.parse(document.getElementById('items-data').textContent);
                 var selectedItem = items.find(item => item.id == itemSelect.val());
                 
-                console.log(selectedItem);
+                // console.log(selectedItem);
                 var price = selectedItem.base_price;
                 var tax = selectedItem.tax;
 
@@ -244,14 +264,15 @@
     // Clone Row
     $("#btn-add-item").click(function() {
 
-      console.log("Add btn");
       var tableBody = $(".formset-row:last").closest('tbody');
             var rowToClone = tableBody.find('tr:first');
-            var newRow = rowToClone.clone();
-
+            var newRow = rowToClone.clone(true);
+            console.log(newRow);
+            
             // Reset values and remove selected attribute for the new row
             newRow.find('select').val('').find('option').removeAttr('selected');
-            newRow.find('.quantity, .price, .tax, .subtotal').val('');
+            newRow.find('input').val('1');
+            newRow.find('.price, .tax, .subtotal').text('');
 
             // Increment formset form count
             var formCount = parseInt($("input[name$='TOTAL_FORMS']").val());
@@ -291,7 +312,7 @@
 
         // Calculate subtotal
         var subtotal = (price * quantity) + (price * quantity * tax / 100);
-        row.find('.subtotal').text(subtotal.toFixed(2));
+        row.find('.subtotal').text(subtotal.toFixed(1));
         updateTotal();
     } 
 
@@ -338,6 +359,9 @@
             row.remove();
             updateFormsetIndices();
         } 
+        else{
+          toastr.error("order must have atleast one item.","Restrict", { timeOut: 5e3, rtl: false });
+        }
     }
 
      // Update formset indices
@@ -364,5 +388,48 @@
     // $(document).on("change", ".quantity", updateSubtotal);
 });
 </script>
+
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+    window.addEventListener(
+      "load",
+      function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(
+          forms,
+          function (form) {
+            form.addEventListener(
+              "submit",
+              function (event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add("was-validated");
+              },
+              false
+            );
+          }
+        );
+      },
+      false
+    );
+  })();
+</script>
+
+<script>
+  // Server Side Errors If any
+  $(document).ready(function(){
+    {% if form.errors %}
+      {% for error in form.errors.values %}
+        toastr.error("{{error.0}}", "Error!", { timeOut: 5e3, rtl: false });
+      {% endfor %}
+    {% endif %}
+  });
+  </script>
 
 {% endblock js %}
