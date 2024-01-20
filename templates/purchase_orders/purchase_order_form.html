@@ -1,52 +1,146 @@
 <!-- templates/purchase_orders/purchase_order_form.html -->
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}{% if purchase_order %}Edit{% else %}Create{% endif %} Purchase Order{% endblock %}
+{% block title %}{% if object %}Update{% else %}Add{% endif %} Purchase Order{% endblock %}
 
 {% block content %}
 <div class="content">
   <div class="page-header">
     <div class="page-title">
       <h4>Purchase Order Management</h4>
-      <h6>Add/Update Purchase Order</h6>
+      <h6>{% if object %}Update{% else %}Add{% endif %}  Purchase Order</h6>
+      {{items|json_script:"po-material-items-data"}}
     </div>
   </div>
   <!-- /add -->
   <div class="card">
     <div class="card-body">
-      <form method="post">
+      <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
-      <div class="row">
-        <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            {{ form.vendor.label_tag }}
-            {{ form.vendor }}
+        <div class="row">
+          <div class="col-lg-6 col-sm-6 col-12">
+            <div class="form-group">
+              {{ form.vendor.label_tag }}
+              {{ form.vendor }}
+              <div class="ml-3 invalid-feedback">
+                Please select a valid vendor name.
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-12">
+            <div class="form-group">
+              {{ form.status.label_tag }}
+              {{ form.status }}
+              <div class="ml-3 invalid-feedback">
+                Please select a valid status.
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            {{ form.status.label_tag }}
-            {{ form.status }}
+
+        <hr />
+        <div class="row">
+          <div class="col-lg-6 col-sm-6 col-12">
+            {% comment %} <div class="form-group">
+              <div class="input-groupicon">
+                <input type="text" placeholder="Please type product code and select...">
+                <div class="addonset">
+                  <img src="{% static "assets/img/icons/scanners.svg" %}" alt="img">
+                </div>
+              </div>
+            </div> {% endcomment %}
+          </div>
+          <div class="col-lg-6 col-sm-6 col-12 d-flex justify-content-end">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary" id="btn-add-item">Add Item</button>
+            </div>
           </div>
         </div>
-      </div>
-        <div>
-        <div class="col-lg-12 col-sm-6 col-12">
+        {{ form.purchase_orderitem_formset.management_form }}
+        {{ form.purchase_orderitem_formset.non_form_errors }}
+  
+        <div class="row">
+          <div class="table-responsive mb-3">
+            <table class="table" id="poitemTable">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>QTY</th>
+                  <th>Price (&#8377;)</th>
+                  <th>Total (in &#8377;)</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for form in form.purchase_orderitem_formset %}
+                <tr class="formset-row">
+                  {{form.id}}
+                  <td class="col-lg-4 col-md-4">{{ form.material }}</td>
+                  <td class="col-lg-2 col-md-2 quantity">{{ form.quantity }}</td>
+                  <td class="price"></td>
+                  <td class="subtotal"></td>
+                  <td>
+                    <a href="#" class="btn delete-row"><img src="{% static "assets/img/icons/delete.svg" %}" alt="svg"></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+  
+          <div class="row">
+            <div class="row">
+              <div class="col-lg-6 ">
+                {% comment %} <div class="total-order w-100 max-widthauto m-auto mb-4">
+                  <ul>
+                    <li>
+                      <h4>Order Tax</h4>
+                      <h5>$ 0.00 (0.00%)</h5>
+                    </li>
+                    <li>
+                      <h4>Discount </h4>
+                      <h5>$ 0.00</h5>
+                    </li>
+                  </ul>
+                </div> {% endcomment %}
+              </div>
+              <div class="col-lg-6 ">
+                <div class="total-order w-100 max-widthauto m-auto mb-4">
+                  <ul>
+                    {% comment %} <li>
+                      <h4>Discount</h4>
+                      <h5 id="discount">0.00</h5>
+                    </li> {% endcomment %}
+                    <li class="total">
+                      <h4>Total (&#8377;)</h4>
+                      <h5 id="grand_total">0.00</h5>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!--d-flex justify-content-end add this to move content end-->
+            <div class="col-lg-12">
+              <button type="submit" class="btn btn-submit me-2">{% if object %}Update{% else %}Add{% endif %}</button>
+              <a href="javascript:void(0);" class="btn btn-cancel">Print</a>
+            </div>
+          </div>
+
+
+        {% comment %} <div class="col-lg-12 col-sm-6 col-12">
           <div class="form-group">
             {{ form.material.label_tag }}
             {{ form.material }}
           </div>
-        </div>
+        </div> {% endcomment %}
         {% comment %} <div class="col-lg-12">
           <div class="form-group">
             <label>Description</label>
             <textarea class="form-control"></textarea>
           </div>
         </div> {% endcomment %}
-        <div class="col-lg-12">
-          <button class="btn btn-submit me-2" type="submit">Submit</button>
-          <a href="javascript:void(0);"  class="btn btn-cancel">Cancel</a>
-        </div>
       </div>
     </form>
     </div>
@@ -54,3 +148,243 @@
   <!-- /add -->
 </div>
 {% endblock content %}
+
+{% block js %}
+<script>
+
+  $(document).ready(function() {
+    // Function to calculate subtotal and total
+    function updateTotals() {
+        var total = 0;
+
+        // Select the tbody of the table with id itemTable
+        var tableBody = $("#poitemTable tbody");
+
+        // Iterate over each row in the table
+        tableBody.find(".formset-row").each(function() {
+            var row = $(this);
+            
+            // Check if item is selected and quantity is entered
+            var itemSelect = row.find(".item-select");
+            var quantityInput = row.find(".item-qty");
+            var priceInput = row.find(".price");
+            var subtotalInput = row.find(".subtotal");
+            // console.log("Values ", itemSelect.val(), quantityInput.val());
+
+            if (itemSelect.val() && quantityInput.val()) {
+                // Fetch price based on the selected item (Assuming you have a JSON variable named 'items')
+                var items = JSON.parse(document.getElementById('po-material-items-data').textContent);
+                console.log(items);
+                var selectedItem = items.find(item => item.id == itemSelect.val());
+                
+                // console.log(selectedItem);
+                var price = selectedItem.price;
+
+                // Update price and tax in the row
+                priceInput.text(price.toFixed(1));
+
+                // Calculate subtotal
+                var quantity = quantityInput.val();
+                if (quantity){
+                  var subtotal = parseFloat(price) * parseInt(quantity);
+                }
+                else{
+                  subtotal = 0;
+                } 
+                subtotalInput.text(subtotal.toFixed(1));
+
+                // Accumulate subtotal to calculate total
+                total += subtotal;
+            }
+        });
+
+        // Update total in the total row
+        $("#grand_total").text(total.toFixed(1));
+    }
+
+    // Attach change event to item select and quantity input
+    $(".item-select, .item-qty").on("change", function() {
+        updateTotals();
+    });
+
+    // Initial calculation on page load
+    updateTotals();
+  });
+  
+  $(document).ready(function() {
+
+    // Add Item on Shift + A
+    $(document).keydown(function(event) {
+      if (event.shiftKey && event.key === 'A') {
+          $("#btn-add-item").click();
+      }
+    });
+
+    // Clone Row
+    $("#btn-add-item").click(function() {
+
+      var tableBody = $(".formset-row:last").closest('tbody');
+            var rowToClone = tableBody.find('tr:first');
+            var newRow = rowToClone.clone(true);
+            console.log(newRow);
+            
+            // Reset values and remove selected attribute for the new row
+            newRow.find('select').val('').find('option').removeAttr('selected');
+            newRow.find('input').val('1');
+            newRow.find('.price, .subtotal').text('');
+
+            // Increment formset form count
+            var formCount = parseInt($("input[name$='TOTAL_FORMS']").val());
+            newRow.find(':input').each(function() {
+                var newName = $(this).attr('name').replace(/-\d+/, '-' + formCount);
+                $(this).attr('name', newName);
+                $(this).attr('id', 'id_' + newName);
+            });
+
+            // Attach event handlers
+            newRow.find('.item-select').change(updateRow);
+            newRow.find('.delete-row').click(deleteRow);
+
+            tableBody.append(newRow);
+            $("input[name$='TOTAL_FORMS']").val(formCount + 1);
+    });
+
+
+    // Update Row
+    function updateRow() {
+
+        var row = $(this).closest('tr');
+        var selectedItem = $(this).find('option:selected');
+        const selectedItemID = parseInt(selectedItem.val());
+        var itemsData = JSON.parse(document.getElementById('po-material-items-data').textContent);
+        console.log(itemsData);
+        const filter_data_item = itemsData.filter(d => d.id === selectedItemID);
+        console.log(filter_data_item);
+
+        if (filter_data_item.length == 1){
+          var price = filter_data_item[0].price;
+          var quantity = parseInt(row.find('.item-qty').val());
+        }
+
+        row.find('.price').text(price);
+
+        // Calculate subtotal
+        var subtotal = (price * quantity);
+        row.find('.subtotal').text(subtotal.toFixed(1));
+        updateTotal();
+    } 
+
+       // Update Subtotal
+       function updateSubtotal() {
+        var row = $(this).closest('tr');
+        var price = row.find('.price').text();
+        var quantity = $(this).val();
+
+        
+        price = parseFloat(price);
+        quantity = parseInt(quantity);
+
+        if (quantity != "" || !isNaN(quantity) || price != ""){
+        // Calculate subtotal
+        var subtotal = (price * quantity);
+        if (isNaN(subtotal)){
+          subtotal = 0.0;
+        }
+        row.find('.subtotal').text(subtotal.toFixed(2));
+        updateTotal();
+      }
+    }
+
+    // Update Total
+    function updateTotal() {
+      var total = 0;
+      $(".subtotal").each(function() {
+          total += parseFloat($(this).text()) || 0;
+      });
+
+      console.log(total);
+      $("#grand_total").text(total.toFixed(2));
+  }
+
+
+    // Delete Row
+    function deleteRow() {
+        var row = $(this).closest('tr');
+        if ($("#poitemTable tbody tr").length > 1) {
+            row.remove();
+            updateFormsetIndices();
+        } 
+        else{
+          toastr.error("order must have atleast one item.","Restrict", { timeOut: 5e3, rtl: false });
+        }
+    }
+
+     // Update formset indices
+     function updateFormsetIndices() {
+      $(".formset-row").each(function(index) {
+          $(this).find(':input').each(function() {
+              var newName = $(this).attr('name').replace(/-\d+/, '-' + index);
+              $(this).attr('name', newName);
+              $(this).attr('id', 'id_' + newName);
+          });
+      });
+      var formCount = $(".formset-row").length;
+      $("input[name$='TOTAL_FORMS']").val(formCount);
+    }
+
+    $(document).on('input', '.item-qty', updateSubtotal);
+    
+    // Event delegation for dynamically added elements with class "delete-row"
+    $(document).on("click", ".delete-row", deleteRow);
+
+    // Event delegation for dynamically added elements with class "item-select"
+    $(document).on("input", ".item-select", updateRow);
+    // Event delegation for dynamically added elements with class "quantity"
+    // $(document).on("change", ".quantity", updateSubtotal);
+});
+</script>
+
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+    window.addEventListener(
+      "load",
+      function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(
+          forms,
+          function (form) {
+            form.addEventListener(
+              "submit",
+              function (event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add("was-validated");
+              },
+              false
+            );
+          }
+        );
+      },
+      false
+    );
+  })();
+</script>
+
+<script>
+  // Server Side Errors If any
+  $(document).ready(function(){
+    {% if form.errors %}
+      {% for error in form.errors.values %}
+        toastr.error("{{error.0}}", "Error!", { timeOut: 5e3, rtl: false });
+      {% endfor %}
+    {% endif %}
+  });
+  </script>
+
+{% endblock js %}

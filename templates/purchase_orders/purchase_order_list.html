@@ -13,7 +13,7 @@
       <h6>Manage Purchase Orders</h6>
     </div>
     <div class="page-btn">
-      <a href="{% url "purchase_orders:purchase-order-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Purchase Orders</a>
+      <a href="{% url "purchase_orders:purchase-order-create" %}" class="btn btn-added"><img src="{% static "assets/img/icons/plus.svg" %}" alt="img">Add Purchase Order</a>
     </div>
   </div>
   <!-- /product list -->
@@ -31,14 +31,19 @@
             <a class="btn btn-searchset"><img src="{% static "assets/img/icons/search-white" %}.svg" alt="img"></a>
           </div>
         </div>
+        <div class="wordset">
+        <ul>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
+          </li>
+        </ul>
+      </div>
         {% comment %}<div class="wordset">
           <ul>
             <li>
               <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="{% static "assets/img/icons/pdf.svg" %}" alt="img"></a>
             </li>
-            <li>
-              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
-            </li>
+            
             <li>
               <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
             </li>
@@ -52,7 +57,7 @@
             <tr>
               <th>Purchase Order</th>
               <th>Vendor Name</th>
-              <th>Total Cost</th>
+              <th>Total Cost (in &#8377;)</th>
               <th>Status</th>
               <th>Created At</th>
               <th>Action</th>
@@ -62,10 +67,10 @@
             {% for purchase_order in purchase_orders %}
               <tr>
                 <td><a href="{% url 'purchase_orders:purchase-order-update' purchase_order.pk %}"><span class="fw-bold">{{purchase_order.purchase_order_id}}</span></a></td>
-                <td>{{purchase_order.vendor.name}}</a></td>
-                <td>{{purchase_order.total}}</td>
+                <td>{{purchase_order.vendor.name|capfirst}}</a></td>
+                <td>&#8377;&nbsp;{{purchase_order.total_cost}}</td>
                 <td>{% if purchase_order.status == "complete" %}<span class="badges bg-lightgreen">Completed</span> {% else %}<span class="badges bg-lightred">Pending</span>{% endif %}</td>
-                <td>{{purchase_order.created_at|naturaltime}}</td>
+                <td>{{purchase_order.created_at}}</td>
                 <td>
                   <a class="me-3" href="{% url 'purchase_orders:purchase-order-update' purchase_order.pk %}">
                     <img src="{% static "assets/img/icons/edit.svg" %}" alt="img">
@@ -73,6 +78,7 @@
                   <a class="me-3" href="{% url 'purchase_orders:purchase-order-delete' purchase_order.pk %}">
                     <img src="{% static "assets/img/icons/delete.svg" %}" alt="img">
                   </a>
+                  <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
                 </td>
               </tr>
             {% endfor %}
