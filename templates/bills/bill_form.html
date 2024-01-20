@@ -18,173 +18,173 @@
   </div>
   <div class="card">
     <div class="card-body">
-      <form method="post" class="needs-validation" novalidate>
+    <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
-      <div class="row">
-        <div class="col-lg-4 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="{{ form.customer_form.name.id_for_label }}">Customer Name</label>
-            {{ form.customer_form.name }}
-            <div class="ml-3 invalid-feedback">
-              Please provide a valid customer name.
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="{{ form.customer_form.mobile.id_for_label }}">Customer Phone Number</label>
-            {{ form.customer_form.mobile }}
-            <div class="ml-3 invalid-feedback">
-              Please provide a valid mobile number.
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="{{ form.customer_form.email.id_for_label }}">Customer Email</label>
-            {{ form.customer_form.email }}
-            <div class="ml-3 invalid-feedback">
-              Please provide a valid email id.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="{{ form.train_details.id_for_label }}">Train Name/No.</label>
-            {{ form.train_details }}
-            <div class="ml-3 invalid-feedback">
-              Please provide a valid train details.
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="{{ form.aggregator.id_for_label }}">Aggregator</label>
-            {{ form.aggregator }}
-            <div class="ml-3 invalid-feedback">
-              Please select a valid aggregator.
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="{{ form.payment_type.id_for_label }}">Payment Type</label>
-            {{ form.payment_type }}
-            <div class="ml-3 invalid-feedback">
-              Please select a valid Payment type.
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="{{ form.status.id_for_label }}">Order Status</label>
-            {{ form.status }}
-            <div class="ml-3 invalid-feedback">
-              Please select a valid order status.
-            </div>
-          </div>
-        </div>
-        {% comment %} <div class="col-lg-3 col-sm-6 col-12">
-          <div class="form-group">
-            <label for="{{ form.orderform.discount.id_for_label }}">Order Discount</label>
-            {{ form.orderform.discount }}
-          </div>
-        </div> {% endcomment %}
-      </div>
-      <hr />
-      <div class="row">
-        <div class="col-lg-6 col-sm-6 col-12">
-          {% comment %} <div class="form-group">
-            <div class="input-groupicon">
-              <input type="text" placeholder="Please type product code and select...">
-              <div class="addonset">
-                <img src="{% static "assets/img/icons/scanners.svg" %}" alt="img">
+        <div class="row">
+          <div class="col-lg-4 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="{{ form.customer_form.name.id_for_label }}">Customer Name</label>
+              {{ form.customer_form.name }}
+              <div class="ml-3 invalid-feedback">
+                Please provide a valid customer name.
               </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="{{ form.customer_form.mobile.id_for_label }}">Customer Phone Number</label>
+              {{ form.customer_form.mobile }}
+              <div class="ml-3 invalid-feedback">
+                Please provide a valid mobile number.
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="{{ form.customer_form.email.id_for_label }}">Customer Email</label>
+              {{ form.customer_form.email }}
+              <div class="ml-3 invalid-feedback">
+                Please provide a valid email id.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="{{ form.train_details.id_for_label }}">Train Name/No.</label>
+              {{ form.train_details }}
+              <div class="ml-3 invalid-feedback">
+                Please provide a valid train details.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="{{ form.aggregator.id_for_label }}">Aggregator</label>
+              {{ form.aggregator }}
+              <div class="ml-3 invalid-feedback">
+                Please select a valid aggregator.
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="{{ form.payment_type.id_for_label }}">Payment Type</label>
+              {{ form.payment_type }}
+              <div class="ml-3 invalid-feedback">
+                Please select a valid Payment type.
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="{{ form.status.id_for_label }}">Order Status</label>
+              {{ form.status }}
+              <div class="ml-3 invalid-feedback">
+                Please select a valid order status.
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="col-lg-3 col-sm-6 col-12">
+            <div class="form-group">
+              <label for="{{ form.orderform.discount.id_for_label }}">Order Discount</label>
+              {{ form.orderform.discount }}
             </div>
           </div> {% endcomment %}
         </div>
-        <div class="col-lg-6 col-sm-6 col-12 d-flex justify-content-end">
-          <div class="form-group">
-            <button type="button" class="btn btn-primary" id="btn-add-item">Add Item</button>
-          </div>
-        </div>
-      </div>
-
-      {{ form.orderform.orderitem_formset.management_form }}
-      {{ form.orderform.orderitem_formset.non_form_errors }}
-
-      <div class="row">
-        <div class="table-responsive mb-3">
-          <table class="table" id="itemTable">
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>QTY</th>
-                <th>Price (&#8377;)</th>
-                <th>Tax (%)</th>
-                <th>Total (in &#8377;)</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for form in form.orderform.orderitem_formset %}
-              <tr class="formset-row">
-                {{form.id}}
-                <td class="col-lg-4 col-md-4">{{ form.item }}</td>
-                <td class="col-lg-3 col-md-3 quantity">{{ form.quantity }}</td>
-                <td class="price"></td>
-                <td class="tax"></td>
-                <td class="subtotal"></td>
-                <td>
-                  <a href="#" class="btn delete-row"><img src="{% static "assets/img/icons/delete.svg" %}" alt="svg"></a>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="row">
+        <hr />
         <div class="row">
-          <div class="col-lg-6 ">
-            {% comment %} <div class="total-order w-100 max-widthauto m-auto mb-4">
-              <ul>
-                <li>
-                  <h4>Order Tax</h4>
-                  <h5>$ 0.00 (0.00%)</h5>
-                </li>
-                <li>
-                  <h4>Discount </h4>
-                  <h5>$ 0.00</h5>
-                </li>
-              </ul>
+          <div class="col-lg-6 col-sm-6 col-12">
+            {% comment %} <div class="form-group">
+              <div class="input-groupicon">
+                <input type="text" placeholder="Please type product code and select...">
+                <div class="addonset">
+                  <img src="{% static "assets/img/icons/scanners.svg" %}" alt="img">
+                </div>
+              </div>
             </div> {% endcomment %}
           </div>
-          <div class="col-lg-6 ">
-            <div class="total-order w-100 max-widthauto m-auto mb-4">
-              <ul>
-                {% comment %} <li>
-                  <h4>Discount</h4>
-                  <h5 id="discount">0.00</h5>
-                </li> {% endcomment %}
-                <li class="total">
-                  <h4>Total (&#8377;)</h4>
-                  <h5 id="grand_total">0.00</h5>
-                </li>
-              </ul>
+          <div class="col-lg-6 col-sm-6 col-12 d-flex justify-content-end">
+            <div class="form-group">
+              <button type="button" class="btn btn-primary" id="btn-add-item">Add Item</button>
             </div>
           </div>
         </div>
-        <!--d-flex justify-content-end add this to move content end-->
-        <div class="col-lg-12">
-          <button type="submit" class="btn btn-submit me-2">{% if order %}Update{% else %}Add{% endif %}</button>
-          {% comment %} <a href="javascript:void(0);" class="btn btn-cancel">Cancel</a> {% endcomment %}
+
+        {{ form.orderform.orderitem_formset.management_form }}
+        {{ form.orderform.orderitem_formset.non_form_errors }}
+
+        <div class="row">
+          <div class="table-responsive mb-3">
+            <table class="table" id="itemTable">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>QTY</th>
+                  <th>Price (&#8377;)</th>
+                  <th>Tax (%)</th>
+                  <th>Total (in &#8377;)</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for form in form.orderform.orderitem_formset %}
+                <tr class="formset-row">
+                  {{form.id}}
+                  <td class="col-lg-4 col-md-4">{{ form.item }}</td>
+                  <td class="col-lg-3 col-md-3 quantity">{{ form.quantity }}</td>
+                  <td class="price"></td>
+                  <td class="tax"></td>
+                  <td class="subtotal"></td>
+                  <td>
+                    <a href="#" class="btn delete-row"><img src="{% static "assets/img/icons/delete.svg" %}" alt="svg"></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+
+        <div class="row">
+          <div class="row">
+            <div class="col-lg-6 ">
+              {% comment %} <div class="total-order w-100 max-widthauto m-auto mb-4">
+                <ul>
+                  <li>
+                    <h4>Order Tax</h4>
+                    <h5>$ 0.00 (0.00%)</h5>
+                  </li>
+                  <li>
+                    <h4>Discount </h4>
+                    <h5>$ 0.00</h5>
+                  </li>
+                </ul>
+              </div> {% endcomment %}
+            </div>
+            <div class="col-lg-6 ">
+              <div class="total-order w-100 max-widthauto m-auto mb-4">
+                <ul>
+                  {% comment %} <li>
+                    <h4>Discount</h4>
+                    <h5 id="discount">0.00</h5>
+                  </li> {% endcomment %}
+                  <li class="total">
+                    <h4>Total (&#8377;)</h4>
+                    <h5 id="grand_total">0.00</h5>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!--d-flex justify-content-end add this to move content end-->
+          <div class="col-lg-12">
+            <button type="submit" class="btn btn-submit me-2">{% if order %}Update{% else %}Add{% endif %}</button>
+            <a href="javascript:void(0);" class="btn btn-cancel">Print</a>
+          </div>
+        </div>
     </form>
     </div>
   </div>
@@ -250,7 +250,7 @@
 
     // Initial calculation on page load
     updateTotals();
-});
+  });
   
   $(document).ready(function() {
 

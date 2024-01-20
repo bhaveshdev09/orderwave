@@ -90,13 +90,17 @@ class ItemForm(forms.ModelForm):
         ),
     )
     tax = forms.FloatField(
-        initial=5.0, widget=forms.NumberInput(attrs={"class": "form-control"})
+        initial=5.0,
+        widget=forms.NumberInput(attrs={"class": "form-control"}),
+        required=False,
+        help_text="default tax applicable is 5.0 %",
     )
     base_price = forms.FloatField(
         min_value=1,
         initial=1,
         widget=forms.NumberInput(attrs={"class": "form-control"}),
     )
+    desc = forms.TextInput()
 
     class Meta:
         model = Item
@@ -115,4 +119,5 @@ class ItemForm(forms.ModelForm):
             "desc": forms.Textarea(attrs={"class": "form-control"}),
             "section": forms.Select(attrs={"class": "form-select"}),
             "category": forms.Select(attrs={"class": "form-select"}),
+            "desc": forms.Textarea(attrs={"class": "form-control"}),
         }
