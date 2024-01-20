@@ -1,9 +1,6 @@
 from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.base import Model as Model
-from django.db.models.query import QuerySet
-from django.forms.models import BaseModelForm
-from django.shortcuts import render, redirect
 from django.views.generic import (
     CreateView,
     ListView,
@@ -63,6 +60,7 @@ class BillListView(ListView):
     model = Bill
     template_name = "bills/bill_list.html"
     context_object_name = "bills"
+    queryset = Bill.objects.all().order_by("-created_at") #TODO: Bill Orders are not ordering by created at
 
 
 class BillCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -71,13 +69,6 @@ class BillCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = "bills/bill_form.html"
     success_url = reverse_lazy("orders:bill-list")
     success_message = "Order created successfully."
-
-    # def form_valid(self, form):
-    #     # The code `print(self.request.POST)` is printing the POST data that is submitted with the
-    #     # form. This can be useful for debugging purposes to see the data that is being sent to the
-    #     # server.
-    #     form.save()
-    #     return super().form_valid(form)
 
     def get_context_data(self, **kwargs: Any):
         self.context = super().get_context_data(**kwargs)

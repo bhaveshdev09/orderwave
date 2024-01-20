@@ -62,6 +62,7 @@
             <div class="form-group">
               {{ form.tax.label_tag }}
               {{ form.tax }}
+              <span class="form-text text-muted"> {{form.tax.help_text}}</span>
               <div class="ml-3 invalid-feedback">
                 Please enter valid tax.
               </div> 
@@ -106,7 +107,7 @@
 
 
 {% block js %}
-<script>
+   <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
   (function () {
     "use strict";
