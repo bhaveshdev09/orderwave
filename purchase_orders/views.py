@@ -1,10 +1,12 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 from django.urls import reverse_lazy
 from purchase_orders.models import PurchaseOrder, Material
 from purchase_orders.forms import PurchaseOrderForm
+from purchase_orders.resources import PurchaseOrderResource
+from import_export.mixins import ExportViewMixin
 
 
 class PurchaseOrderListView(ListView):
@@ -48,3 +50,23 @@ class PurchaseOrderDeleteView(DeleteView):
     template_name = "purchase_orders/purchase_order_confirm_delete.html"
     success_url = reverse_lazy("purchase_orders:purchase-order-list")
     context_object_name = "purchase_order"
+
+
+class PurchaseOrderExportToExcelView(ExportViewMixin, View):
+    model = PurchaseOrder
+    resource_class = PurchaseOrderResource  # Use the default ModelResource
+
+    def get(self, request, *args, **kwargs):
+        # Export the data to Excel
+        dataset = self.resource_class().export()
+        from django.http import HttpResponse
+
+        response = HttpResponse(
+            dataset.xlsx,
+            content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+        response[
+            "Content-Disposition"
+        ] = "attachment; filename=purchase_orders_export.xlsx"
+
+        return response
