@@ -7,19 +7,23 @@ from purchase_orders.models import PurchaseOrder, Material
 from purchase_orders.forms import PurchaseOrderForm
 from purchase_orders.resources import PurchaseOrderResource
 from import_export.mixins import ExportViewMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class PurchaseOrderListView(ListView):
+class PurchaseOrderListView(LoginRequiredMixin, ListView):
     model = PurchaseOrder
     template_name = "purchase_orders/purchase_order_list.html"
     context_object_name = "purchase_orders"
+    queryset = PurchaseOrder.objects.all().order_by("-created_at")
 
 
-class PurchaseOrderCreateView(CreateView):
+class PurchaseOrderCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = PurchaseOrder
     form_class = PurchaseOrderForm
     template_name = "purchase_orders/purchase_order_form.html"
     success_url = reverse_lazy("purchase_orders:purchase-order-list")
+    success_message = "Purchase Order created successfully."
 
     def get_context_data(self, **kwargs: Any):
         self.context = super().get_context_data(**kwargs)
@@ -30,11 +34,12 @@ class PurchaseOrderCreateView(CreateView):
         return self.context
 
 
-class PurchaseOrderUpdateView(UpdateView):
+class PurchaseOrderUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = PurchaseOrder
     form_class = PurchaseOrderForm
     template_name = "purchase_orders/purchase_order_form.html"
     success_url = reverse_lazy("purchase_orders:purchase-order-list")
+    success_message = "Purchase Order updated successfully."
 
     def get_context_data(self, **kwargs: Any):
         self.context = super().get_context_data(**kwargs)
@@ -45,11 +50,12 @@ class PurchaseOrderUpdateView(UpdateView):
         return self.context
 
 
-class PurchaseOrderDeleteView(DeleteView):
+class PurchaseOrderDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = PurchaseOrder
     template_name = "purchase_orders/purchase_order_confirm_delete.html"
     success_url = reverse_lazy("purchase_orders:purchase-order-list")
     context_object_name = "purchase_order"
+    success_message = "Purchase Order deleted successfully."
 
 
 class PurchaseOrderExportToExcelView(ExportViewMixin, View):

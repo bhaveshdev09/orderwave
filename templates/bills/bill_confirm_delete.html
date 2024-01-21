@@ -19,7 +19,8 @@
       <form method="post" action="{% url 'branches:branch-delete' bill.pk %}">
         {% csrf_token %}
         <div class="col-lg-12">
-          <button class="btn btn-submit me-2" type="submit">Confirm</button>
+          <button class="btn btn-delete me-2" type="submit">Delete</button>
+          {% comment %} <button class="btn btn-submit me-2" type="submit">Confirm</button> {% endcomment %}
           <a href="javascript:void(0);" onclick="history.back();" class="btn btn-cancel">Cancel</a>
         </div>
       </form>
