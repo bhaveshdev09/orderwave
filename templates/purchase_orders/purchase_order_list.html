@@ -34,10 +34,11 @@
         <div class="wordset">
         <ul>
           <li>
-            <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
+            <a href="{% url "purchase_orders:export-purchase-orders-to-excel" %}"data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="{% static "assets/img/icons/excel.svg" %}" alt="img"></a>
           </li>
         </ul>
       </div>
+    </div>
         {% comment %}<div class="wordset">
           <ul>
             <li>

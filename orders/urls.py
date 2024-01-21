@@ -10,6 +10,7 @@ from orders.views import (
     BillCreateView,
     BillUpdateView,
     BillDeleteView,
+    BillsExportToExcelView,
 )
 
 app_name = "orders"
@@ -24,5 +25,6 @@ urlpatterns = [
     path("bills/create/", BillCreateView.as_view(), name="bill-create"),
     path("bills/<int:pk>/update/", BillUpdateView.as_view(), name="bill-update"),
     path("bills/<int:pk>/delete/", BillDeleteView.as_view(), name="bill-delete"),
+    path("export/", BillsExportToExcelView.as_view(), name="export-bills-to-excel"),
     # Add any other URLs as needed.
 ]

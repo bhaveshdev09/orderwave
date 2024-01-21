@@ -6,14 +6,13 @@ from .views import (
     PurchaseOrderCreateView,
     PurchaseOrderUpdateView,
     PurchaseOrderDeleteView,
+    PurchaseOrderExportToExcelView,
 )
 
 app_name = "purchase_orders"
 
 urlpatterns = [
-    path(
-        "", PurchaseOrderListView.as_view(), name="purchase-order-list"
-    ),
+    path("", PurchaseOrderListView.as_view(), name="purchase-order-list"),
     path(
         "create/",
         PurchaseOrderCreateView.as_view(),
@@ -28,5 +27,10 @@ urlpatterns = [
         "<int:pk>/delete/",
         PurchaseOrderDeleteView.as_view(),
         name="purchase-order-delete",
+    ),
+    path(
+        "export/",
+        PurchaseOrderExportToExcelView.as_view(),
+        name="export-purchase-orders-to-excel",
     ),
 ]

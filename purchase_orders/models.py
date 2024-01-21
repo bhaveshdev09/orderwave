@@ -37,6 +37,14 @@ class PurchaseOrder(BaseModel):
     def total_cost(self):
         return self.get_total()
 
+    def get_items(self):
+        return self.materials.all()
+
+    def get_items_for_excel(self):
+        return list(
+            self.get_items().values_list("material__name", "quantity", "total_price")
+        )
+
     def save(self, *args, **kwargs):
         new_po_id = self._meta.model.objects.count() + 1
         self.po_no = str(new_po_id)
