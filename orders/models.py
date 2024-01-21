@@ -19,6 +19,14 @@ class Order(BaseModel):
     def final_total(self):
         return self.total - self.discount
 
+    def get_items(self):
+        return self.items.all()
+
+    def get_items_for_excel(self):
+        return list(
+            self.get_items().values_list("item__name", "quantity", "total_price")
+        )
+
     def __str__(self):
         return f"CC-{self.order_date.strftime('%d%m%Y')}-{self.order_no}"
 

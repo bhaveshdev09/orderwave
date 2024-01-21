@@ -8,12 +8,15 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
     FormView,
+    View,
 )
 from django.urls import reverse_lazy
 from orders.models import Order, OrderItem, Bill
 from orders.forms import OrderForm, BillForm
 from items.models import Item
 from django.contrib.messages.views import SuccessMessageMixin
+from import_export.mixins import ExportViewMixin
+from orders.resources import BillResource
 
 
 class OrderListView(LoginRequiredMixin, ListView):
@@ -60,7 +63,9 @@ class BillListView(ListView):
     model = Bill
     template_name = "bills/bill_list.html"
     context_object_name = "bills"
-    queryset = Bill.objects.all().order_by("-created_at") #TODO: Bill Orders are not ordering by created at
+    queryset = Bill.objects.all().order_by(
+        "-created_at"
+    )  # TODO: Bill Orders are not ordering by created at
 
 
 class BillCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -114,3 +119,21 @@ class BillDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = "bills/bill_confirm_delete.html"
     success_url = reverse_lazy("orders:bill-list")
     success_message = "Order deleted successfully."
+
+
+class BillsExportToExcelView(ExportViewMixin, View):
+    model = Bill
+    resource_class = BillResource  # Use the default ModelResource
+
+    def get(self, request, *args, **kwargs):
+        # Export the data to Excel
+        dataset = BillResource().export()
+        from django.http import HttpResponse
+
+        response = HttpResponse(
+            dataset.xlsx,
+            content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+        response["Content-Disposition"] = "attachment; filename=bills_export.xlsx"
+
+        return response
