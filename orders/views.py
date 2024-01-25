@@ -10,13 +10,17 @@ from django.views.generic import (
     FormView,
     View,
 )
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.http import JsonResponse, Http404
 from orders.models import Order, OrderItem, Bill
 from orders.forms import OrderForm, BillForm
 from items.models import Item
 from django.contrib.messages.views import SuccessMessageMixin
 from import_export.mixins import ExportViewMixin
 from orders.resources import BillResource
+
+from django.contrib import messages
 
 
 class OrderListView(LoginRequiredMixin, ListView):
@@ -59,7 +63,7 @@ class OrderDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("orders:order-list")
 
 
-class BillListView(ListView):
+class BillListView(LoginRequiredMixin, ListView):
     model = Bill
     template_name = "bills/bill_list.html"
     context_object_name = "bills"
@@ -137,3 +141,28 @@ class BillsExportToExcelView(ExportViewMixin, View):
         response["Content-Disposition"] = "attachment; filename=bills_export.xlsx"
 
         return response
+
+
+# API
+class ToggleBillStatusView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        try:
+            bill = get_object_or_404(Bill, pk=pk)
+        except Http404:
+            # messages.error(request, "Invalid request")
+            return JsonResponse({"status": "error", "message": "Invalid request"})
+        # Toggle the status
+        if bill.status == Bill.STATUS_CHOICE_PENDING:
+            bill.status = Bill.STATUS_CHOICE_COMPLETE
+        else:
+            bill.status = Bill.STATUS_CHOICE_PENDING
+
+        bill.save()
+        # messages.success(request, "Order status updated")
+        return JsonResponse(
+            {
+                "status": "success",
+                "message": "Order status updated",
+                "bill_current_status": bill.status,
+            }
+        )
