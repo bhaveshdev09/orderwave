@@ -20,5 +20,14 @@ class Item(BaseModel):
         # Your logic for calculating selling price
         return round(self.base_price * (self.tax * 0.01 + 1), 1)
 
+    @property
+    def is_available(self):
+        pass
+
+    @classmethod
+    def get_available_items(cls):
+        current_operating_hours = OperatingHour.get_current_operating_hour()
+        return cls._default_manager.filter(operation_hour__in=current_operating_hours)
+
     def __str__(self):
         return self.name
