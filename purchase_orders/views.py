@@ -9,6 +9,7 @@ from purchase_orders.resources import PurchaseOrderResource
 from import_export.mixins import ExportViewMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse, Http404
 
 
 class PurchaseOrderListView(LoginRequiredMixin, ListView):
@@ -16,6 +17,15 @@ class PurchaseOrderListView(LoginRequiredMixin, ListView):
     template_name = "purchase_orders/purchase_order_list.html"
     context_object_name = "purchase_orders"
     queryset = PurchaseOrder.objects.all().order_by("-created_at")
+
+    def get(self, request, *args, **kwargs):
+        status = request.GET.get("status", None)
+        if status in (
+            PurchaseOrder.STATUS_CHOICE_PENDING,
+            PurchaseOrder.STATUS_CHOICE_COMPLETE,
+        ):
+            self.queryset = self.queryset.filter(status=status)
+        return super().get(request, *args, **kwargs)
 
 
 class PurchaseOrderCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -76,3 +86,28 @@ class PurchaseOrderExportToExcelView(ExportViewMixin, View):
         ] = "attachment; filename=purchase_orders_export.xlsx"
 
         return response
+
+
+# API
+class TogglePurchaseOrderStatusView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        try:
+            purchase_order = get_object_or_404(PurchaseOrder, pk=pk)
+        except Http404:
+            # messages.error(request, "Invalid request")
+            return JsonResponse({"status": "error", "message": "Invalid request"})
+        # Toggle the status
+        if purchase_order.status == PurchaseOrder.STATUS_CHOICE_PENDING:
+            purchase_order.status = PurchaseOrder.STATUS_CHOICE_COMPLETE
+        else:
+            purchase_order.status = PurchaseOrder.STATUS_CHOICE_PENDING
+
+        purchase_order.save()
+        # messages.success(request, "Order status updated")
+        return JsonResponse(
+            {
+                "status": "success",
+                "message": "Purchase order status updated",
+                "purchase_order_current_status": purchase_order.status,
+            }
+        )

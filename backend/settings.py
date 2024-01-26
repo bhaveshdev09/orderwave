@@ -27,17 +27,17 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    "branches", #
-    "customers", #
+    "branches",
+    "customers",
     "items",
     "orders",
-    "staticapp", #
-    "vendors", #
+    "staticapp", 
+    "vendors", 
     "users",
-    "materials", #
+    "materials", 
     "purchase_orders",
-    "analytics", #
-    "aggregators", #
+    "analytics", 
+    "aggregators", 
 ]
 
 MIDDLEWARE = [
