@@ -76,6 +76,9 @@
                   <a class="me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="print">
                     <img src="{% static "assets/img/icons/printer.svg" %}" alt="img">
                   </a>
+                  <a class="me-3 toggleStatusButton" href="#" data-bill-id="{{order.pk}}">
+                    <img src="{% if order.status == "complete" %}{% static "assets/img/icons/close-circle2.svg" %}{% else %}{% static "assets/img/icons/check.svg" %}{% endif %}" alt="img">
+                  </a>
                 </td>
               </tr>
             {% endfor %}
@@ -96,7 +99,51 @@
 <script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
 
 <script>
-
+  $(document).ready(function () {
+    // Attach a click event to the button
+    $('.toggleStatusButton').click(function () {
+      var billId = $(this).data('bill-id');
+      var thisRow = $(this).closest('tr');
+      var statusCell = thisRow.find('td:eq(4)');
+      var iconCell = thisRow.find('td:last');
+      //Send a POST request to the toggle_bill_status view
+      
+      $.ajax({
+        url: "/order/bills/" + billId + '/update-status/',
+        method: 'POST',
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},  // Include the CSRF token
+        success: function (data) {
+          console.log(data);
+          // Update the UI or perform any other actions on success
+          if (data.status === "success"){
+            toastr.success(data.message, "Success", { timeOut: 5e3, rtl: false });
+             // Update the Status column in the table
+             if (data.bill_current_status == "complete"){
+             statusCell.html('<span class="badges bg-lightgreen">Completed</span>');
+             iconCell.find('.toggleStatusButton').find('img').attr('src', '{% static "assets/img/icons/close-circle2.svg" %}'); // Change the icon based on your logic
+             }
+             else{
+              statusCell.html('<span class="badges bg-lightred">Pending</span>');
+              iconCell.find('.toggleStatusButton').find('img').attr('src', '{% static "assets/img/icons/check.svg" %}');
+             }
+          }
+          else{
+            toastr.error(data.message, "Error!", { timeOut: 5e3, rtl: false });
+          }
+          
+          // toastr.success(message, "Success", { timeOut: 5e3, rtl: false });
+          // You can update the UI, e.g., change the button text, color, etc.
+        },
+        error: function (error) {
+          console.log(error);
+          console.error('Error toggling status:', error);
+          toastr.error(error.message, "Error!", { timeOut: 5e3, rtl: false }); 
+        }
+      });
+    });
+  });
+</script>
+<script>
   $(document).ready(function () {
     $("#billOrdersDataTable").dataTable().fnDestroy();
     $('#billOrdersDataTable').DataTable({
@@ -116,7 +163,6 @@
 			},	
 		});
   });
-  
 </script>
 
 <script>

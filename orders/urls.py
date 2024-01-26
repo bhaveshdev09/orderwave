@@ -11,6 +11,7 @@ from orders.views import (
     BillUpdateView,
     BillDeleteView,
     BillsExportToExcelView,
+    ToggleBillStatusView
 )
 
 app_name = "orders"
@@ -24,6 +25,7 @@ urlpatterns = [
     path("bills/", BillListView.as_view(), name="bill-list"),
     path("bills/create/", BillCreateView.as_view(), name="bill-create"),
     path("bills/<int:pk>/update/", BillUpdateView.as_view(), name="bill-update"),
+    path('bills/<int:pk>/update-status/', ToggleBillStatusView.as_view(), name='toggle_bill_status'),
     path("bills/<int:pk>/delete/", BillDeleteView.as_view(), name="bill-delete"),
     path("export/", BillsExportToExcelView.as_view(), name="export-bills-to-excel"),
     # Add any other URLs as needed.
