@@ -71,6 +71,12 @@ class BillListView(LoginRequiredMixin, ListView):
         "-created_at"
     )  # TODO: Bill Orders are not ordering by created at
 
+    def get(self, request, *args, **kwargs):
+        status = request.GET.get("status", None)
+        if status in (Bill.STATUS_CHOICE_PENDING, Bill.STATUS_CHOICE_COMPLETE):
+            self.queryset = self.queryset.filter(status=status)
+        return super().get(request, *args, **kwargs)
+
 
 class BillCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Bill

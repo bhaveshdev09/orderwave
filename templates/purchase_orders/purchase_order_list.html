@@ -39,6 +39,47 @@
           </ul>
         </div>
       </div>
+
+      
+      <!-- /Filter -->
+      <div class="card" id="filter_inputs">
+        <div class="card-body pb-0">
+          <div class="row">
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <select class="form-select" id="status-search-value">
+                  <option value="pending">Pending</option>
+                  <option value="complete">Completed</option>
+                </select>
+              </div>
+            </div>
+            {% comment %} <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <select class="form-select">
+                  <option>Choose Sub Category</option>
+                  <option>Fruits</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <select class="form-select">
+                  <option>Choose Sub Brand</option>
+                  <option>Iphone</option>
+                </select>
+              </div>
+            </div> {% endcomment %}
+            <div class="col-lg-1 col-sm-6 col-12 ms-auto">
+              <div class="form-group">
+                <a class="btn btn-filters ms-auto" id="status-search"><img src="{% static "assets/img/icons/search-whites.svg" %}" alt="img"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Filter -->
+    
+
       <div class="table-responsive">
         <table class="table datanew" id="purchaseOrdersDataTable">
           <thead>
@@ -46,8 +87,8 @@
                 <th>Purchase Order</th>
                 <th>Vendor Name</th>
                 <th>Total Cost (in &#8377;)</th>
-                <th>Status</th>
                 <th>Created At</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
           </thead>
@@ -57,8 +98,8 @@
                 <td><a href="{% url 'purchase_orders:purchase-order-update' purchase_order.pk %}"><span class="fw-bold">{{purchase_order.purchase_order_id}}</span></a></td>
                 <td>{{purchase_order.vendor.name|capfirst}}</a></td>
                 <td>&#8377;&nbsp;{{purchase_order.total_cost}}</td>
-                <td>{% if purchase_order.status == "complete" %}<span class="badges bg-lightgreen">Completed</span> {% else %}<span class="badges bg-lightred">Pending</span>{% endif %}</td>
                 <td>{{purchase_order.created_at}}</td>
+                <td>{% if purchase_order.status == "complete" %}<span class="badges bg-lightgreen">Completed</span> {% else %}<span class="badges bg-lightred">Pending</span>{% endif %}</td>
                 <td>
                   <a class="me-3" href="{% url 'purchase_orders:purchase-order-update' purchase_order.pk %}">
                     <img src="{% static "assets/img/icons/edit.svg" %}" alt="img">
@@ -66,7 +107,10 @@
                   <a class="me-3" href="{% url 'purchase_orders:purchase-order-delete' purchase_order.pk %}">
                     <img src="{% static "assets/img/icons/delete.svg" %}" alt="img">
                   </a>
-                  <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
+                  <a class="me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="{% static "assets/img/icons/printer.svg" %}" alt="img"></a>
+                  <a class="me-3 toggleStatusButton" href="#" data-bill-id="{{purchase_order.pk}}">
+                    <img src="{% if purchase_order.status == "complete" %}{% static "assets/img/icons/close-circle2.svg" %}{% else %}{% static "assets/img/icons/check.svg" %}{% endif %}" alt="img">
+                  </a>
                 </td>
               </tr>
             {% endfor %}
@@ -87,14 +131,70 @@
 <script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
 
 <script>
+  $(document).ready(function () {
+    $("#status-search").click(function(){
+      var statusValue = $("#status-search-value").val();
+      console.log(statusValue);
+      window.location.replace("/purchase-orders/?status=" + statusValue);
+    });
+  });
+</script>
 
+<script>
+  $(document).ready(function () {
+    // Attach a click event to the button
+    $('.toggleStatusButton').click(function () {
+      var billId = $(this).data('bill-id');
+      var thisRow = $(this).closest('tr');
+      var statusCell = thisRow.find('td:eq(4)');
+      var iconCell = thisRow.find('td:last');
+      //Send a POST request to the toggle_bill_status view
+      
+      $.ajax({
+        url: "/purchase-orders/" + billId + '/update-status/',
+        method: 'POST',
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},  // Include the CSRF token
+        success: function (data) {
+          console.log(data);
+          // Update the UI or perform any other actions on success
+          if (data.status === "success"){
+            toastr.success(data.message, "Success", { timeOut: 5e3, rtl: false });
+             // Update the Status column in the table
+             if (data.purchase_order_current_status == "complete"){
+                statusCell.html('<span class="badges bg-lightgreen">Completed</span>');
+                iconCell.find('.toggleStatusButton').find('img').attr('src', '{% static "assets/img/icons/close-circle2.svg" %}'); // Change the icon based on your logic
+             }
+             else{
+              statusCell.html('<span class="badges bg-lightred">Pending</span>');
+              iconCell.find('.toggleStatusButton').find('img').attr('src', '{% static "assets/img/icons/check.svg" %}');
+             }
+          }
+          else{
+            toastr.error(data.message, "Error!", { timeOut: 5e3, rtl: false });
+          }
+          
+          // toastr.success(message, "Success", { timeOut: 5e3, rtl: false });
+          // You can update the UI, e.g., change the button text, color, etc.
+        },
+        error: function (error) {
+          console.log(error);
+          console.error('Error toggling status:', error);
+          toastr.error("Something went wrong!", "Error!", { timeOut: 5e3, rtl: false }); 
+        }
+      });
+    });
+  });
+</script>
+
+<script>
   $(document).ready(function () {
     $("#purchaseOrdersDataTable").dataTable().fnDestroy();
     $('#purchaseOrdersDataTable').DataTable({
 			"bFilter": true,
 			"sDom": "fBtlpi",  
 			"pagingType": "numbers", 
-			"ordering": false,
+			"ordering": true,
+      "order": [[3, 'desc']],  // Created At column no
 			"language": {
 				search: ' ',
 				sLengthMenu: '_MENU_',

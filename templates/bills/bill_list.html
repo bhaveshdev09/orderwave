@@ -45,6 +45,44 @@
           </ul>
         </div>
       </div>
+
+      <!-- /Filter -->
+      <div class="card" id="filter_inputs">
+        <div class="card-body pb-0">
+          <div class="row">
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <select class="form-select" id="status-search-value">
+                  <option value="pending">Pending</option>
+                  <option value="complete">Completed</option>
+                </select>
+              </div>
+            </div>
+            {% comment %} <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <select class="form-select">
+                  <option>Choose Sub Category</option>
+                  <option>Fruits</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <select class="form-select">
+                  <option>Choose Sub Brand</option>
+                  <option>Iphone</option>
+                </select>
+              </div>
+            </div> {% endcomment %}
+            <div class="col-lg-1 col-sm-6 col-12 ms-auto">
+              <div class="form-group">
+                <a class="btn btn-filters ms-auto" id="status-search"><img src="{% static "assets/img/icons/search-whites.svg" %}" alt="img"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Filter -->
     
       <div class="table-responsive">
         <table class="table datanew" id="billOrdersDataTable">
@@ -64,7 +102,7 @@
                 <td><a href="{% url 'orders:bill-update' order.pk %}"><span class="fw-bold">{{order.order_repr}}</span></a></td>
                 <td>{{order.customer.name}}</a></td>
                 <td>&#8377;&nbsp;{{order.total}}</td>
-                <td>{{order.created_at}}</td>
+                <td>{{order.bill_date}}</td>
                 <td>{% if order.status == "complete" %}<span class="badges bg-lightgreen">Completed</span> {% else %}<span class="badges bg-lightred">Pending</span>{% endif %}</td>
                 <td>
                   <a class="me-3" href="{% url 'orders:bill-update' order.pk %}" data-bs-toggle="tooltip" data-bs-placement="top" title="edit">
@@ -97,6 +135,16 @@
 <!-- Datatable JS -->
 <script src="{% static "assets/js/jquery.dataTables.min.js" %}"></script>
 <script src="{% static "assets/js/dataTables.bootstrap4.min.js" %}"></script>
+
+<script>
+  $(document).ready(function () {
+    $("#status-search").click(function(){
+      var statusValue = $("#status-search-value").val();
+      console.log(statusValue);
+      window.location.replace("/order/bills/?status=" + statusValue);
+    });
+  });
+</script>
 
 <script>
   $(document).ready(function () {
@@ -150,7 +198,8 @@
 			"bFilter": true,
 			"sDom": "fBtlpi",  
 			"pagingType": "numbers", 
-			"ordering": false,
+			"ordering": true,
+      "order": [[3, 'desc']],  // Created At column no
 			"language": {
 				search: ' ',
 				sLengthMenu: '_MENU_',

@@ -6,9 +6,12 @@ from materials.models import Material
 
 
 class PurchaseOrder(BaseModel):
+    # Bill Status
+    STATUS_CHOICE_PENDING = "pending"
+    STATUS_CHOICE_COMPLETE = "complete"
     STATUS_CHOICES = [
         ("complete", "Complete"),
-        ("incomplete", "Incomplete"),
+        ("pending", "Pending"),
     ]
 
     po_no = models.CharField(max_length=20, editable=False)
@@ -16,7 +19,7 @@ class PurchaseOrder(BaseModel):
     total = models.FloatField(default=0, editable=False)
     order_date = models.DateTimeField(default=timezone.now)
     status = models.CharField(
-        max_length=20, choices=STATUS_CHOICES, default="incomplete"
+        max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICE_PENDING
     )
 
     def __str__(self):

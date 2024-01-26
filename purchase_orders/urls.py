@@ -7,6 +7,7 @@ from .views import (
     PurchaseOrderUpdateView,
     PurchaseOrderDeleteView,
     PurchaseOrderExportToExcelView,
+    TogglePurchaseOrderStatusView,
 )
 
 app_name = "purchase_orders"
@@ -32,5 +33,10 @@ urlpatterns = [
         "export/",
         PurchaseOrderExportToExcelView.as_view(),
         name="export-purchase-orders-to-excel",
+    ),
+    path(
+        "<int:pk>/update-status/",
+        TogglePurchaseOrderStatusView.as_view(),
+        name="toggle_purchase_order_status",
     ),
 ]

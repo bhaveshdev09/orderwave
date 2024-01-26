@@ -105,7 +105,7 @@ class Bill(BaseModel):
 
     @property
     def order_repr(self) -> str:
-        return f"CC-{self.bill_date.strftime('%d%m%Y')}-{self.order.order_no}"
+        return f"CC-{self.bill_date.strftime('%d%m%Y')}-{self.pk}"
 
     @property
     def total(self):
