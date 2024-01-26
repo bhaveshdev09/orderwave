@@ -6,7 +6,7 @@ from django.db.models import Sum
 
 
 # Create your models here.
-class ProxyPurchseOrder(PurchaseOrder):
+class ProxyPurchaseOrder(PurchaseOrder):
     class Meta:
         proxy = True
 
