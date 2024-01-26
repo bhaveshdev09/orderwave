@@ -2,6 +2,7 @@ from django.db import models
 from backend.models import BaseModel
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from django.utils import timezone
 
 
 class OperatingHour(BaseModel):
@@ -22,6 +23,13 @@ class OperatingHour(BaseModel):
         managed = True
         verbose_name = "operating_hour"
         verbose_name_plural = "operating_hours"
+
+    @classmethod
+    def get_current_operating_hour(cls):
+        current_time = timezone.localtime(timezone.now())
+        return cls._default_manager.filter(
+            from_time__lte=current_time.time(), to_time__gte=current_time.time()
+        )
 
     def get_absolute_url(self):
         return reverse("items:operating-hour-detail", kwargs={"pk": self.pk})

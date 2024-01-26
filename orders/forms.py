@@ -9,6 +9,12 @@ from aggregators.models import Aggregator
 
 
 class OrderItemForm(forms.ModelForm):
+    item = forms.ModelChoiceField(
+        queryset=Item.get_available_items(),
+        widget=forms.Select(
+            attrs={"class": "form-select item-select", "required": True},
+        ),
+    )
     quantity = forms.IntegerField(
         widget=forms.NumberInput(
             attrs={
@@ -24,11 +30,6 @@ class OrderItemForm(forms.ModelForm):
     class Meta:
         model = OrderItem
         fields = ["item", "quantity"]
-        widgets = {
-            "item": forms.Select(
-                attrs={"class": "form-select item-select", "required": True}
-            ),
-        }
 
 
 OrderItemFormSet = inlineformset_factory(
