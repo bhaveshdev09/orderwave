@@ -24,14 +24,14 @@
                         <div class="form-login">
                             <label>Email</label>
                             <div class="form-addons">
-                                <input type="text" name="email" placeholder="Enter your email address">
+                                {{form.email}}
                                 <img src="{% static 'assets/img/icons/mail.svg' %}" alt="img">
                             </div>
                         </div>
                         <div class="form-login">
                             <label>Password</label>
                             <div class="pass-group">
-                                <input type="password" name="password" class="pass-input" placeholder="Enter your password">
+                                {{form.password}}
                                 <span class="fas toggle-password fa-eye-slash"></span>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
 </div>
 {% endblock content %}
 
-{% block js %}
+{% block extra_js %}
 <!-- Datatable JS -->
 <script>
   // Server Side Errors If any
@@ -74,4 +74,5 @@
     {% endif %}
   });
 </script>
-{% endblock js %}
+                    
+{% endblock %}

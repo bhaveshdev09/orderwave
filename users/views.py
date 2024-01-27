@@ -14,6 +14,8 @@ from users.models import CustomUser
 from users.forms import CustomUserForm, CustomUserAuthForm
 from django.contrib.auth.views import LogoutView, PasswordResetView
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class CustomUserCreateView(LoginRequiredMixin, CreateView):
@@ -53,7 +55,12 @@ class CustomUserDeleteView(LoginRequiredMixin, DeleteView):
 class CustomLoginView(FormView):
     form_class = CustomUserAuthForm
     template_name = "authentication/login.html"
-    success_url = reverse_lazy("users:user-list")  # Adjust 'home' to your home URL
+    success_url = reverse_lazy("analytics:dashboard")  # Adjust 'home' to your home URL
+
+    def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(redirect_to=reverse_lazy("analytics:dashboard"))
+        return super().get(request, *args, **kwargs)
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         if request.user.is_authenticated:
@@ -67,19 +74,30 @@ class CustomLoginView(FormView):
 
         if user is not None:
             login(self.request, user)
+            messages.success(self.request, "login successful")
             # Your custom logic after successful login
             return super().form_valid(form)
         else:
             return self.form_invalid(form)
 
     def form_invalid(self, form):
-        print(form.errors.as_data())
         response = super().form_invalid(form)
+        for message in form.errors.values():
+            messages.error(
+                self.request,
+                message[0],
+            )
+
         return response
 
 
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy("users:login")
+
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(request, "You have been successfully logged out.")
+        print("Total:", len(messages.get_messages(self.request)))
+        return super().dispatch(request, *args, **kwargs)
 
 
 # class CustomPasswordResetView(PasswordResetView):
