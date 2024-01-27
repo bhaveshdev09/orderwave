@@ -32,6 +32,10 @@ class SectionCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("items:section-list")
     success_message = "Section created successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class SectionUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Section
@@ -40,9 +44,17 @@ class SectionUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("items:section-list")
     success_message = "Section updated successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class SectionDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Section
     template_name = "sections/section_confirm_delete.html"
     success_url = reverse_lazy("items:section-list")
     success_message = "Section deleted successfully."
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)

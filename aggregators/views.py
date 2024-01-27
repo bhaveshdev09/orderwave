@@ -33,7 +33,7 @@ class AggregatorCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = "Aggregator created successfully."
 
     def form_valid(self, form):
-        print(self.request.user)
+        form.instance.created_by = self.request.user
         return super().form_valid(form)
 
 
@@ -44,9 +44,17 @@ class AggregatorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("aggregators:aggregator-list")
     success_message = "Aggregator updated successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class AggregatorDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Aggregator
     template_name = "aggregators/aggregator_confirm_delete.html"
     success_url = reverse_lazy("aggregators:aggregator-list")
     success_message = "Aggregator deleted successfully."
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)

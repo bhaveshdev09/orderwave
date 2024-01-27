@@ -31,6 +31,10 @@ class ItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("items:item-list")
     success_message = "Item created successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class ItemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Item
@@ -39,9 +43,17 @@ class ItemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("items:item-list")
     success_message = "Item updated successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class ItemDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Item
     template_name = "items/item_confirm_delete.html"
     success_url = reverse_lazy("items:item-list")
     success_message = "Item deleted successfully."
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)

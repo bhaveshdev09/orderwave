@@ -34,7 +34,7 @@ class BranchCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = "Branch created successfully."
 
     def form_valid(self, form):
-        print(self.request.user)
+        form.instance.created_by = self.request.user
         return super().form_valid(form)
 
 
@@ -45,9 +45,17 @@ class BranchUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("branches:branch-list")
     success_message = "Branch updated successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class BranchDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Branch
     template_name = "branches/branch_confirm_delete.html"
     success_url = reverse_lazy("branches:branch-list")
     success_message = "Branch deleted successfully."
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)

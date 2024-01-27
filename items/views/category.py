@@ -31,6 +31,10 @@ class CategoryCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("items:category-list")
     success_message = "Category created successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class CategoryUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Category
@@ -39,9 +43,17 @@ class CategoryUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("items:category-list")
     success_message = "Category updated successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class CategoryDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Category
     template_name = "categories/category_confirm_delete.html"
     success_url = reverse_lazy("items:category-list")
     success_message = "Category deleted successfully."
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)

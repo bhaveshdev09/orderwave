@@ -20,10 +20,9 @@ class VendorCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("vendors:vendor-list")
     success_message = "Vendor created successfully."
 
-    def form_invalid(self, form):
-        response = super().form_invalid(form)
-        print(form.errors.as_json())
-        return response
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class VendorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -33,9 +32,17 @@ class VendorUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("vendors:vendor-list")
     success_message = "Vendor updated successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class VendorDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Vendor
     template_name = "vendors/vendor_confirm_delete.html"
     success_url = reverse_lazy("vendors:vendor-list")
     success_message = "Vendor deleted successfully."
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)

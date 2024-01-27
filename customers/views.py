@@ -32,6 +32,10 @@ class CustomerCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("customers:customer-list")
     success_message = "Customer created successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class CustomerUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Customer
@@ -40,9 +44,17 @@ class CustomerUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("customers:customer-list")
     success_message = "Customer updated successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class CustomerDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Customer
     template_name = "customers/customer_confirm_delete.html"
     success_url = reverse_lazy("customers:customer-list")
     success_message = "Customer deleted successfully."
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)

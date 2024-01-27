@@ -20,10 +20,9 @@ class MaterialCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy("materials:material-list")
     success_message = "Material created successfully."
 
-    def form_invalid(self, form):
-        print(form.errors)
-        response = super().form_invalid(form)
-        return response
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class MaterialUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -33,9 +32,17 @@ class MaterialUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy("materials:material-list")
     success_message = "Material updated successfully."
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
 
 class MaterialDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Material
     template_name = "materials/material_confirm_delete.html"
     success_url = reverse_lazy("materials:material-list")
     success_message = "Material deleted successfully."
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
