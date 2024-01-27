@@ -29,8 +29,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     mobile_no = models.CharField(max_length=15, blank=True, null=True)
-    branch = models.ForeignKey(
-        "branches.Branch", on_delete=models.DO_NOTHING, null=True, blank=True
+    assigned_branch = models.ForeignKey(
+        "branches.Branch",
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
+        related_name="assigned",
     )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

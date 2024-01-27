@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             bases=('customers.customer',),
         ),
         migrations.CreateModel(
-            name='ProxyPurchseOrder',
+            name='ProxyPurchaseOrder',
             fields=[
             ],
             options={
@@ -46,5 +46,16 @@ class Migration(migrations.Migration):
                 'constraints': [],
             },
             bases=('vendors.vendor',),
+        ),
+        migrations.CreateModel(
+            name='ProxyOrder',
+            fields=[
+            ],
+            options={
+                'proxy': True,
+                'indexes': [],
+                'constraints': [],
+            },
+            bases=('orders.bill',),
         ),
     ]

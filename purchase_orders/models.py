@@ -21,6 +21,13 @@ class PurchaseOrder(BaseModel):
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES, default=STATUS_CHOICE_PENDING
     )
+    order_branch = models.ForeignKey(
+        "branches.Branch",
+        on_delete=models.SET_NULL,
+        null=True,
+        default=None,
+        related_name="purchases",
+    )
 
     def __str__(self):
         return f"PO-{self.order_date.strftime('%d%m%Y')}-{self.po_no}"

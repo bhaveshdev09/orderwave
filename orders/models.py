@@ -99,6 +99,13 @@ class Bill(BaseModel):
     payment_type = models.CharField(
         max_length=20, choices=PAYMENT_TYPE_CHOICES, default="upi"
     )
+    order_branch = models.ForeignKey(
+        "branches.Branch",
+        on_delete=models.SET_NULL,
+        null=True,
+        default=None,
+        related_name="sales",
+    )
 
     def __str__(self):
         return f"Bill for Order: Customer: {self.customer.name}, Status: {self.status}"
