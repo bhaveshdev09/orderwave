@@ -9,7 +9,7 @@ class CustomUserForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ("name", "email", "mobile_no", "branch")
+        fields = ("name", "email", "mobile_no", "assigned_branch")
         widgets = {
             "name": forms.TextInput(
                 attrs={
@@ -18,7 +18,7 @@ class CustomUserForm(forms.ModelForm):
                 }
             ),
             "email": forms.EmailInput(attrs={"class": "form-control"}),
-            "branch": forms.Select(attrs={"class": "form-control"}),
+            "assigned_branch": forms.Select(attrs={"class": "form-control"}),
         }
 
 

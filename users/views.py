@@ -1,4 +1,6 @@
+from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -11,7 +13,6 @@ from django.views.generic import (
 from users.models import CustomUser
 from users.forms import CustomUserForm, CustomUserAuthForm
 from django.contrib.auth.views import LogoutView, PasswordResetView
-from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
 
 
@@ -53,6 +54,11 @@ class CustomLoginView(FormView):
     form_class = CustomUserAuthForm
     template_name = "authentication/login.html"
     success_url = reverse_lazy("users:user-list")  # Adjust 'home' to your home URL
+
+    def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(redirect_to=reverse_lazy("analytics:dashboard"))
+        return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         email = form.cleaned_data["email"]
