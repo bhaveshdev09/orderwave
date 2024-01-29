@@ -68,7 +68,7 @@
                 <td>{{ user.name|default:"-"|capfirst }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.mobile_no }}</td>
-                <td>{{ user.branch|default_if_none:"-" }}</td>
+                <td>{{ user.assigned_branch|default_if_none:"-" }}</td>
                 {% comment %} <td>{{ user.created_at|naturaltime }}</td> {% endcomment %}
                 <td>
                   <a class="me-3" href="{% url 'users:user-update' user.pk %}">
@@ -93,11 +93,12 @@
 <script src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'assets/js/dataTables.bootstrap4.min.js' %}"></script>
 
-
 <!-- Initiate Datatable -->
 <script>
   $(document).ready(function () {
     $('#userDataTable').DataTable();
   });
+
+
 </script>
 {% endblock js %}

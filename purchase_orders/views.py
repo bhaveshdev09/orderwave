@@ -40,8 +40,12 @@ class PurchaseOrderCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateVie
         self.context["items"] = list(
             Material.objects.only("id", "name", "price").values("id", "name", "price")
         )
-        print(self.context)
         return self.context
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.order_branch = self.request.user.assigned_branch
+        return super().form_valid(form)
 
 
 class PurchaseOrderUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
@@ -56,8 +60,11 @@ class PurchaseOrderUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateVie
         self.context["items"] = list(
             Material.objects.only("id", "name", "price").values("id", "name", "price")
         )
-        print(self.context)
         return self.context
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class PurchaseOrderDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
@@ -66,6 +73,10 @@ class PurchaseOrderDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteVie
     success_url = reverse_lazy("purchase_orders:purchase-order-list")
     context_object_name = "purchase_order"
     success_message = "Purchase Order deleted successfully."
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class PurchaseOrderExportToExcelView(ExportViewMixin, View):

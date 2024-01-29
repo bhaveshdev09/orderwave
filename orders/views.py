@@ -94,6 +94,11 @@ class BillCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         )
         return self.context
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.order_branch = self.request.user.assigned_branch
+        return super().form_valid(form)
+
     def form_invalid(self, form):
         print(form.errors)
         response = super().form_invalid(form)
@@ -110,6 +115,10 @@ class BillUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.select_related("order", "customer")
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs: Any):
         self.context = super().get_context_data(**kwargs)
@@ -129,6 +138,10 @@ class BillDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = "bills/bill_confirm_delete.html"
     success_url = reverse_lazy("orders:bill-list")
     success_message = "Order deleted successfully."
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
 
 class BillsExportToExcelView(ExportViewMixin, View):

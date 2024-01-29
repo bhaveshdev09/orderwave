@@ -1,7 +1,14 @@
 <!-- templates/users/customuser_form.html -->
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}{% if customuser %}Edit{% else %}Create{% endif %} User{% endblock %}
+
+{% block css %}
+<!-- Select2 CSS -->
+<link rel="stylesheet" href="{% static "admin/css/vendor/select2/css/select2.min.css" %}">
+{% comment %} <link rel="stylesheet" href="{% static "assets/plugins/select2/css/select2.min.css" %}"> {% endcomment %}
+{% comment %} <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> {% endcomment %}
+{% endblock  %}
 
 {% block content %}
 <div class="content">
@@ -17,29 +24,28 @@
             <form method="post">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-lg-3 col-sm-6 col-12">
+                    <div class="col-lg-6 col-sm-6 col-12">
                         <div class="form-group">
                             {{ form.name.label_tag }}
                             {{ form.name }}
                         </div>
                     </div>
-
-                    <div class="col-lg-3 col-sm-6 col-12">
+                    <div class="col-lg-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            {{ form.assigned_branch.label_tag }}
+                            {{ form.assigned_branch }}
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-12">
                         <div class="form-group">
                             {{ form.email.label_tag }}
                             {{ form.email }}
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-6 col-12">
+                    <div class="col-lg-6 col-sm-6 col-12">
                         <div class="form-group">
                             {{ form.mobile_no.label_tag }}
                             {{ form.mobile_no }}
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 col-12">
-                        <div class="form-group">
-                            {{ form.branch.label_tag }}
-                            {{ form.branch }}
                         </div>
                     </div>
                     {% comment %} <div class="col-lg-3 col-sm-6 col-12">
@@ -66,3 +72,21 @@
     <!-- /add -->
 </div>
 {% endblock content %}
+
+{% block js %}
+<!-- Select2 JS -->
+{% comment %} <script src="{% static "assets/plugins/select2/js/select2.min.js" %}"></script>
+<script src="{% static "assets/plugins/select2/js/custom-select.js" %}"></script> {% endcomment %}
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+    // In your Javascript (external .js resource or <script> tag)
+        $(document).ready(function() {
+        $('.select-branch').select2({
+                allowClear:true,
+                placeholder: 'Position',
+            });
+        });
+    </script> {% endcomment %}
+{% endblock js %}
+

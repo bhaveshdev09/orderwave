@@ -18,7 +18,7 @@ class CustomUserForm(forms.ModelForm):
                 }
             ),
             "email": forms.EmailInput(attrs={"class": "form-control"}),
-            "assigned_branch": forms.Select(attrs={"class": "form-control"}),
+            "assigned_branch": forms.Select(attrs={"class": "form-select select"}),
         }
 
 
